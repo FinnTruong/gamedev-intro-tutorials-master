@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "PlayerState.h"
 #include "GameGlobal.h"
+#include "Fireball.h"
 
 
 #define MARIO_WALKING_SPEED		0.1f
@@ -85,6 +86,9 @@
 
 #define MARIO_FULL_ABILITY_BAR 1200
 
+#define MARIO_RACCOON_ATTACK_TIME	300
+#define MARIO_FIRE_ATTACK_TIME		200
+
 
 class Player : public CGameObject
 {
@@ -100,6 +104,7 @@ public:
 	Player(float x = 0.0f, float y = 0.0f);
 	static Player* GetInstance();
 
+
 	bool isFlip;
 	bool isGrounded;
 	bool isAttacking;
@@ -112,6 +117,7 @@ public:
 
 	float releaseMoveInputTime;
 	float releaseJumpInputTime;
+	float attackTime;
 	int facingDirection;
 
 	float abilityBar;
@@ -119,6 +125,9 @@ public:
 	PlayerState* playerState;
 	std::unordered_map<int, bool> allow;
 
+	vector<Fireball*> listFireball;
+	Fireball* fireball1;
+	Fireball* fireball2;
 
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
@@ -126,6 +135,8 @@ public:
 	void SetState(PlayerState* newState);
 	void SetLevel(int l) { level = l; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
+	void CheckCanAttack();
+
 
 	void Reset();
 

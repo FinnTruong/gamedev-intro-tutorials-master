@@ -6,7 +6,7 @@
 
 PlayerRunningMaxState::PlayerRunningMaxState()
 {
-	Mario->allow[MARIO_STATE_FLYING] = true;
+	Mario->allow[MARIO_STATE_FLYING] = false;
 	state = MARIO_STATE_RUNNING_MAX;
 }
 

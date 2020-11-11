@@ -7,6 +7,7 @@
 PlayerWalkingState::PlayerWalkingState()
 {
 	Mario->allow[MARIO_STATE_CROUCHING] = false;
+	Mario->isAttacking = false;
 	state = MARIO_STATE_WALKING;
 	moveInput = 0;	
 }
@@ -28,23 +29,23 @@ void PlayerWalkingState::HandleKeyboard(DWORD dt)
 	}
 	else if (keyCode[DIK_RIGHT])
 	{
-		if (isSkiding)
+		/*if (isSkiding)
 		{
 			moveInput = -0.5;
 			Mario->nx = -1;
 			return;
-		}
+		}*/
 		moveInput = moveInput >= 1 ? 1 : moveInput + MARIO_ACCELERATION_MULTIPLIER * dt;
 		Mario->nx = 1;
 	}
 	else if (keyCode[DIK_LEFT])
 	{
-		if (isSkiding)
+		/*if (isSkiding)
 		{
 			moveInput = 0.5;
 			Mario->nx = 1;
 			return;
-		}
+		}*/
 		moveInput = moveInput <= -1 ? -1 : moveInput - MARIO_ACCELERATION_MULTIPLIER * dt;
 		Mario->nx = -1;
 	}

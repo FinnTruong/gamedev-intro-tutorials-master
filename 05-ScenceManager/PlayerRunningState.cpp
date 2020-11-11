@@ -31,29 +31,29 @@ void PlayerRunningState::HandleKeyboard(DWORD dt)
 	{
 		if (keyCode[DIK_RIGHT])
 		{
-			if (isSkiding)
+			/*if (isSkiding)
 			{
 				moveInput = -0.5;
 				Mario->nx = -1;
 				return;
-			}
+			}*/
 			moveInput = moveInput >= 1 ? 1 : moveInput + MARIO_ACCELERATION_MULTIPLIER * dt;
 			Mario->nx = 1;
 		}
 		else if (keyCode[DIK_LEFT])
 		{
-			if (isSkiding)
+			/*if (isSkiding)
 			{
 				moveInput = 0.5;
 				Mario->nx = 1;
 				return;
-			}
+			}*/
 			moveInput = moveInput <= -1 ? -1 : moveInput - MARIO_ACCELERATION_MULTIPLIER * dt;
 			Mario->nx = -1;
 		}
 		else
 		{
-			Mario->nx = Mario->facingDirection;
+			Mario->facingDirection = Mario->nx;
 			Mario->SetState(new PlayerIdleState());
 		}
 	}
@@ -83,6 +83,9 @@ void PlayerRunningState::UpdateAnimation()
 	switch (Mario->level)
 	{
 	case MARIO_LEVEL_SMALL:
+		if (Mario->vx == 0)
+			return;
+
 		if (GetTickCount64() - Mario->releaseMoveInputTime <= 150)
 		{
 			if (Mario->facingDirection != movingDirection)
@@ -105,7 +108,7 @@ void PlayerRunningState::UpdateAnimation()
 	case MARIO_LEVEL_BIG:
 		if (GetTickCount64() - Mario->releaseMoveInputTime <= 150)
 		{
-			if (Mario->facingDirection != movingDirection)
+			if (Mario->facingDirection != movingDirection )
 			{
 				isSkiding = true;
 				animation = MARIO_ANI_BIG_SKIDING;

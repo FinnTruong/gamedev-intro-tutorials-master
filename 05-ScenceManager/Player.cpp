@@ -16,6 +16,7 @@
 #include "PlayerFallingState.h"
 #include "PlayerAttackingState.h"
 #include "PlayerFlyingState.h"
+#include "Fireball.h"
 
 Player* Player::instance = NULL;
 
@@ -27,6 +28,17 @@ Player::Player(float x, float y) : CGameObject()
 	isFlip = false;
 	isAttacking = false;
 	abilityBar = 0;
+
+	if (!fireball1)
+	{
+		fireball1 = new Fireball();
+		listFireball.push_back(fireball1);
+	}
+	if (!fireball2)
+	{
+		fireball2 = new Fireball();
+		listFireball.push_back(fireball2);
+	}
 
 	playerState = new PlayerIdleState();
 	start_x = x; 
@@ -48,12 +60,27 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 	playerState->Update(dt);
+
+	CheckCanAttack();
+
 	// Simple fall down
+	if (isSlowFalling && vy > 0)
+	{
+		vy += MARIO_GRAVITY / 3 * dt;
+	}
+	else
+		vy += MARIO_GRAVITY * dt;
+
 	
-	vy += MARIO_GRAVITY * dt;
 
+	// reset untouchable timer if untouchable time has passed
+	if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
+	{
+		untouchable_start = 0;
+		untouchable = 0;
+	}
 
-
+#pragma region  Handle Collision
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -63,13 +90,6 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// turn off collision when die 
 	if (state!=MARIO_STATE_DIE)
 		CalcPotentialCollisions(coObjects, coEvents);
-
-	// reset untouchable timer if untouchable time has passed
-	if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
-	{
-		untouchable_start = 0;
-		untouchable = 0;
-	}
 
 	// No collision occured, proceed normally
 	if (coEvents.size()==0)
@@ -92,7 +112,7 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 		// block every object first!
 		x += min_tx * dx + nx * 0.4f;
-		y += min_ty * dy + ny * 0.4f;
+		y += min_ty * dy + ny * 0.001f;
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
@@ -104,45 +124,14 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-
-			if (dynamic_cast<CGoomba*>(e->obj)) // if e->obj is Goomba 
-			{
-				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
-
-				// jump on top >> kill Goomba and deflect a bit 
-				if (e->ny < 0)
-				{
-					if (goomba->GetState() != GOOMBA_STATE_DIE)
-					{
-						goomba->SetState(GOOMBA_STATE_DIE);
-						vy = -MARIO_JUMP_DEFLECT_SPEED;
-					}
-				}
-				else if (e->nx != 0)
-				{
-					if (untouchable == 0)
-					{
-						if (goomba->GetState() != GOOMBA_STATE_DIE)
-						{
-							if (level > MARIO_LEVEL_SMALL)
-							{
-								level = MARIO_LEVEL_SMALL;
-								StartUntouchable();
-							}
-							/*else
-								SetState(MARIO_STATE_DIE);*/
-						}
-					}
-				}
-			}
-			else if (dynamic_cast<Ground*>(e->obj)) // if e->obj is CBrick 
+			if (dynamic_cast<Ground*>(e->obj)) // if e->obj is CBrick 
 			{
 				Ground* ground = dynamic_cast<Ground*>(e->obj);
 
 				if (e->ny != 0)
 				{
 					if (e->ny == -1)
-					{						
+					{
 						//vy = 0;
 					}
 					else
@@ -151,22 +140,72 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					}
 
 				}
-			}
-			else if (dynamic_cast<OneWayPlatform*>(e->obj))
-			{
+
+				else if (dynamic_cast<Ground*>(e->obj)) // if e->obj is CBrick 
+				{
+					Ground* ground = dynamic_cast<Ground*>(e->obj);
+
+					if (e->ny != 0)
+					{
+						if (e->ny == -1)
+						{
+							//vy = 0;
+						}
+						else
+						{
+							y += dy;
+						}
+
+					}
+				}
+				else if (dynamic_cast<CGoomba*>(e->obj)) // if e->obj is Goomba 
+				{
+					CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+
+					// jump on top >> kill Goomba and deflect a bit 
+					if (e->ny < 0)
+					{
+						if (goomba->GetState() != GOOMBA_STATE_DIE)
+						{
+							goomba->SetState(GOOMBA_STATE_DIE);
+							vy = -MARIO_JUMP_DEFLECT_SPEED;
+						}
+					}
+					else if (e->nx != 0)
+					{
+						if (untouchable == 0)
+						{
+							if (goomba->GetState() != GOOMBA_STATE_DIE)
+							{
+								if (level > MARIO_LEVEL_SMALL)
+								{
+									level = MARIO_LEVEL_SMALL;
+									StartUntouchable();
+								}
+								/*else
+									SetState(MARIO_STATE_DIE);*/
+							}
+						}
+					}
+				}
+				else if (dynamic_cast<OneWayPlatform*>(e->obj))
+				{
+
+				}
+				else if (dynamic_cast<CPortal*>(e->obj))
+				{
+					CPortal* p = dynamic_cast<CPortal*>(e->obj);
+					CGame::GetInstance()->SwitchScene(p->GetSceneId());
+				}
 
 			}
-			else if (dynamic_cast<CPortal*>(e->obj))
-			{
-				CPortal* p = dynamic_cast<CPortal*>(e->obj);
-				CGame::GetInstance()->SwitchScene(p->GetSceneId());
-			}
-		
+
+			// clean up collision events
+			for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 		}
-
-		// clean up collision events
-		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	}
+#pragma endregion
+
 }
 
 void Player::Render()
@@ -205,8 +244,8 @@ void Player::Render()
 	int alpha = 255;
 	if (untouchable)
 		alpha = 128;
-
 	animation_set->at(playerState->animation)->Render(nx, x, y, alpha);
+
 	RenderBoundingBox();
 }
 
@@ -272,6 +311,22 @@ void Player::Reset()
 	SetSpeed(0, 0);
 }
 
+void Player::CheckCanAttack()
+{
+	switch (level)
+	{
+	case MARIO_LEVEL_RACCOON:
+		if (GetTickCount64() - attackTime >= MARIO_RACCOON_ATTACK_TIME)
+			isAttacking = false;
+		break;
+
+	case MARIO_LEVEL_FIRE:
+		if (GetTickCount64() - attackTime >= MARIO_FIRE_ATTACK_TIME)
+			isAttacking = false;
+
+	}
+}
+
 void Player::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
@@ -302,19 +357,18 @@ void Player::OnKeyDown(int keyCode)
 	case DIK_SPACE:
 		if (allow[MARIO_STATE_JUMPING])
 		{
-			if ((abilityBar >= MARIO_FULL_ABILITY_BAR || isFlying))
-			{
-				if (level == MARIO_LEVEL_RACCOON)
-					SetState(new PlayerFlyingState());
-				return;
-			}
 			allow[MARIO_STATE_JUMPING] = false;
 			this->SetState(new PlayerJumpingState());
+		}
+		if ((abilityBar >= MARIO_FULL_ABILITY_BAR || isFlying))
+		{
+			if (level == MARIO_LEVEL_RACCOON)
+				SetState(new PlayerFlyingState());
 		}
 
 		break;
 
-	case DIK_Q:	
+	case DIK_Q:
 		SetLevel(MARIO_LEVEL_SMALL);
 		break;
 	case DIK_W:
@@ -327,13 +381,38 @@ void Player::OnKeyDown(int keyCode)
 		this->Reset();
 		break;
 	case DIK_A:
-		if (!isAttacking && (level == MARIO_LEVEL_RACCOON))
-			SetState(new PlayerAttackingState());
+		if (!isAttacking)
+		{
+			attackTime = GetTickCount64();
+			if (level == MARIO_LEVEL_RACCOON)			{
+
+				SetState(new PlayerAttackingState());
+				return;
+			}
+			else if (level == MARIO_LEVEL_FIRE)
+			{
+				isAttacking = true;
+				SetState(new PlayerAttackingState());
+				for (size_t i = 0; i < listFireball.size(); i++)
+				{
+					if (listFireball[i]->isDone == true)
+					{
+						listFireball[i]->Fire(nx, x, y);
+						break;
+					}
+				}
+				return;
+			}
+		}
 		break;
+
 	default:
 		break;
 	}
 }
+
+
+
 
 void Player::OnKeyUp(int keyCode)
 {

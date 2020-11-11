@@ -7,6 +7,7 @@ PlayerIdleState::PlayerIdleState()
 {
 	Mario->allow[MARIO_STATE_JUMPING] = true;
 	Mario->allow[MARIO_STATE_CROUCHING] = true;
+	Mario->isAttacking = false;
 	state = MARIO_STATE_IDLE;	
 
 }

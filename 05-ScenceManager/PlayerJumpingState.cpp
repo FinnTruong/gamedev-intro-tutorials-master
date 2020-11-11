@@ -9,6 +9,7 @@
 PlayerJumpingState::PlayerJumpingState()
 {
 	Mario->allow[MARIO_STATE_CROUCHING] = false;
+	Mario->allow[MARIO_STATE_FLYING] = true;
 	Mario->vy = -MARIO_JUMP_SPEED_Y;
 	state = MARIO_STATE_JUMPING;
 

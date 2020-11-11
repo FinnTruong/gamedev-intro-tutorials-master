@@ -1,8 +1,8 @@
 # id	file_path	transparent_color_r	g	b
 [TEXTURES]
-0	textures\marioSprite.png	255	255	255
-20	textures\misc.png	176	224	248
-10	textures\enemies.png	3	26	110
+0	textures\mario.png	255	255	255
+1	textures\Item\misc.png	176	224	248
+2	textures\Enemy\enemy.png	3	26	110
 
 
 
@@ -217,11 +217,22 @@
 30003	45	21	16	16	10
 
 #brick with question mark animation
-40001	300	117	16	16	20
-40002	318	117	16	16	20
-40003	336	117	16	16	20
-40004	355	117	16	16	20
-						
+40001	300	117	16	16	1
+40002	318	117	16	16	1
+40003	336	117	16	16	1
+40004	355	117	16	16	1
+
+#FIREBALL
+60000	35	36	8	8	2
+60001	50	37	8	8	2
+60002	35	50	8	8	2
+60003	50	50	8	8	2
+#EXPLODE
+60004	527	20	16	16	1
+60005	546	22	12	12	1
+60006	561	22	12	12	1
+60007	576	23	11	10	1
+				
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 
@@ -270,7 +281,7 @@
 513	10062	100
 #fall RACOON
 514	10060	100
-#slow fall RACOON
+#fall slow RACOON
 515	10059	100	10060	100	10061	100
 #crouch RACCOON
 516	10072	100
@@ -278,7 +289,6 @@
 517	10066	100	10067	100	10068	100
 #attack RACOON
 518	10069	100	10070	100	10071	100
-
 #idle FIRE
 519	10096	100
 #walk FIRE
@@ -296,7 +306,7 @@
 #crouch FIRE
 526	10108	100
 #attack FIRE
-527	10069	100	10070	100	10071	100
+527	10101	150	10102	150
 
 
 #die
@@ -316,6 +326,10 @@
 # die
 702	30003	100
 
+# ====== FIREBAL =========
+801	60000	100	60001	100	60002	100	60003	100
+802	60004	100	60005	100	60006	100	60007	100
+
 
 
 #
@@ -334,12 +348,14 @@
 4	601
 # GOOMBA
 5	701	702
+# FIREBALL
+6	801	802
 
 
 
 [OBJECTS]
 # type	x	y	ani_set_id	extra_settings per object type
-# type: 0 = Mario , 1 = Ground, 2 = Brick, 3 = One Way Platform, 4 = GOOMBAS
+# type: 0 = Mario , 1 = Ground, 2 = Brick, 3 = One Way Platform, 4 = GOOMBAS, 5 = FIREBALL
 # MARIO
 0	50.0	150.0	1
 
@@ -468,7 +484,8 @@
 
 
 # ONE WAY PLATFORM
-3	240	168	2	48	16
+#3	240	168	2	48	16
+
 
 
 # --- SCENE PORTAL ----

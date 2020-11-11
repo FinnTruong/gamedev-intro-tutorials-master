@@ -20,6 +20,12 @@
     <Filter Include="Game Objects\Object">
       <UniqueIdentifier>{dea7c69d-3f33-4426-af5b-f549ae9bf09c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Component\Scene">
+      <UniqueIdentifier>{1818b5ed-7b0e-4d4e-9d97-586cee23b053}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Object\Projectile">
+      <UniqueIdentifier>{1af29866-c028-4f61-9ddb-252a3397930a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp">
@@ -46,14 +52,8 @@
     <ClCompile Include="Player.cpp">
       <Filter>Game Objects\Player</Filter>
     </ClCompile>
-    <ClCompile Include="PlayScence.cpp">
-      <Filter>Game Component</Filter>
-    </ClCompile>
     <ClCompile Include="Portal.cpp">
       <Filter>Game Objects\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Scence.cpp">
-      <Filter>Game Component</Filter>
     </ClCompile>
     <ClCompile Include="Sprites.cpp">
       <Filter>Game Graphics</Filter>
@@ -109,6 +109,18 @@
     <ClCompile Include="PlayerSkiddingState.cpp">
       <Filter>Game Objects\Player</Filter>
     </ClCompile>
+    <ClCompile Include="PlayScence.cpp">
+      <Filter>Game Component\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scence.cpp">
+      <Filter>Game Component\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Game Objects\Object\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Fireball.cpp">
+      <Filter>Game Objects\Object\Projectile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -141,14 +153,8 @@
     <ClInclude Include="PlayerState.h">
       <Filter>Game Objects\Player</Filter>
     </ClInclude>
-    <ClInclude Include="PlayScence.h">
-      <Filter>Game Component</Filter>
-    </ClInclude>
     <ClInclude Include="Portal.h">
       <Filter>Game Objects\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Scence.h">
-      <Filter>Game Component</Filter>
     </ClInclude>
     <ClInclude Include="Sprites.h">
       <Filter>Game Graphics</Filter>
@@ -200,6 +206,18 @@
     </ClInclude>
     <ClInclude Include="PlayerSkiddingState.h">
       <Filter>Game Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScence.h">
+      <Filter>Game Component\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scence.h">
+      <Filter>Game Component\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Game Objects\Object\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Fireball.h">
+      <Filter>Game Objects\Object\Projectile</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,6 +7,8 @@
 #include "Sprites.h"
 #include "Portal.h"
 #include "GameGlobal.h"
+#include "Fireball.h"
+
 
 using namespace std;
 
@@ -36,6 +38,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_ONEWAYPLATFORM	3
 #define OBJECT_TYPE_GOOMBA			4
 #define OBJECT_TYPE_KOOPAS			5
+#define OBJECT_TYPE_FIREBALL		6
 
 #define OBJECT_TYPE_PORTAL	50
 
@@ -309,6 +312,10 @@ void CPlayScene::Update(DWORD dt)
 	{
 		objects[i]->Update(dt, &coObjects);
 	}
+	for (size_t i = 0; i < Mario->listFireball.size(); i++)
+	{
+		Mario->listFireball[i]->Update(dt, &coObjects);
+	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return; 
@@ -330,8 +337,10 @@ void CPlayScene::Update(DWORD dt)
 		cx = tilemap->GetWidthTileMap() - SCREEN_WIDTH;
 	}
 
+	
 
-	CGame::GetInstance()->SetCamPos(cx, 32.0f /*cy*/);
+
+	CGame::GetInstance()->SetCamPos((int)cx, (int)cy /*cy*/);
 }
 
 void CPlayScene::Render()
@@ -339,6 +348,10 @@ void CPlayScene::Render()
 	tilemap->Draw();
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
+	for (size_t i = 0; i < Mario->listFireball.size(); i++)
+	{
+		Mario->listFireball[i]->Render();
+	}
 }
 
 /*

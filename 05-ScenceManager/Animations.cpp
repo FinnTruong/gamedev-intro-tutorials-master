@@ -19,9 +19,17 @@ void CAnimation::Add(int spriteId, DWORD time)
 	frames.push_back(frame);
 }
 
+bool CAnimation::HasAnimationEnded()
+{
+	return currentFrame == frames.size() - 1;
+}
+
 // NOTE: sometimes Animation object is NULL ??? HOW ??? 
 void CAnimation::Render(int direction, float x, float y, int alpha)
 {
+	if (this == nullptr)
+		return;
+
 	DWORD now = GetTickCount();
 	if (currentFrame == -1)
 	{
@@ -35,11 +43,12 @@ void CAnimation::Render(int direction, float x, float y, int alpha)
 		{
 			currentFrame++;
 			lastFrameTime = now;
-			if (currentFrame == frames.size()) currentFrame = 0;
+			if (currentFrame == frames.size())
+				currentFrame = 0;
 		}
 	}
 
-	frames[currentFrame]->GetSprite()->Draw(direction,x, y, alpha);
+	frames[currentFrame]->GetSprite()->Draw(direction, (int)x, (int)y, alpha);
 }
 
 CAnimations * CAnimations::__instance = NULL;

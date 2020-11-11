@@ -63,6 +63,8 @@ public:
 	LPANIMATION_SET animation_set;
 
 public: 
+	CGameObject();
+	~CGameObject();
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
@@ -86,7 +88,6 @@ public:
 		float &rdx, 
 		float &rdy);
 
-	CGameObject();
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
@@ -94,6 +95,5 @@ public:
 	virtual void SetState(int state) { this->state = state; }
 
 
-	~CGameObject();
 };
 

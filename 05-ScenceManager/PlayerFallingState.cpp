@@ -65,7 +65,7 @@ void PlayerFallingState::UpdateAnimation()
 			animation = MARIO_ANI_BIG_CROUCHING;
 		break;
 	case MARIO_LEVEL_RACCOON:
-		animation = Mario->isSlowFalling ? MARIO_ANI_RACCOON_FALLING : MARIO_ANI_RACCOON_FALLING;
+		animation = Mario->isSlowFalling ? MARIO_ANI_RACCOON_SLOW_FALLING : MARIO_ANI_RACCOON_FALLING;
 		if (keyCode[DIK_DOWN])
 			animation = MARIO_ANI_RACCOON_CROUCHING;
 		break;
