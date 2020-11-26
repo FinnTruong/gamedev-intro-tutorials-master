@@ -33,7 +33,7 @@ public:
 	int GetCurrentFrame() { return currentFrame; }
 	int GetLastFrame() { return frames.size() - 1; }
 	bool HasAnimationEnded();
-	void Play() { currentFrame == -1; }
+	void Play() { currentFrame = -1; }
 	void Render(int direction, float x, float y, int alpha = 255);
 };
 

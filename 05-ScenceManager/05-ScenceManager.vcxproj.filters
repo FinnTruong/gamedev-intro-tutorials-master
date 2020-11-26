@@ -26,13 +26,19 @@
     <Filter Include="Game Objects\Object\Projectile">
       <UniqueIdentifier>{1af29866-c028-4f61-9ddb-252a3397930a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Component\Map">
+      <UniqueIdentifier>{4dc13cf5-3ecb-4857-942d-b06907174d27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Item">
+      <UniqueIdentifier>{0cb206ba-4adf-487d-87b2-927b6079c922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Object\Platform">
+      <UniqueIdentifier>{f7b830ad-961f-4c53-88a2-6a1b43a82e19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp">
       <Filter>Game Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Brick.cpp">
-      <Filter>Game Objects\Object</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Game Component</Filter>
@@ -82,23 +88,14 @@
     <ClCompile Include="PlayerCrouchingState.cpp">
       <Filter>Game Objects\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Tilemap.cpp">
-      <Filter>Game Component</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Game Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Ground.cpp">
-      <Filter>Game Objects\Object</Filter>
     </ClCompile>
     <ClCompile Include="PlayerFallingState.cpp">
       <Filter>Game Objects\Player</Filter>
     </ClCompile>
     <ClCompile Include="PlayerRunningMaxState.cpp">
       <Filter>Game Objects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="OneWayPlatform.cpp">
-      <Filter>Game Objects\Object</Filter>
     </ClCompile>
     <ClCompile Include="PlayerFlyingState.cpp">
       <Filter>Game Objects\Player</Filter>
@@ -121,6 +118,30 @@
     <ClCompile Include="Fireball.cpp">
       <Filter>Game Objects\Object\Projectile</Filter>
     </ClCompile>
+    <ClCompile Include="Tilemap.cpp">
+      <Filter>Game Component\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>Game Objects\Object\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="OneWayPlatform.cpp">
+      <Filter>Game Objects\Object\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestionMarkBrick.cpp">
+      <Filter>Game Objects\Object\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="Leaf.cpp">
+      <Filter>Game Objects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Mushroom.cpp">
+      <Filter>Game Objects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Game Objects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Game Objects\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -128,9 +149,6 @@
     </ClInclude>
     <ClInclude Include="Animations.h">
       <Filter>Game Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Brick.h">
-      <Filter>Game Objects\Object</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Game Component</Filter>
@@ -180,23 +198,14 @@
     <ClInclude Include="PlayerCrouchingState.h">
       <Filter>Game Objects\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Tilemap.h">
-      <Filter>Game Component</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Game Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Ground.h">
-      <Filter>Game Objects\Object</Filter>
     </ClInclude>
     <ClInclude Include="PlayerFallingState.h">
       <Filter>Game Objects\Player</Filter>
     </ClInclude>
     <ClInclude Include="PlayerRunningMaxState.h">
       <Filter>Game Objects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="OneWayPlatform.h">
-      <Filter>Game Objects\Object</Filter>
     </ClInclude>
     <ClInclude Include="PlayerFlyingState.h">
       <Filter>Game Objects\Player</Filter>
@@ -218,6 +227,30 @@
     </ClInclude>
     <ClInclude Include="Fireball.h">
       <Filter>Game Objects\Object\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Tilemap.h">
+      <Filter>Game Component\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>Game Objects\Object\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="OneWayPlatform.h">
+      <Filter>Game Objects\Object\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestionMarkBrick.h">
+      <Filter>Game Objects\Object\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Leaf.h">
+      <Filter>Game Objects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Mushroom.h">
+      <Filter>Game Objects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Game Objects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Game Objects\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

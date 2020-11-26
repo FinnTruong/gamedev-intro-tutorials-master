@@ -54,9 +54,9 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CGoomba *>(e->obj)) // if e->obj is Goomba 
+			if (dynamic_cast<Goomba *>(e->obj)) // if e->obj is Goomba 
 			{
-				CGoomba *goomba = dynamic_cast<CGoomba *>(e->obj);
+				Goomba *goomba = dynamic_cast<Goomba *>(e->obj);
 
 				// jump on top >> kill Goomba and deflect a bit 
 				if (e->ny < 0)

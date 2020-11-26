@@ -1,68 +1,143 @@
 #include "Koopas.h"
+#include "Player.h"
 
-CKoopas::CKoopas()
+Koopa::Koopa()
 {
-	SetState(KOOPAS_STATE_WALKING);
+	tag = Tag::KOOPA;
+	SetState(KOOPA_STATE_WALKING);
 }
 
-void CKoopas::GetBoundingBox(float &left, float &top, float &right, float &bottom)
+
+void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
+	CGameObject::Update(dt);
+	if (isBeingHeld)
+	{
+		//vx = Player::GetInstance()->vx;
+		return;
+	}
+	vy += 0.002 * dt;
+	HandleCollision(dt, coObjects);
+}
+
+void Koopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{	
 	left = x;
 	top = y;
-	right = x + KOOPAS_BBOX_WIDTH;
+	right = x + KOOPA_BBOX_WIDTH;
+	
+	if (isBeingHeld)
+		left = right = top = bottom = 0;
 
-	if (state == KOOPAS_STATE_DIE)
-		bottom = y + KOOPAS_BBOX_HEIGHT_DIE;
+	if (state == KOOPA_STATE_SHELL || state == KOOPA_STATE_SPIN)
+	{
+		bottom = y + KOOPA_BBOX_HEIGHT_DIE;
+	}
+	else if (state == KOOPA_STATE_DIE || isBeingHeld )
+		left = right = top = bottom = 0;
 	else
-		bottom = y + KOOPAS_BBOX_HEIGHT;
+		bottom = y + KOOPA_BBOX_HEIGHT;
+	
+
 }
 
-void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
+void Koopa::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	CGameObject::Update(dt, coObjects);
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
 
-	//
-	// TO-DO: make sure Koopas can interact with the world and to each of them too!
-	// 
+	coEvents.clear();
 
-	x += dx;
-	y += dy;
+	CalcPotentialCollisions(coObjects, coEvents);
 
-	if (vx < 0 && x < 0) {
-		x = 0; vx = -vx;
+	// No collision occured, proceed normally
+	if (coEvents.size() == 0)
+	{
+		x += dx;
+		y += dy;
 	}
+	else
+	{
+		float min_tx, min_ty, nx = 0, ny;
+		float rdx = 0;
+		float rdy = 0;
 
-	if (vx > 0 && x > 290) {
-		x = 290; vx = -vx;
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+
+		x += min_tx * dx + nx * 0.4f;
+		y += min_ty * dy + ny * 0.4f;
+
+		if (nx != 0) vx *= -1; //Change direction when hit object
+
+		if (ny != 0) vy = 0;
+
 	}
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
-void CKoopas::Render()
+void Koopa::Render()
 {
-	int ani = KOOPAS_ANI_WALKING_LEFT;
-	if (state == KOOPAS_STATE_DIE) {
-		ani = KOOPAS_ANI_DIE;
+	int ani = KOOPA_ANI_WALKING;
+	if (state == KOOPA_STATE_SHELL) {
+		ani = KOOPA_ANI_SHELL;
 	}
-	else if (vx > 0) ani = KOOPAS_ANI_WALKING_RIGHT;
-	else if (vx <= 0) ani = KOOPAS_ANI_WALKING_LEFT;
+	else if (state == KOOPA_STATE_SPIN) {
+		ani = KOOPA_ANI_SPIN;
+	}
+	else if (state == KOOPA_STATE_DIE)
+		ani = KOOPA_ANI_DIE;
+
+	nx = vx >= 0 ? 1 : -1;
 
 	animation_set->at(ani)->Render(nx, x, y);
 
 	RenderBoundingBox();
 }
 
-void CKoopas::SetState(int state)
+void Koopa::SetState(int state)
 {
 	CGameObject::SetState(state);
 	switch (state)
 	{
-	case KOOPAS_STATE_DIE:
-		y += KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE + 1;
+	case KOOPA_STATE_WALKING:
+		vx = KOOPA_WALKING_SPEED;
+		break;
+	case KOOPA_STATE_SHELL:
+		y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE) / 2 - 5;
 		vx = 0;
 		vy = 0;
 		break;
-	case KOOPAS_STATE_WALKING:
-		vx = KOOPAS_WALKING_SPEED;
+
+	case KOOPA_STATE_SPIN:
+		vx = -nx * 0.1;
+		break;
+	case KOOPA_STATE_DIE:
+		vx = -KOOPA_WALKING_SPEED + 0.04f;
+		vy = -0.35f;
+		break;
 	}
 
+}
+
+void Koopa::OnSteppedOn()
+{
+	switch (state)
+	{
+	case KOOPA_STATE_WALKING:
+		SetState(KOOPA_STATE_SHELL);
+		break;
+	case KOOPA_STATE_SHELL:
+		SetState(KOOPA_STATE_SPIN);
+		break;
+	case KOOPA_STATE_SPIN:
+		SetState(KOOPA_STATE_SHELL);
+		break;
+	default:
+		break;
+	}
+}
+
+void Koopa::OnAttacked()
+{
+	SetState(KOOPA_STATE_DIE);
 }

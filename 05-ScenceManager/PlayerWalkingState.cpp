@@ -16,9 +16,9 @@ void PlayerWalkingState::Update(DWORD dt)
 {
 	Mario->abilityBar = Mario->abilityBar <= 0 ? 0 : Mario->abilityBar - 1 * dt;
 
-	Mario->vx = MARIO_WALKING_SPEED * moveInput;
-
-	this->HandleKeyboard(dt);
+	Mario->HandleMovement(dt);
+	
+	HandleKeyboard(dt);
 }
 
 void PlayerWalkingState::HandleKeyboard(DWORD dt)
@@ -26,29 +26,7 @@ void PlayerWalkingState::HandleKeyboard(DWORD dt)
 	if (keyCode[DIK_A] && !Mario->isAttacking)
 	{
 		Mario->SetState(new PlayerRunningState());
-	}
-	else if (keyCode[DIK_RIGHT])
-	{
-		/*if (isSkiding)
-		{
-			moveInput = -0.5;
-			Mario->nx = -1;
-			return;
-		}*/
-		moveInput = moveInput >= 1 ? 1 : moveInput + MARIO_ACCELERATION_MULTIPLIER * dt;
-		Mario->nx = 1;
-	}
-	else if (keyCode[DIK_LEFT])
-	{
-		/*if (isSkiding)
-		{
-			moveInput = 0.5;
-			Mario->nx = 1;
-			return;
-		}*/
-		moveInput = moveInput <= -1 ? -1 : moveInput - MARIO_ACCELERATION_MULTIPLIER * dt;
-		Mario->nx = -1;
-	}
+	}	
 	else
 	{		
 		Mario->nx = Mario->facingDirection;

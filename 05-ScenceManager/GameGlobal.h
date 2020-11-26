@@ -16,5 +16,16 @@
 
 extern std::unordered_map<int, bool> keyCode;
 
+enum Tag
+{
+	PLAYER,
+	GROUND,
+	ONEWAYPLATFORM,
+	QUESTIONMARKBRICK,
+	GOOMBA,
+	KOOPA,
+	ITEM
+};
+
 
 

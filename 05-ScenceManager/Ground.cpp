@@ -2,6 +2,7 @@
 
 Ground::Ground(int width, int height)
 {
+	tag = Tag::GROUND;
 	this->width = width;
 	this->height = height;
 }

@@ -20,44 +20,45 @@ void PlayerRunningState::Update(DWORD dt)
 	if (Mario->abilityBar == MARIO_FULL_ABILITY_BAR)
 		Mario->abilityBar = MARIO_FULL_ABILITY_BAR;
 
-	Mario->vx = MARIO_RUNNING_SPEED * moveInput;
+	Mario->HandleMovement(dt);
 
-	this->HandleKeyboard(dt);
+	HandleKeyboard(dt);
 }
 
 void PlayerRunningState::HandleKeyboard(DWORD dt)
 {
-	if (keyCode[DIK_A] && !Mario->isAttacking)
-	{
-		if (keyCode[DIK_RIGHT])
-		{
-			/*if (isSkiding)
-			{
-				moveInput = -0.5;
-				Mario->nx = -1;
-				return;
-			}*/
-			moveInput = moveInput >= 1 ? 1 : moveInput + MARIO_ACCELERATION_MULTIPLIER * dt;
-			Mario->nx = 1;
-		}
-		else if (keyCode[DIK_LEFT])
-		{
-			/*if (isSkiding)
-			{
-				moveInput = 0.5;
-				Mario->nx = 1;
-				return;
-			}*/
-			moveInput = moveInput <= -1 ? -1 : moveInput - MARIO_ACCELERATION_MULTIPLIER * dt;
-			Mario->nx = -1;
-		}
-		else
-		{
-			Mario->facingDirection = Mario->nx;
-			Mario->SetState(new PlayerIdleState());
-		}
-	}
-	else
+	//if (keyCode[DIK_A] && !Mario->isAttacking)
+	//{
+	//	if (keyCode[DIK_RIGHT])
+	//	{
+	//		/*if (isSkiding)
+	//		{
+	//			moveInput = -0.5;
+	//			Mario->nx = -1;
+	//			return;
+	//		}*/
+	//		moveInput = moveInput >= 1 ? 1 : moveInput + MARIO_ACCELERATION_MULTIPLIER * dt;
+	//		Mario->nx = 1;
+	//	}
+	//	else if (keyCode[DIK_LEFT])
+	//	{
+	//		/*if (isSkiding)
+	//		{
+	//			moveInput = 0.5;
+	//			Mario->nx = 1;
+	//			return;
+	//		}*/
+	//		moveInput = moveInput <= -1 ? -1 : moveInput - MARIO_ACCELERATION_MULTIPLIER * dt;
+	//		Mario->nx = -1;
+	//	}
+	//	else
+	//	{
+	//		Mario->facingDirection = Mario->nx;
+	//		Mario->SetState(new PlayerIdleState());
+	//	}
+	//}
+	//
+	if(!keyCode[DIK_A] || Mario->isAttacking)
 	{
 		if (keyCode[DIK_RIGHT] || keyCode[DIK_LEFT])
 			Mario->SetState(new PlayerWalkingState());

@@ -3,7 +3,7 @@
 #include "Projectile.h"
 #include <math.h>
 
-#define ANIMATION_SET_FIREBALL		6
+#define ANIMATION_SET_FIREBALL		9
 #define FIREBALL_BBOX_WIDTH			8
 #define FIREBALL_BBOX_HEIGHT		9
 
@@ -27,6 +27,7 @@ public:
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 	void Render();
+	void HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 };
 
 

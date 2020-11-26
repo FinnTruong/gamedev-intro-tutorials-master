@@ -1,6 +1,7 @@
 #include "OneWayPlatform.h"
 OneWayPlatform::OneWayPlatform(int width, int height)
 {
+	tag = Tag::ONEWAYPLATFORM;
 	this->width = width;
 	this->height = height;
 }

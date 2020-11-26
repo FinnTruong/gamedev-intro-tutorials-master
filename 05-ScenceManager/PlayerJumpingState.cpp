@@ -11,13 +11,14 @@ PlayerJumpingState::PlayerJumpingState()
 	Mario->allow[MARIO_STATE_CROUCHING] = false;
 	Mario->allow[MARIO_STATE_FLYING] = true;
 	Mario->vy = -MARIO_JUMP_SPEED_Y;
+	Mario->isGrounded = false;
 	state = MARIO_STATE_JUMPING;
 
 }
 
 void PlayerJumpingState::Update(DWORD dt)
 {
-	if (Mario->vy == 0)
+	if (Mario->vy == 0 && Mario->isGrounded)
 	{
 		Mario->SetState(new PlayerIdleState());
 		return;
@@ -66,6 +67,8 @@ void PlayerJumpingState::HandleKeyboard(DWORD dt)
 
 void PlayerJumpingState::UpdateAnimation()
 {
+
+
 	switch (Mario->level)
 	{
 	case MARIO_LEVEL_SMALL:

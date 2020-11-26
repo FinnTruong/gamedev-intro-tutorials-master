@@ -21,7 +21,7 @@
 #include "Textures.h"
 
 #include "Player.h"
-#include "Brick.h"
+#include "QuestionMarkBrick.h"
 #include "Goomba.h"
 
 #include "PlayScence.h"

@@ -3,12 +3,14 @@
 #include "Textures.h"
 #include "Scence.h"
 #include "GameObject.h"
-#include "Brick.h"
+#include "QuestionMarkBrick.h"
 #include "Ground.h"
 #include "Player.h"
 #include "Goomba.h"
 #include "Koopas.h"
 #include "Tilemap.h"
+#include "Item.h"
+#include "Leaf.h"
 
 
 class CPlayScene: public CScene
@@ -16,7 +18,6 @@ class CPlayScene: public CScene
 protected: 
 	Tilemap* tilemap;
 	Player *player;					// A play scene has to have player, right? 
-	/*Tilemap* tilemap;*/
 
 	vector<LPGAMEOBJECT> objects;
 

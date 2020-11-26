@@ -47,7 +47,7 @@
 CGame *game;
 
 Player *mario;
-CGoomba *goomba;
+Goomba *goomba;
 
 vector<LPGAMEOBJECT> objects;
 
@@ -242,17 +242,17 @@ void LoadResources()
 
 	for (int i = 0; i < 5; i++)
 	{
-		CBrick *brick = new CBrick();
+		QuestionMarkBrick *brick = new QuestionMarkBrick();
 		brick->AddAnimation(601);
 		brick->SetPosition(100.0f + i*60.0f, 74.0f);
 		objects.push_back(brick);
 
-		brick = new CBrick();
+		brick = new QuestionMarkBrick();
 		brick->AddAnimation(601);
 		brick->SetPosition(100.0f + i*60.0f, 90.0f);
 		objects.push_back(brick);
 
-		brick = new CBrick();
+		brick = new QuestionMarkBrick();
 		brick->AddAnimation(601);
 		brick->SetPosition(84.0f + i*60.0f, 90.0f);
 		objects.push_back(brick);
@@ -261,7 +261,7 @@ void LoadResources()
 
 	for (int i = 0; i < 30; i++)
 	{
-		CBrick *brick = new CBrick();
+		QuestionMarkBrick *brick = new QuestionMarkBrick();
 		brick->AddAnimation(601);
 		brick->SetPosition(0 + i*16.0f, 150);
 		objects.push_back(brick);
@@ -270,7 +270,7 @@ void LoadResources()
 	// and Goombas 
 	for (int i = 0; i < 4; i++)
 	{
-		goomba = new CGoomba();
+		goomba = new Goomba();
 		goomba->AddAnimation(701);
 		goomba->AddAnimation(702);
 		goomba->SetPosition(200 + i*60, 135);

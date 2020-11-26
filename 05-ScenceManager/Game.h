@@ -63,20 +63,7 @@ public:
 	int GetScreenWidth() { return screen_width; }
 	int GetScreenHeight() { return screen_height; }
 
-	static void SweptAABB(
-		float ml,			// move left 
-		float mt,			// move top
-		float mr,			// move right 
-		float mb,			// move bottom
-		float dx,			// 
-		float dy,			// 
-		float sl,			// static left
-		float st, 
-		float sr, 
-		float sb,
-		float &t, 
-		float &nx, 
-		float &ny);
+	
 
 	LPDIRECT3DDEVICE9 GetDirect3DDevice() { return this->d3ddv; }
 	LPDIRECT3DSURFACE9 GetBackBuffer() { return backBuffer; }

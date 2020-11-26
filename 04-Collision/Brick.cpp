@@ -1,12 +1,12 @@
 #include "Brick.h"
 
-void CBrick::Render()
+void QuestionMarkBrick::Render()
 {
 	animations[0]->Render(x, y);
 	//RenderBoundingBox();
 }
 
-void CBrick::GetBoundingBox(float &l, float &t, float &r, float &b)
+void QuestionMarkBrick::GetBoundingBox(float &l, float &t, float &r, float &b)
 {
 	l = x;
 	t = y;

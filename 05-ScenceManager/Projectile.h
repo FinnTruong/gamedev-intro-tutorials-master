@@ -9,7 +9,7 @@ public:
 	int damage;
 	int isTargetTop;
 	int alpha;
-	bool isCollision;
+	bool hasCollided;
 	float timeDelayed, timeDelayMax;
 
 public:
@@ -19,7 +19,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 
-	void Fire(int direction, float posX, float posY) { nx = direction; x = posX; y = posY; alpha = 255; isDone = false; isCollision = 0; }
+	void Fire(int direction, float posX, float posY) { nx = direction; x = posX; y = posY; alpha = 255; isDone = false; hasCollided = 0; }
 	void ResetDelay() { timeDelayed = 0; }
 	bool GetIsDone() { return isDone; }
 	void SetIsDone(bool isdone) { isDone = isdone; }

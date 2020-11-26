@@ -16,12 +16,12 @@ void PlayerIdleState::Update(DWORD dt)
 {
 	if (Mario->vx > 0) 
 	{
-		Mario->vx -= 0.00015 * dt;
+		Mario->vx -= MARIO_DRAG_FORCE * dt;
 		if (Mario->vx < 0)
 			Mario->vx = 0;
 	}
 	else if (Mario->vx < 0) {
-		Mario->vx += 0.00015 * dt;
+		Mario->vx += MARIO_DRAG_FORCE * dt;
 		if (Mario->vx > 0)
 			Mario->vx = 0;
 	}
@@ -50,15 +50,23 @@ void PlayerIdleState::UpdateAnimation()
 	{
 	case MARIO_LEVEL_SMALL:
 		animation = Mario->vx != 0 ? MARIO_ANI_SMALL_WALKING : MARIO_ANI_SMALL_IDLE;
+		if (Mario->holdingObject)
+			animation = animation = Mario->vx == 0 ? MARIO_ANI_SMALL_IDLE_HOLD : MARIO_ANI_SMALL_MOVING_HOLD;
 		break;
 	case MARIO_LEVEL_BIG:
 		animation = Mario->vx != 0 ? MARIO_ANI_BIG_WALKING : MARIO_ANI_BIG_IDLE;
+		if (Mario->holdingObject)
+			animation = animation = Mario->vx == 0 ? MARIO_ANI_BIG_IDLE_HOLD : MARIO_ANI_BIG_MOVING_HOLD;
 		break;
 	case MARIO_LEVEL_RACCOON:
 		animation = Mario->vx != 0 ? MARIO_ANI_RACCOON_WALKING : MARIO_ANI_RACCOON_IDLE;
+		if (Mario->holdingObject)
+			animation = animation = Mario->vx == 0 ? MARIO_ANI_RACCOON_IDLE_HOLD : MARIO_ANI_RACCOON_MOVING_HOLD;
 		break;
 	case MARIO_LEVEL_FIRE:
 		animation = Mario->vx != 0 ? MARIO_ANI_FIRE_WALKING : MARIO_ANI_FIRE_IDLE;
+		if (Mario->holdingObject)
+			animation = animation = Mario->vx == 0 ? MARIO_ANI_FIRE_IDLE_HOLD : MARIO_ANI_FIRE_MOVING_HOLD;
 		break;
 	default:
 		break;

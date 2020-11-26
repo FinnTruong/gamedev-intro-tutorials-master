@@ -9,6 +9,7 @@ PlayerFallingState::PlayerFallingState()
 	Mario->allow[MARIO_STATE_FLYING] = false;
 	state = MARIO_STATE_FALLING;
 	Mario->isFlying = false;
+	Mario->isGrounded = false;
 }
 
 void PlayerFallingState::Update(DWORD dt)

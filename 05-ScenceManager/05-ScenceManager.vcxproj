@@ -125,7 +125,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
-    <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="Coin.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Leaf.cpp" />
+    <ClCompile Include="Mushroom.cpp" />
+    <ClCompile Include="QuestionMarkBrick.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Fireball.cpp" />
     <ClCompile Include="GameGlobal.cpp" />
@@ -158,9 +162,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Coin.h" />
     <ClInclude Include="Fireball.h" />
     <ClInclude Include="GameGlobal.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="Leaf.h" />
+    <ClInclude Include="Mushroom.h" />
     <ClInclude Include="OneWayPlatform.h" />
     <ClInclude Include="PlayerAttackingState.h" />
     <ClInclude Include="PlayerFallingState.h" />
@@ -173,7 +181,7 @@
     <ClInclude Include="PlayerSkiddingState.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="Animations.h" />
-    <ClInclude Include="Brick.h" />
+    <ClInclude Include="QuestionMarkBrick.h" />
     <ClInclude Include="Koopas.h" />
     <ClInclude Include="PlayerWalkingState.h" />
     <ClInclude Include="Portal.h" />

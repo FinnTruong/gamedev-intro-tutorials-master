@@ -1,4 +1,5 @@
 ﻿#include "Fireball.h"
+#include "Goomba.h"
 
 Fireball::Fireball()
 {
@@ -6,7 +7,7 @@ Fireball::Fireball()
 	x = 0;
 	y = 0;
 	alpha = 0;
-	isCollision = 0;
+	hasCollided = false;
 	isDone = true;
 	damage = 1;
 	timeDelayed = 0;
@@ -23,51 +24,86 @@ void Fireball::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 	}
 	else
 	{
-		vy += FIREBALL_GRAVITY * dt;
-		//DebugOut(L"direction %d", direction);
-		vx = FIREBALL_SPEED * nx;
-		timeDelayed += dt;
 		CGameObject::Update(dt);
-
-#pragma region Xử lý va chạm
-		vector<LPCOLLISIONEVENT> coEvents;
-		vector<LPCOLLISIONEVENT> coEventsResult;
-
-		coEvents.clear();
-
-		CalcPotentialCollisions(colliable_objects, coEvents);
-
-		if (coEvents.size() == 0)
+		HandleCollision(dt, colliable_objects);
+		if (!hasCollided)
 		{
-			x += dx;
-			y += dy;
+			vy += FIREBALL_GRAVITY * dt;
+			vx = FIREBALL_SPEED * nx;
 		}
-		else
+
+		timeDelayed += dt;
+	}
+}
+
+
+
+void Fireball::GetBoundingBox(float& l, float& t, float& r, float& b)
+{
+	l = x;
+	t = y;
+	r = x + FIREBALL_BBOX_HEIGHT;
+	b = y + FIREBALL_BBOX_WIDTH;
+
+	if (hasCollided)
+	{
+		l = r = t = b = 0;
+	}
+}
+
+void Fireball::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
+{
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
+
+	coEvents.clear();
+
+	CalcPotentialCollisions(colliable_objects, coEvents);
+
+	if (coEvents.size() == 0)
+	{
+		x += dx;
+		y += dy;
+	}
+	else
+	{
+		float min_tx, min_ty, nx = 0, ny;
+		float rdx = 0;
+		float rdy = 0;
+
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+
+		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
-			float min_tx, min_ty, nx = 0, ny;
-			float rdx = 0;
-			float rdy = 0;
-
-			FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
-			for (UINT i = 0; i < coEventsResult.size(); i++)
+			x += min_tx * dx + nx * 0.4f;
+			y += min_ty * dy + ny * 0.4f;
+			LPCOLLISIONEVENT e = coEventsResult[i];
+			if (e->nx != 0)
 			{
-				x += min_tx * dx + nx * 0.4f;
-				y += min_ty * dy + ny * 0.4f;
-				LPCOLLISIONEVENT e = coEventsResult[i];
-				if (e->nx != 0)
+				hasCollided = true;
+				vx = 0;
+				vy = 0;
+			}
+			if (e->ny != 0)
+				vy = -FIREBALL_DEFLECT_SPEED_Y;
+
+			if (e->obj->tag == Tag::GOOMBA)
+			{
+				Goomba* goomba = dynamic_cast<Goomba*>(e->obj);
+				if (e->nx != 0 || e->ny!= 0 )
 				{
-					isCollision = 1;
-					vx = 0;
-					vy = 0;
+					hasCollided = true;
+					//vy = -FIREBALL_DEFLECT_SPEED_Y;
+					if (goomba->GetState() != GOOMBA_STATE_DIE)
+					{
+						goomba->OnAttacked();
+					}
 				}
-				if (e->ny != 0)
-					vy = -FIREBALL_DEFLECT_SPEED_Y;
+
 			}
 		}
-		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-#pragma endregion
 	}
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void Fireball::Render()
@@ -81,7 +117,7 @@ void Fireball::Render()
 	}
 	else
 	{
-		if (!isCollision)
+		if (!hasCollided)
 		{
 			ani = FIREBALL_ANI_FIRE;
 			animation_set->at(0)->Render(nx, x, y, alpha);
@@ -90,7 +126,7 @@ void Fireball::Render()
 		{
 			ani = FIREBALL_ANI_BANG;
 			animation_set->at(ani)->Render(nx, x, y - DISTANCE_TO_BANG, alpha);
-			if (animation_set->at(ani)->GetCurrentFrame() == 4)
+			if (animation_set->at(ani)->HasAnimationEnded())
 			{
 				isDone = true;
 				timeDelayed = 0;
@@ -99,10 +135,3 @@ void Fireball::Render()
 	}
 }
 
-void Fireball::GetBoundingBox(float& l, float& t, float& r, float& b)
-{
-	l = x;
-	t = y;
-	r = x + FIREBALL_BBOX_HEIGHT;
-	b = y + FIREBALL_BBOX_WIDTH;
-}

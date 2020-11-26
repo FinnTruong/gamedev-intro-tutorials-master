@@ -8,6 +8,9 @@
 #include "Portal.h"
 #include "GameGlobal.h"
 #include "Fireball.h"
+#include "OneWayPlatform.h"
+#include "Leaf.h"
+#include "Coin.h"
 
 
 using namespace std;
@@ -16,7 +19,6 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 	CScene(id, filePath)
 {
 	/*key_handler = new CPlayScenceKeyHandler(this);*/
-
 }
 
 /*
@@ -39,6 +41,8 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_GOOMBA			4
 #define OBJECT_TYPE_KOOPAS			5
 #define OBJECT_TYPE_FIREBALL		6
+#define OBJECT_TYPE_LEAF			7
+#define OBJECT_TYPE_COIN			8
 
 #define OBJECT_TYPE_PORTAL	50
 
@@ -96,7 +100,7 @@ void CPlayScene::_ParseSection_ANIMATIONS(string line)
 	LPANIMATION ani = new CAnimation();
 
 	int ani_id = atoi(tokens[0].c_str());
-	for (int i = 1; i < tokens.size(); i += 2)	// why i+=2 ?  sprite_id | frame_time  
+	for (auto i = 1; i < tokens.size(); i += 2)	// why i+=2 ?  sprite_id | frame_time  
 	{
 		int sprite_id = atoi(tokens[i].c_str());
 		int frame_time = atoi(tokens[i+1].c_str());
@@ -163,9 +167,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
-	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
-	case OBJECT_TYPE_BRICK: obj = new CBrick(); break;
-	case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;
+	case OBJECT_TYPE_GOOMBA: obj = new Goomba(); break;
+	case OBJECT_TYPE_BRICK: obj = new QuestionMarkBrick(x,y); break;
+	case OBJECT_TYPE_KOOPAS: obj = new Koopa(); break;
 	case OBJECT_TYPE_GROUND:
 	{
 		float width = atof(tokens[4].c_str());
@@ -176,9 +180,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	{
 		float width = atof(tokens[4].c_str());
 		float height = atof(tokens[5].c_str());
-		obj = new Ground(width, height);
+		obj = new OneWayPlatform(width, height);
 	}
 	break;
+	case OBJECT_TYPE_LEAF: obj = new Leaf(x, y); break;
+	case OBJECT_TYPE_COIN: obj = new Coin(x, y); break;
 	case OBJECT_TYPE_PORTAL:
 		{	
 			float r = atof(tokens[4].c_str());
@@ -309,13 +315,15 @@ void CPlayScene::Update(DWORD dt)
 	}
 
 	for (size_t i = 0; i < objects.size(); i++)
-	{
+	{		
+		//objects[i]->CalcPotentialCollisions(&coObjects, objects[i]->coEvents);
 		objects[i]->Update(dt, &coObjects);
 	}
 	for (size_t i = 0; i < Mario->listFireball.size(); i++)
 	{
 		Mario->listFireball[i]->Update(dt, &coObjects);
 	}
+
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return; 
@@ -352,6 +360,8 @@ void CPlayScene::Render()
 	{
 		Mario->listFireball[i]->Render();
 	}
+
+
 }
 
 /*
@@ -363,6 +373,7 @@ void CPlayScene::Unload()
 		delete objects[i];
 
 	objects.clear();
+
 	player = NULL;
 
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);

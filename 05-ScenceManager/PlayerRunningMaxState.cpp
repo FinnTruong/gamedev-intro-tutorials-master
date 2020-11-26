@@ -12,6 +12,7 @@ PlayerRunningMaxState::PlayerRunningMaxState()
 
 void PlayerRunningMaxState::Update(DWORD dt)
 {
+	Mario->HandleMovement(dt);
 	HandleKeyboard(dt);
 }
 
@@ -22,12 +23,10 @@ void PlayerRunningMaxState::HandleKeyboard(DWORD dt)
 
 		if (keyCode[DIK_RIGHT])
 		{
-			Mario->vx = MARIO_RUNNING_SPEED;
 			Mario->nx = 1;
 		}
 		else if (keyCode[DIK_LEFT])
 		{
-			Mario->vx = -MARIO_RUNNING_SPEED;
 			Mario->nx = -1;
 		}
 		else
