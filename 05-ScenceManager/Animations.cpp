@@ -30,7 +30,7 @@ void CAnimation::Render(int direction, float x, float y, int alpha)
 	if (this == nullptr)
 		return;
 
-	DWORD now = GetTickCount();
+	DWORD now = GetTickCount64();
 	if (currentFrame == -1)
 	{
 		currentFrame = 0;

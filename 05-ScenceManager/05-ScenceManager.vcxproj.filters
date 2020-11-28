@@ -23,9 +23,6 @@
     <Filter Include="Game Component\Scene">
       <UniqueIdentifier>{1818b5ed-7b0e-4d4e-9d97-586cee23b053}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game Objects\Object\Projectile">
-      <UniqueIdentifier>{1af29866-c028-4f61-9ddb-252a3397930a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game Component\Map">
       <UniqueIdentifier>{4dc13cf5-3ecb-4857-942d-b06907174d27}</UniqueIdentifier>
     </Filter>
@@ -34,6 +31,15 @@
     </Filter>
     <Filter Include="Game Objects\Object\Platform">
       <UniqueIdentifier>{f7b830ad-961f-4c53-88a2-6a1b43a82e19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Object\Projectile">
+      <UniqueIdentifier>{1af29866-c028-4f61-9ddb-252a3397930a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Object\PlayerWeapon">
+      <UniqueIdentifier>{e55661e3-4a33-436c-860b-7f04ac9a2b24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Player\PlayerStateMachine">
+      <UniqueIdentifier>{53d367cc-75c5-4275-8083-7aac4bb19874}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -58,9 +64,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>Game Objects\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Portal.cpp">
-      <Filter>Game Objects\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Sprites.cpp">
       <Filter>Game Graphics</Filter>
     </ClCompile>
@@ -70,41 +73,11 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Game Component</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerIdleState.cpp">
-      <Filter>Game Objects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerRunningState.cpp">
-      <Filter>Game Objects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerJumpingState.cpp">
-      <Filter>Game Objects\Player</Filter>
-    </ClCompile>
     <ClCompile Include="GameGlobal.cpp">
       <Filter>Game Component</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerWalkingState.cpp">
-      <Filter>Game Objects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerCrouchingState.cpp">
-      <Filter>Game Objects\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Game Component</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerFallingState.cpp">
-      <Filter>Game Objects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerRunningMaxState.cpp">
-      <Filter>Game Objects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerFlyingState.cpp">
-      <Filter>Game Objects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerAttackingState.cpp">
-      <Filter>Game Objects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerSkiddingState.cpp">
-      <Filter>Game Objects\Player</Filter>
     </ClCompile>
     <ClCompile Include="PlayScence.cpp">
       <Filter>Game Component\Scene</Filter>
@@ -142,6 +115,48 @@
     <ClCompile Include="Item.cpp">
       <Filter>Game Objects\Item</Filter>
     </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Game Component\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Flower.cpp">
+      <Filter>Game Objects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Portal.cpp">
+      <Filter>Game Objects\Object\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAttackingState.cpp">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCrouchingState.cpp">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerFallingState.cpp">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerFlyingState.cpp">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerIdleState.cpp">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerJumpingState.cpp">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerRunningMaxState.cpp">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerRunningState.cpp">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSkiddingState.cpp">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerWalkingState.cpp">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Tail.cpp">
+      <Filter>Game Objects\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -168,53 +183,17 @@
     <ClInclude Include="Player.h">
       <Filter>Game Objects\Player</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerState.h">
-      <Filter>Game Objects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Portal.h">
-      <Filter>Game Objects\Object</Filter>
-    </ClInclude>
     <ClInclude Include="Sprites.h">
       <Filter>Game Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Textures.h">
       <Filter>Game Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerIdleState.h">
-      <Filter>Game Objects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerRunningState.h">
-      <Filter>Game Objects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerJumpingState.h">
-      <Filter>Game Objects\Player</Filter>
-    </ClInclude>
     <ClInclude Include="GameGlobal.h">
       <Filter>Game Component</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerWalkingState.h">
-      <Filter>Game Objects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerCrouchingState.h">
-      <Filter>Game Objects\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Game Component</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerFallingState.h">
-      <Filter>Game Objects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerRunningMaxState.h">
-      <Filter>Game Objects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerFlyingState.h">
-      <Filter>Game Objects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerAttackingState.h">
-      <Filter>Game Objects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerSkiddingState.h">
-      <Filter>Game Objects\Player</Filter>
     </ClInclude>
     <ClInclude Include="PlayScence.h">
       <Filter>Game Component\Scene</Filter>
@@ -251,6 +230,51 @@
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>Game Objects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Game Component\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Flower.h">
+      <Filter>Game Objects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Portal.h">
+      <Filter>Game Objects\Object\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAttackingState.h">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCrouchingState.h">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerFallingState.h">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerFlyingState.h">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerIdleState.h">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerJumpingState.h">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerRunningMaxState.h">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerRunningState.h">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSkiddingState.h">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerWalkingState.h">
+      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Tail.h">
+      <Filter>Game Objects\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

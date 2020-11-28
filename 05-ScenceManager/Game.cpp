@@ -59,14 +59,6 @@ void CGame::Init(HWND hWnd)
 */
 void CGame::Draw(int direction, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
 {
-	/*D3DXVECTOR3 p(x - cam_x, y - cam_y, 0);
-	RECT r; 
-	r.left = left;
-	r.top = top;
-	r.right = right;
-	r.bottom = bottom;
-	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));*/
-
 	D3DXVECTOR3 p(x - cam_x, y - cam_y, 0);
 	RECT r;
 	r.left = left;
@@ -80,10 +72,9 @@ void CGame::Draw(int direction, float x, float y, LPDIRECT3DTEXTURE9 texture, in
 		scaling = D3DXVECTOR2(1, 1);
 	else
 		scaling = D3DXVECTOR2(-1, 1);
-
-	D3DXMatrixTransformation2D(&newMatrix, &D3DXVECTOR2(p.x + (float)(right - left) / 2, p.y + (float)(bottom + top) / 2), 0, &scaling, NULL, 0, NULL);
+	D3DXMatrixTransformation2D(&newMatrix, &D3DXVECTOR2(p.x + (float)(right - left) / 2, p.y + (float)(bottom - top) / 2), 0, &scaling, NULL, 0, NULL);
 	spriteHandler->GetTransform(&oldMatrix);
-	spriteHandler->SetTransform(&newMatrix);
+	spriteHandler->SetTransform(&(oldMatrix*newMatrix));
 	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 	spriteHandler->SetTransform(&oldMatrix);
 

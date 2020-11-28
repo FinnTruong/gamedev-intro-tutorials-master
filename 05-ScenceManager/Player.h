@@ -3,6 +3,7 @@
 #include "PlayerState.h"
 #include "GameGlobal.h"
 #include "Koopas.h"
+#include "Tail.h"
 #include "Fireball.h"
 
 
@@ -145,6 +146,8 @@ public:
 
 	PlayerState* playerState;
 	std::unordered_map<int, bool> allow;
+
+	Tail* tail;
 
 	vector<Fireball*> listFireball;
 	Fireball* fireball1;

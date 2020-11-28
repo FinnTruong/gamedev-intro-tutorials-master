@@ -16,7 +16,7 @@
 
 extern std::unordered_map<int, bool> keyCode;
 
-enum Tag
+enum class Tag
 {
 	PLAYER,
 	GROUND,
@@ -24,7 +24,11 @@ enum Tag
 	QUESTIONMARKBRICK,
 	GOOMBA,
 	KOOPA,
-	ITEM
+	ITEM,
+	MUSHROOM,
+	LEAF,
+	FLOWER,
+	TAIL
 };
 
 

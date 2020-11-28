@@ -43,6 +43,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_FIREBALL		6
 #define OBJECT_TYPE_LEAF			7
 #define OBJECT_TYPE_COIN			8
+#define OBJECT_TYPE_MUSHROOM		9
 
 #define OBJECT_TYPE_PORTAL	50
 
@@ -185,6 +186,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	break;
 	case OBJECT_TYPE_LEAF: obj = new Leaf(x, y); break;
 	case OBJECT_TYPE_COIN: obj = new Coin(x, y); break;
+	case OBJECT_TYPE_MUSHROOM: obj = new Mushroom(x, y); break;
 	case OBJECT_TYPE_PORTAL:
 		{	
 			float r = atof(tokens[4].c_str());
@@ -319,6 +321,12 @@ void CPlayScene::Update(DWORD dt)
 		//objects[i]->CalcPotentialCollisions(&coObjects, objects[i]->coEvents);
 		objects[i]->Update(dt, &coObjects);
 	}
+
+	for (size_t i = 0; i < items.size(); i++)
+	{
+		items[i]->Update(dt, &coObjects);
+	}
+
 	for (size_t i = 0; i < Mario->listFireball.size(); i++)
 	{
 		Mario->listFireball[i]->Update(dt, &coObjects);
@@ -348,14 +356,27 @@ void CPlayScene::Update(DWORD dt)
 	
 
 
-	CGame::GetInstance()->SetCamPos((int)cx, (int)cy /*cy*/);
+	CGame::GetInstance()->SetCamPos((int)cx, 64 /*cy*/);
 }
 
 void CPlayScene::Render()
 {
 	tilemap->Draw();
+
+
+	//Render objects
 	for (int i = 0; i < objects.size(); i++)
+	{
 		objects[i]->Render();
+	}
+
+	//Render items / power up
+	for (int i = 0; i < items.size(); i++)
+	{
+		items[i]->Render();
+	}
+
+	//Render fireball
 	for (size_t i = 0; i < Mario->listFireball.size(); i++)
 	{
 		Mario->listFireball[i]->Render();

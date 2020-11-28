@@ -9,7 +9,6 @@ PlayerAttackingState::PlayerAttackingState()
 {
 	state = MARIO_STATE_ATTACKING;
 	Mario->isAttacking = true;
-	DebugOut(L"Spin");
 }
 
 PlayerAttackingState::~PlayerAttackingState()
@@ -19,7 +18,6 @@ PlayerAttackingState::~PlayerAttackingState()
 
 void PlayerAttackingState::Update(DWORD dt)
 {
-
 	if (!Mario->isAttacking)
 	{
 		if (keyCode[DIK_LEFT] || keyCode[DIK_RIGHT])
@@ -38,7 +36,7 @@ void PlayerAttackingState::UpdateAnimation()
 {
 	switch (Mario->level)
 	{
-	case MARIO_LEVEL_RACCOON:
+	case MARIO_LEVEL_RACCOON:		
 		animation = MARIO_ANI_RACCOON_ATTACKING;
 		break;
 	case MARIO_LEVEL_FIRE:

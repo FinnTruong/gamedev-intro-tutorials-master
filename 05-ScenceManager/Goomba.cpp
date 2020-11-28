@@ -1,5 +1,6 @@
 #include "Goomba.h"
 #include "Ground.h"
+#include "Utils.h"
 
 Goomba::Goomba()
 {
@@ -82,6 +83,7 @@ void Goomba::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	coEvents.clear();
 
 	CalcPotentialCollisions(coObjects, coEvents);
+	CalcPotentialOverlapped(coObjects);
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -106,6 +108,15 @@ void Goomba::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+}
+
+void Goomba::OnOverlapped(LPGAMEOBJECT obj)
+{
+	if (obj->tag == Tag::TAIL)
+	{
+		DebugOut(L"Hit");
+		OnAttacked();
+	}
 }
 
 void Goomba::OnSteppedOn()

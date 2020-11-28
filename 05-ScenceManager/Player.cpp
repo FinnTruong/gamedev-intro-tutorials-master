@@ -4,6 +4,7 @@
 
 #include "Player.h"
 #include "Game.h"
+#include "PlayScence.h"
 
 #include "Ground.h"
 #include "QuestionMarkBrick.h"
@@ -11,6 +12,7 @@
 #include "Goomba.h"
 #include "Koopas.h"
 #include "Fireball.h"
+#include "Mushroom.h"
 #include "Portal.h"
 
 #include "PlayerIdleState.h"
@@ -32,6 +34,11 @@ Player::Player(float x, float y) : CGameObject()
 	isFlip = false;
 	isAttacking = false;
 	abilityBar = 0;
+
+	if (!tail)
+	{
+		tail = new Tail();
+	}
 
 	if (!fireball1)
 	{
@@ -112,7 +119,7 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 void Player::SetState(PlayerState* newState)
 {	
 	previousState = state;
-	//delete playerState;
+	delete playerState;
 	playerState = newState;
 	state = newState->state;	
 }
@@ -279,6 +286,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 			}
+
 			else if (e->obj->tag == Tag::QUESTIONMARKBRICK)
 			{
 				QuestionMarkBrick* brick = dynamic_cast<QuestionMarkBrick*>(e->obj);
@@ -319,11 +327,12 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 			}
+
 			else if (e->obj->tag == Tag::KOOPA)
 			{
 				Koopa* koopa = dynamic_cast<Koopa*>(e->obj);
 
-				if (e->ny <  0)
+				if (e->ny < 0)
 				{
 					if (koopa->GetState() == KOOPA_STATE_WALKING)
 					{
@@ -378,7 +387,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 								koopa->isBeingHeld = false;
 								koopa->SetState(KOOPA_STATE_SPIN);
 							}
-							else if(keyCode[DIK_A])
+							else if (keyCode[DIK_A])
 							{
 								holdingObject = koopa;
 								koopa->isBeingHeld = true;
@@ -387,20 +396,15 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 					else
 						x += dx;
-
-				}
-
-				else if (e->obj->tag == Tag::ITEM)
-				{
-
-				}
-
-				else if (dynamic_cast<CPortal*>(e->obj))
-				{
-					CPortal* p = dynamic_cast<CPortal*>(e->obj);
-					CGame::GetInstance()->SwitchScene(p->GetSceneId());
 				}
 			}
+
+			else if (dynamic_cast<CPortal*>(e->obj))
+			{
+				CPortal* p = dynamic_cast<CPortal*>(e->obj);
+				CGame::GetInstance()->SwitchScene(p->GetSceneId());
+			}		
+			
 		}
 	}
 
@@ -410,12 +414,29 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Player::OnOverlapped(LPGAMEOBJECT other)
 {
-	DebugOut(L"Overlap");
+	//DebugOut(L"Overlap");
+	if (dynamic_cast<Item*>(other))
+	{
+		if (dynamic_cast<Item*>(other)->CheckIsSprouting())
+			return;
+	}
+
 	switch (other->tag)
 	{
 	case Tag::ITEM:
-		other->isActive = false;
+		other->SetActive(false);
+		other->DisableGameObject();
+		break;
+	case Tag::LEAF:
+		other->SetActive(false);
+		other->DisableGameObject();
 		SetLevel(MARIO_LEVEL_RACCOON);
+		break;
+	case Tag::MUSHROOM:
+		DebugOut(L"Mushroom\n");
+		other->SetActive(false);
+		other->DisableGameObject();
+		SetLevel(MARIO_LEVEL_BIG);
 		break;
 	}
 	
@@ -470,6 +491,8 @@ void Player::OnKeyDown(int keyCode)
 			attackTime = GetTickCount64();
 			if (level == MARIO_LEVEL_RACCOON)			
 			{
+				tail->ActivateGameObject();
+				tail->Attack(x + 14, y + 15);
 				SetState(new PlayerAttackingState());
 				return;
 			}
@@ -540,7 +563,10 @@ void Player::Render()
 	if (untouchable)
 		alpha = 128;
 
-	animation_set->at(currentAnimation)->Render(nx, x, y, alpha);
+	if (level == MARIO_LEVEL_RACCOON && nx == 1 && currentAnimation != MARIO_ANI_RACCOON_ATTACKING)
+		animation_set->at(currentAnimation)->Render(nx, x - 6, y, alpha);
+	else
+		animation_set->at(currentAnimation)->Render(nx, x, y, alpha);
 
 }
 

@@ -126,9 +126,11 @@
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Coin.cpp" />
+    <ClCompile Include="Flower.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Leaf.cpp" />
     <ClCompile Include="Mushroom.cpp" />
+    <ClCompile Include="Tail.cpp" />
     <ClCompile Include="QuestionMarkBrick.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Fireball.cpp" />
@@ -148,6 +150,7 @@
     <ClCompile Include="PlayerWalkingState.cpp" />
     <ClCompile Include="Portal.cpp" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Tilemap.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -164,6 +167,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Fireball.h" />
+    <ClInclude Include="Flower.h" />
     <ClInclude Include="GameGlobal.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Item.h" />
@@ -175,6 +179,7 @@
     <ClInclude Include="PlayerFlyingState.h" />
     <ClInclude Include="PlayerIdleState.h" />
     <ClInclude Include="PlayerJumpingState.h" />
+    <ClInclude Include="Tail.h" />
     <ClInclude Include="PlayerRunningMaxState.h" />
     <ClInclude Include="PlayerRunningState.h" />
     <ClInclude Include="PlayerCrouchingState.h" />
@@ -186,6 +191,7 @@
     <ClInclude Include="PlayerWalkingState.h" />
     <ClInclude Include="Portal.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Tilemap.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Game.h" />

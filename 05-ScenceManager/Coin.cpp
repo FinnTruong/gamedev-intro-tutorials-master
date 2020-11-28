@@ -2,7 +2,7 @@
 
 Coin::Coin(float startX, float startY)
 {
-	this->SetAnimationSet(CAnimationSetDatabase::GetInstance()->Get(12));
+	this->SetAnimationSet(CAnimationSetDatabase::GetInstance()->Get(ANIMATION_SET_COIN));
 	SetActive(true);
 	tag = Tag::ITEM;
 	x = startX;
@@ -12,10 +12,11 @@ Coin::Coin(float startX, float startY)
 
 void Coin::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x;
+	left = right = top = bottom = 0;
+	/*left = x;
 	top = y;
 	right = x + 15;
-	bottom = y + 15;
+	bottom = y + 15;*/
 }
 
 void Coin::Render()

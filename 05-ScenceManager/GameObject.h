@@ -77,9 +77,9 @@ public:
 	CGameObject();
 	~CGameObject();
 
-	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) = 0;
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {}
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
-	virtual void Render() = 0;
+	virtual void Render() {}
 	virtual void SetState(int state) { this->state = state; }
 	virtual void HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 
@@ -94,7 +94,7 @@ public:
 	void SetActive(bool value) { this->isActive = value; }
 
 	bool IsOverlapped(CGameObject* other);
-	virtual void OnOverlapped(CGameObject* other);
+	virtual void OnOverlapped(CGameObject* other) {}
 
 
 	int GetState() { return this->state; }
@@ -134,6 +134,9 @@ public:
 		float& ny,
 		float& rdx,
 		float& rdy);
+
+	void ActivateGameObject();
+	void DisableGameObject();
 
 };
 

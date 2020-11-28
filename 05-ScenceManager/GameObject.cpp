@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "GameObject.h"
 #include "Sprites.h"
+#include "PlayScence.h"
 
 CGameObject::CGameObject()
 {
@@ -176,11 +177,6 @@ bool CGameObject::IsOverlapped(LPGAMEOBJECT other)
 	
 }
 
-void CGameObject::OnOverlapped(CGameObject* other)
-{
-	other->SetActive(false);
-}
-
 /*
 	Calculate potential collisions with the list of colliable objects
 	coObjects: the list of colliable objects
@@ -193,9 +189,6 @@ void CGameObject::CalcPotentialCollisions(
 
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
-		if (coObjects->at(i)->isTrigger)
-			return;
-
 		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
 
 		if (e->t > 0 && e->t <= 1.0f)
@@ -275,6 +268,24 @@ void CGameObject::RenderBoundingBox()
 void CGameObject::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 
+}
+
+void CGameObject::ActivateGameObject()
+{
+	auto curScene = CGame::GetInstance()->GetCurrentScene();
+	if (dynamic_cast<CPlayScene*>(curScene))
+	{
+		dynamic_cast<CPlayScene*>(curScene)->AddNewGameObject(this);
+	}
+}
+
+void CGameObject::DisableGameObject()
+{
+	auto curScene = CGame::GetInstance()->GetCurrentScene();
+	if (dynamic_cast<CPlayScene*>(curScene))
+	{
+		dynamic_cast<CPlayScene*>(curScene)->DisableGameObject(this);
+	}
 }
 
 CGameObject::~CGameObject()

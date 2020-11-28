@@ -4,9 +4,29 @@
 
 class Item : public CGameObject
 {
+protected:
+	float startX;
+	float startY;
+
+	float spawnTime;
+
+	bool isSprouting;
+	bool hasSproutCompleted;
+	float sproutHeight;
+	float sproutSpeed;	
+
 public:
-	virtual void Update(DWORD dt) = 0;
-	virtual void Render() = 0;
+	Item();
+	Item(float,float);
+
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) = 0;
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	virtual void OnSproutComplete();
+
+	void SproutOut();
+
+	bool CheckIsSprouting() { return isSprouting; }
+
+
 };
 

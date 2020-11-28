@@ -25,11 +25,13 @@ class Goomba : public CGameObject
 
 public: 	
 	Goomba();
-	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
-	virtual void Render();
-	virtual void SetState(int state);
-	virtual void HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
+	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void Render();
+	void SetState(int state);
+	void HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
+	void OnOverlapped(LPGAMEOBJECT obj);
+
 
 	void OnSteppedOn();
 	void OnAttacked();

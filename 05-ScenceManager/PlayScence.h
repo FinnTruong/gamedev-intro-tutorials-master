@@ -10,7 +10,9 @@
 #include "Koopas.h"
 #include "Tilemap.h"
 #include "Item.h"
+#include "Mushroom.h"
 #include "Leaf.h"
+#include "Flower.h"
 
 
 class CPlayScene: public CScene
@@ -20,6 +22,7 @@ protected:
 	Player *player;					// A play scene has to have player, right? 
 
 	vector<LPGAMEOBJECT> objects;
+	vector<LPGAMEOBJECT> items;
 
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);
@@ -39,6 +42,25 @@ public:
 	virtual void KeyState(BYTE *states);
 	virtual void OnKeyDown(int KeyCode);
 	virtual void OnKeyUp(int KeyCode);
+
+
+	//Add new game obj to active list
+	void AddNewGameObject(LPGAMEOBJECT obj)
+	{
+		objects.push_back(obj);
+	}
+
+	//Remove game obj from active list
+	void DisableGameObject(LPGAMEOBJECT gameObj)
+	{
+		for (size_t i = 0; i < objects.size(); i++)
+		{
+			if (objects[i] == gameObj)
+			{
+				objects.erase(objects.begin() + i);
+			}
+		}
+	}
 
 	Player * GetPlayer() { return player; } 
 
