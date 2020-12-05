@@ -7,12 +7,16 @@
 #include "Ground.h"
 #include "Player.h"
 #include "Goomba.h"
-#include "Koopas.h"
+#include "Paragoomba.h"
+#include "KoopaTroopa.h"
+#include "PiranhaPlant.h"
+#include "VenusFireTrap.h"
 #include "Tilemap.h"
 #include "Item.h"
 #include "Mushroom.h"
 #include "Leaf.h"
 #include "Flower.h"
+#include "Coin.h"
 
 
 class CPlayScene: public CScene

@@ -9,7 +9,6 @@ Fireball::Fireball()
 	alpha = 0;
 	hasCollided = false;
 	isDone = true;
-	damage = 1;
 	timeDelayed = 0;
 	timeDelayMax = FIREBALL_DELAY;
 }

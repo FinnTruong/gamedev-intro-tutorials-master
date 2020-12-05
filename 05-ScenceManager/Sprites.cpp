@@ -38,6 +38,7 @@ void CSpriteDatabase::Add(int id, int left, int top, int right, int bottom, LPDI
 	DebugOut(L"[INFO] sprite added: %d, %d, %d, %d, %d \n", id, left, top, right, bottom);
 }
 
+
 LPSPRITE CSpriteDatabase::Get(int id)
 {
 	return sprites[id];

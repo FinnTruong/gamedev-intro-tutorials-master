@@ -3,9 +3,6 @@
 #include "Projectile.h"
 #include <math.h>
 
-#define ANIMATION_SET_FIREBALL		9
-#define FIREBALL_BBOX_WIDTH			8
-#define FIREBALL_BBOX_HEIGHT		9
 
 #define DISTANCE_TO_BANG			5
 #define FIREBALL_ANI_FIRE			0

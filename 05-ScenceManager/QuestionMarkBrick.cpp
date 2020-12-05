@@ -7,7 +7,7 @@ QuestionMarkBrick::QuestionMarkBrick(float posX, float posY, bool hasItem)
 	x = posX;
 	y = posY;
 	startY = posY;
-	tag = Tag::QUESTIONMARKBRICK;
+	tag = Tag::QUESTION_MARK_BRICK;
 	hasCollided = false;
 }
 
@@ -67,7 +67,19 @@ void QuestionMarkBrick::SetState(int state)
 void QuestionMarkBrick::SpawnItem()
 {
 	auto curScence = CGame::GetInstance()->GetCurrentScene();
-	item = new Mushroom(x, y);
+	switch (Mario->level)
+	{
+	case MARIO_LEVEL_SMALL:
+		item = new Mushroom(x, y);
+		break;
+	case MARIO_LEVEL_BIG:
+		item = new Leaf(x, y);
+		break;
+	default:
+		item = new Mushroom(x, y);
+		break;
+
+	}
 	item->ActivateGameObject();
 	item->SproutOut();
 }

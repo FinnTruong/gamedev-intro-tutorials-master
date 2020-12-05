@@ -41,6 +41,18 @@
     <Filter Include="Game Objects\Player\PlayerStateMachine">
       <UniqueIdentifier>{53d367cc-75c5-4275-8083-7aac4bb19874}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Objects\Enemy\Goomba">
+      <UniqueIdentifier>{3812098a-710d-4859-8465-35ec3365a253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Enemy\Koopa">
+      <UniqueIdentifier>{7dff5416-5169-4d26-8263-256b8f69640a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Enemy\Piranha Plant">
+      <UniqueIdentifier>{e07b82e8-539b-414a-88a2-3d44ee68f95d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Component\HUD">
+      <UniqueIdentifier>{2fbc849f-0ef2-44ff-a94a-d6b4e8193d03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp">
@@ -51,12 +63,6 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Game Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Goomba.cpp">
-      <Filter>Game Objects\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Koopas.cpp">
-      <Filter>Game Objects\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Game Component</Filter>
@@ -115,9 +121,6 @@
     <ClCompile Include="Item.cpp">
       <Filter>Game Objects\Item</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Game Component\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Flower.cpp">
       <Filter>Game Objects\Item</Filter>
     </ClCompile>
@@ -157,6 +160,33 @@
     <ClCompile Include="Tail.cpp">
       <Filter>Game Objects\Player</Filter>
     </ClCompile>
+    <ClCompile Include="PiranhaPlant.cpp">
+      <Filter>Game Objects\Enemy\Piranha Plant</Filter>
+    </ClCompile>
+    <ClCompile Include="Goomba.cpp">
+      <Filter>Game Objects\Enemy\Goomba</Filter>
+    </ClCompile>
+    <ClCompile Include="VenusFireTrap.cpp">
+      <Filter>Game Objects\Enemy\Piranha Plant</Filter>
+    </ClCompile>
+    <ClCompile Include="VenusFireball.cpp">
+      <Filter>Game Objects\Object\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Paragoomba.cpp">
+      <Filter>Game Objects\Enemy\Goomba</Filter>
+    </ClCompile>
+    <ClCompile Include="KoopaTroopa.cpp">
+      <Filter>Game Objects\Enemy\Koopa</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Game Component</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Game Component\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="KoopaParatroopa.cpp">
+      <Filter>Game Objects\Enemy\Koopa</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -171,14 +201,8 @@
     <ClInclude Include="GameObject.h">
       <Filter>Game Component</Filter>
     </ClInclude>
-    <ClInclude Include="Goomba.h">
-      <Filter>Game Objects\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="KeyEventHandler.h">
       <Filter>Game Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Koopas.h">
-      <Filter>Game Objects\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Game Objects\Player</Filter>
@@ -275,6 +299,30 @@
     </ClInclude>
     <ClInclude Include="Tail.h">
       <Filter>Game Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PiranhaPlant.h">
+      <Filter>Game Objects\Enemy\Piranha Plant</Filter>
+    </ClInclude>
+    <ClInclude Include="Goomba.h">
+      <Filter>Game Objects\Enemy\Goomba</Filter>
+    </ClInclude>
+    <ClInclude Include="VenusFireTrap.h">
+      <Filter>Game Objects\Enemy\Piranha Plant</Filter>
+    </ClInclude>
+    <ClInclude Include="VenusFireball.h">
+      <Filter>Game Objects\Object\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Paragoomba.h">
+      <Filter>Game Objects\Enemy\Goomba</Filter>
+    </ClInclude>
+    <ClInclude Include="KoopaTroopa.h">
+      <Filter>Game Objects\Enemy\Koopa</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Game Component\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="KoopaParatroopa.h">
+      <Filter>Game Objects\Enemy\Koopa</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

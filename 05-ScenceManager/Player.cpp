@@ -10,7 +10,8 @@
 #include "QuestionMarkBrick.h"
 #include "OneWayPlatform.h"
 #include "Goomba.h"
-#include "Koopas.h"
+#include "Paragoomba.h"
+#include "KoopaTroopa.h"
 #include "Fireball.h"
 #include "Mushroom.h"
 #include "Portal.h"
@@ -262,7 +263,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (e->obj->tag != Tag::ONEWAYPLATFORM)
+			if (e->obj->tag != Tag::ONE_WAY_PLATFORM)
 			{
 				if (nx != 0) vx = 0;
 				if (ny != 0) vy = 0;
@@ -270,7 +271,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			//if (ny < 0) isGrounded = true;
 
 
-			if (e->obj->tag == Tag::ONEWAYPLATFORM)
+			if (e->obj->tag == Tag::ONE_WAY_PLATFORM)
 			{
 
 				//Collision from top
@@ -287,7 +288,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 
-			else if (e->obj->tag == Tag::QUESTIONMARKBRICK)
+			else if (e->obj->tag == Tag::QUESTION_MARK_BRICK)
 			{
 				QuestionMarkBrick* brick = dynamic_cast<QuestionMarkBrick*>(e->obj);
 
@@ -330,7 +331,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 			else if (e->obj->tag == Tag::KOOPA)
 			{
-				Koopa* koopa = dynamic_cast<Koopa*>(e->obj);
+				KoopaTroopa* koopa = dynamic_cast<KoopaTroopa*>(e->obj);
 
 				if (e->ny < 0)
 				{
@@ -492,7 +493,6 @@ void Player::OnKeyDown(int keyCode)
 			if (level == MARIO_LEVEL_RACCOON)			
 			{
 				tail->ActivateGameObject();
-				tail->Attack(x + 14, y + 15);
 				SetState(new PlayerAttackingState());
 				return;
 			}

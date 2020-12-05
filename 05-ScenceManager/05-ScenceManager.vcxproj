@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -127,16 +127,20 @@
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Flower.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="KoopaParatroopa.cpp" />
     <ClCompile Include="Leaf.cpp" />
     <ClCompile Include="Mushroom.cpp" />
+    <ClCompile Include="Paragoomba.cpp" />
+    <ClCompile Include="PiranhaPlant.cpp" />
     <ClCompile Include="Tail.cpp" />
     <ClCompile Include="QuestionMarkBrick.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Fireball.cpp" />
     <ClCompile Include="GameGlobal.cpp" />
     <ClCompile Include="Ground.cpp" />
-    <ClCompile Include="Koopas.cpp" />
+    <ClCompile Include="KoopaTroopa.cpp" />
     <ClCompile Include="OneWayPlatform.cpp" />
     <ClCompile Include="PlayerAttackingState.cpp" />
     <ClCompile Include="PlayerFallingState.cpp" />
@@ -162,6 +166,8 @@
     <ClCompile Include="Scence.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
+    <ClCompile Include="VenusFireball.cpp" />
+    <ClCompile Include="VenusFireTrap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -170,10 +176,14 @@
     <ClInclude Include="Flower.h" />
     <ClInclude Include="GameGlobal.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="KoopaParatroopa.h" />
     <ClInclude Include="Leaf.h" />
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="OneWayPlatform.h" />
+    <ClInclude Include="Paragoomba.h" />
+    <ClInclude Include="PiranhaPlant.h" />
     <ClInclude Include="PlayerAttackingState.h" />
     <ClInclude Include="PlayerFallingState.h" />
     <ClInclude Include="PlayerFlyingState.h" />
@@ -187,7 +197,7 @@
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="Animations.h" />
     <ClInclude Include="QuestionMarkBrick.h" />
-    <ClInclude Include="Koopas.h" />
+    <ClInclude Include="KoopaTroopa.h" />
     <ClInclude Include="PlayerWalkingState.h" />
     <ClInclude Include="Portal.h" />
     <ClInclude Include="Projectile.h" />
@@ -203,6 +213,8 @@
     <ClInclude Include="Scence.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Textures.h" />
+    <ClInclude Include="VenusFireball.h" />
+    <ClInclude Include="VenusFireTrap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

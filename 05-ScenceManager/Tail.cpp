@@ -18,6 +18,16 @@ void Tail::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 
 void Tail::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (Mario->nx == 1)
+	{
+		x = Mario->x + 14;
+		y = Mario->y + 15;
+	}
+	else if (Mario->nx == -1)
+	{
+		x = Mario->x - 8;
+		y = Mario->y + 15;
+	}
 	if (!Mario->isAttacking)
 		DisableGameObject();
 }

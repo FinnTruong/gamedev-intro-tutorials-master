@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "PlayerState.h"
 #include "GameGlobal.h"
-#include "Koopas.h"
+#include "KoopaTroopa.h"
 #include "Tail.h"
 #include "Fireball.h"
 
@@ -15,10 +15,9 @@
 #define MARIO_ACCELERATION			0.000346f
 #define MARIO_SKID_ACCELERATION		0.00204f
 
-//0.1f
-#define MARIO_JUMP_SPEED_Y		0.27f
+#define MARIO_JUMP_SPEED_Y		0.23f
 #define MARIO_JUMP_DEFLECT_SPEED 0.2f
-#define MARIO_GRAVITY			0.0005f
+#define MARIO_GRAVITY			0.0004f
 #define MARIO_DIE_DEFLECT_SPEED	 0.5f
 #define MARIO_ACCELERATION_MULTIPLIER	 0.005f
 
@@ -153,7 +152,7 @@ public:
 	Fireball* fireball1;
 	Fireball* fireball2;
 
-	Koopa* holdingObject = nullptr;
+	KoopaTroopa* holdingObject = nullptr;
 
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);

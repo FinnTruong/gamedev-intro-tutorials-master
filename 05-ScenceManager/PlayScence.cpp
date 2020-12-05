@@ -9,8 +9,7 @@
 #include "GameGlobal.h"
 #include "Fireball.h"
 #include "OneWayPlatform.h"
-#include "Leaf.h"
-#include "Coin.h"
+
 
 
 using namespace std;
@@ -34,16 +33,20 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define SCENE_SECTION_OBJECTS	6
 #define SCENE_SECTION_TILEMAP	7
 
-#define OBJECT_TYPE_MARIO			0
-#define OBJECT_TYPE_GROUND			1
-#define OBJECT_TYPE_BRICK			2
-#define OBJECT_TYPE_ONEWAYPLATFORM	3
-#define OBJECT_TYPE_GOOMBA			4
-#define OBJECT_TYPE_KOOPAS			5
-#define OBJECT_TYPE_FIREBALL		6
-#define OBJECT_TYPE_LEAF			7
-#define OBJECT_TYPE_COIN			8
-#define OBJECT_TYPE_MUSHROOM		9
+#define OBJECT_TYPE_MARIO					0
+#define OBJECT_TYPE_GROUND					1
+#define OBJECT_TYPE_BRICK					2
+#define OBJECT_TYPE_ONEWAYPLATFORM			3
+#define OBJECT_TYPE_GOOMBA					4
+#define OBJECT_TYPE_KOOPAS					5
+#define OBJECT_TYPE_FIREBALL				6
+#define OBJECT_TYPE_LEAF					7
+#define OBJECT_TYPE_COIN					8
+#define OBJECT_TYPE_MUSHROOM				9
+#define OBJECT_TYPE_FLOWER					10
+#define OBJECT_TYPE_PIRANHA_PLANT			11
+#define OBJECT_TYPE_VENUS_FIRE_TRAP			12
+#define OBJECT_TYPE_PARAGOOMBA				13
 
 #define OBJECT_TYPE_PORTAL	50
 
@@ -169,14 +172,23 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
 	case OBJECT_TYPE_GOOMBA: obj = new Goomba(); break;
+	case OBJECT_TYPE_PARAGOOMBA: obj = new Paragoomba(); break;
 	case OBJECT_TYPE_BRICK: obj = new QuestionMarkBrick(x,y); break;
-	case OBJECT_TYPE_KOOPAS: obj = new Koopa(); break;
+	case OBJECT_TYPE_KOOPAS: obj = new KoopaTroopa(); break;
+	case OBJECT_TYPE_PIRANHA_PLANT: obj = new PiranhaPlant(x, y); break;
+	case OBJECT_TYPE_VENUS_FIRE_TRAP: 
+	{
+		int type = atof(tokens[4].c_str());
+		obj = new VenusFireTrap(x, y, type); 
+	}
+	break;
 	case OBJECT_TYPE_GROUND:
 	{
 		float width = atof(tokens[4].c_str());
 		float height= atof(tokens[5].c_str());
 		obj = new Ground(width,height);
 	}
+	break;
 	case OBJECT_TYPE_ONEWAYPLATFORM:
 	{
 		float width = atof(tokens[4].c_str());
@@ -219,7 +231,7 @@ void CPlayScene::_ParseSection_TILEMAP(string line)
 	wstring filePath_texture = ToWSTR(tokens[1]);
 	wstring filePath_data = ToWSTR(tokens[2]);
 	int num_row_on_texture = atoi(tokens[3].c_str());
-	int num_col_on_textture = atoi(tokens[4].c_str());
+	int num_col_on_texture = atoi(tokens[4].c_str());
 	int num_row_on_tilemap = atoi(tokens[5].c_str());
 	int num_col_on_tilemap = atoi(tokens[6].c_str());
 	int tileset_width = atoi(tokens[7].c_str());
@@ -230,7 +242,7 @@ void CPlayScene::_ParseSection_TILEMAP(string line)
 	//grid = new Grid();
 	//grid->Resize(widthGrid, heightGrid);
 	//grid->PushGrid(allObject);
-	tilemap = new Tilemap(ID, filePath_texture.c_str(), filePath_data.c_str(), num_row_on_texture, num_col_on_textture, num_row_on_tilemap, num_col_on_tilemap, tileset_width, tileset_height);
+	tilemap = new Tilemap(ID, filePath_texture.c_str(), filePath_data.c_str(), num_row_on_texture, num_col_on_texture, num_row_on_tilemap, num_col_on_tilemap, tileset_width, tileset_height);
 }
 
 #pragma endregion
@@ -363,17 +375,10 @@ void CPlayScene::Render()
 {
 	tilemap->Draw();
 
-
 	//Render objects
 	for (int i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Render();
-	}
-
-	//Render items / power up
-	for (int i = 0; i < items.size(); i++)
-	{
-		items[i]->Render();
 	}
 
 	//Render fireball
@@ -381,6 +386,8 @@ void CPlayScene::Render()
 	{
 		Mario->listFireball[i]->Render();
 	}
+
+
 
 
 }

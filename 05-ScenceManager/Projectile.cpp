@@ -17,6 +17,8 @@ void Projectile::GetBoundingBox(float& left, float& top, float& right, float& bo
 void Projectile::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
+	x += dx;
+	y += dy;
 }
 
 void Projectile::Render()

@@ -9,6 +9,7 @@
 #include <WinUser.h>
 #include <unordered_map>
 
+
 #define SCREEN_WIDTH 280
 #define SCREEN_HEIGHT 260
 //---------------PLAYER STATS-------------------
@@ -20,16 +21,20 @@ enum class Tag
 {
 	PLAYER,
 	GROUND,
-	ONEWAYPLATFORM,
-	QUESTIONMARKBRICK,
+	ONE_WAY_PLATFORM,
+	QUESTION_MARK_BRICK,
 	GOOMBA,
 	KOOPA,
+	PIRANHA_PLANT,
+	VENUS_FIRE_TRAP,
+	VENUS_FIREBALL,
 	ITEM,
 	MUSHROOM,
 	LEAF,
 	FLOWER,
 	TAIL
 };
+
 
 
 

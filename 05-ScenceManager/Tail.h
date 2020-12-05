@@ -6,8 +6,13 @@
 #define TAIL_WIDTH 10
 #define TAIL_HEIGHT 9
 
+#define TAIL_PHASE_TIME 150
+
 class Tail : public CGameObject
 {
+	float firstPhaseStartTime;
+	float secondPhaseStartTime;
+	float thirdPhaseStartTime;
 public:
 	Tail();
 	~Tail();

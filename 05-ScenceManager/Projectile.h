@@ -2,6 +2,10 @@
 
 #include "GameObject.h"
 
+#define ANIMATION_SET_FIREBALL		9
+#define FIREBALL_BBOX_WIDTH			8
+#define FIREBALL_BBOX_HEIGHT		9
+
 class Projectile : public CGameObject
 {
 public:
@@ -20,9 +24,6 @@ public:
 	virtual void Render();
 
 	void Fire(int direction, float posX, float posY) { nx = direction; x = posX; y = posY; alpha = 255; isDone = false; hasCollided = 0; }
-	void ResetDelay() { timeDelayed = 0; }
-	bool GetIsDone() { return isDone; }
-	void SetIsDone(bool isdone) { isDone = isdone; }
-	int GetDamage() { return damage; }
+
 };
 

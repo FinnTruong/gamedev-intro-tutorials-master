@@ -1,14 +1,15 @@
-#include "Koopas.h"
+#include "KoopaTroopa.h"
 #include "Player.h"
 
-Koopa::Koopa()
+KoopaTroopa::KoopaTroopa()
 {
 	tag = Tag::KOOPA;
+	type = KoopaTroopaType::KOOPA_RED;
 	SetState(KOOPA_STATE_WALKING);
 }
 
 
-void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
+void KoopaTroopa::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	CGameObject::Update(dt);
 	if (isBeingHeld)
@@ -16,11 +17,18 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		//vx = Player::GetInstance()->vx;
 		return;
 	}
-	vy += 0.002 * dt;
+
+	nx = vx >= 0 ? 1 : -1;
+
+	if (state == KOOPA_STATE_JUMPING && isGrounded)
+	{
+		vy = -KOOPA_JUMPING_SPEED;
+	}
+
 	HandleCollision(dt, coObjects);
 }
 
-void Koopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+void KoopaTroopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {	
 	left = x;
 	top = y;
@@ -41,8 +49,10 @@ void Koopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 
 }
 
-void Koopa::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void KoopaTroopa::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	vy += 0.0005 * dt;
+
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -53,6 +63,7 @@ void Koopa::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
+		isGrounded = false;
 		x += dx;
 		y += dy;
 	}
@@ -67,38 +78,54 @@ void Koopa::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
-		if (nx != 0) vx *= -1; //Change direction when hit object
+		if (nx != 0)
+		{
+			vx *= -1; //Change direction when hit object
+		}
 
 		if (ny != 0) vy = 0;
+
+		if (ny < 0)
+			isGrounded = true;
 
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
-void Koopa::Render()
+void KoopaTroopa::Render()
 {
-	int ani = KOOPA_ANI_WALKING;
-	if (state == KOOPA_STATE_SHELL) {
-		ani = KOOPA_ANI_SHELL;
-	}
-	else if (state == KOOPA_STATE_SPIN) {
-		ani = KOOPA_ANI_SPIN;
-	}
-	else if (state == KOOPA_STATE_DIE)
-		ani = KOOPA_ANI_DIE;
+	int ani = KOOPA_RED_ANI_WALKING;
 
-	nx = vx >= 0 ? 1 : -1;
+	switch (state)
+	{
+	case KOOPA_STATE_JUMPING:
+		ani = type == KoopaTroopaType::KOOPA_RED ? KOOPA_RED_ANI_JUMPING : KOOPA_GREEN_ANI_JUMPING;
+		break;
+	case KOOPA_STATE_WALKING:
+		ani = type == KoopaTroopaType::KOOPA_RED ? KOOPA_RED_ANI_WALKING : KOOPA_GREEN_ANI_WALKING;
+		break;
+	case KOOPA_STATE_SHELL:
+		ani = type == KoopaTroopaType::KOOPA_RED ? KOOPA_RED_ANI_SHELL : KOOPA_GREEN_ANI_SHELL;
+		break;
+	case KOOPA_STATE_DIE:
+		ani = type == KoopaTroopaType::KOOPA_RED ? KOOPA_RED_ANI_DIE : KOOPA_GREEN_ANI_DIE;
+		break;
+	default:
+		break;
+	}
 
 	animation_set->at(ani)->Render(nx, x, y);
 
 	RenderBoundingBox();
 }
 
-void Koopa::SetState(int state)
+void KoopaTroopa::SetState(int state)
 {
 	CGameObject::SetState(state);
 	switch (state)
 	{
+	case KOOPA_STATE_JUMPING:
+		break;
 	case KOOPA_STATE_WALKING:
 		vx = KOOPA_WALKING_SPEED;
 		break;
@@ -119,10 +146,13 @@ void Koopa::SetState(int state)
 
 }
 
-void Koopa::OnSteppedOn()
+void KoopaTroopa::OnSteppedOn()
 {
 	switch (state)
 	{
+	case KOOPA_STATE_JUMPING:
+		SetState(KOOPA_STATE_WALKING);
+		break;
 	case KOOPA_STATE_WALKING:
 		SetState(KOOPA_STATE_SHELL);
 		break;
@@ -137,7 +167,12 @@ void Koopa::OnSteppedOn()
 	}
 }
 
-void Koopa::OnAttacked()
+void KoopaTroopa::OnAttacked()
 {
 	SetState(KOOPA_STATE_DIE);
+}
+
+KoopaTroopa::~KoopaTroopa()
+{
+
 }

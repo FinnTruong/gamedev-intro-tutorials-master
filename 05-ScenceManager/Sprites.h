@@ -7,7 +7,7 @@ using namespace std;
 
 class CSprite
 {
-	int id;				// Sprite ID in the sprite database
+	string id;				// Sprite ID in the sprite database
 
 	int left; 
 	int top;
