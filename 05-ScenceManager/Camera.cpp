@@ -6,3 +6,9 @@
 //		instance = new Camera();
 //	return instance;
 //}
+
+Camera::Camera()
+{
+	cam_x = 0.0f;
+	cam_y = 0.0f;
+}

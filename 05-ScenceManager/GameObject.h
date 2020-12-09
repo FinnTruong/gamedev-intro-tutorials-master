@@ -12,6 +12,7 @@
 using namespace std;
 
 #define ID_TEX_BBOX -100		// special texture to draw object bounding box
+#define ID_TEX_HUD_BG -200		// special texture to draw HUD background
 
 class CGameObject; 
 typedef CGameObject * LPGAMEOBJECT;

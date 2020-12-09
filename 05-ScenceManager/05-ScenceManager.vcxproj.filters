@@ -178,14 +178,14 @@
     <ClCompile Include="KoopaTroopa.cpp">
       <Filter>Game Objects\Enemy\Koopa</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Game Component</Filter>
-    </ClCompile>
     <ClCompile Include="HUD.cpp">
       <Filter>Game Component\HUD</Filter>
     </ClCompile>
     <ClCompile Include="KoopaParatroopa.cpp">
       <Filter>Game Objects\Enemy\Koopa</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Game Component\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

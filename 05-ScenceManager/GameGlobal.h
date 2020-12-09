@@ -10,10 +10,15 @@
 #include <unordered_map>
 
 
-#define SCREEN_WIDTH 280
-#define SCREEN_HEIGHT 260
+#define SCREEN_WIDTH 272
+#define SCREEN_HEIGHT 264
 //---------------PLAYER STATS-------------------
 #define Mario Player::GetInstance()
+
+typedef D3DXVECTOR2 Vector2;
+typedef D3DXVECTOR3 Vector3;
+
+typedef LPDIRECT3DTEXTURE9 Texture;
 
 extern std::unordered_map<int, bool> keyCode;
 

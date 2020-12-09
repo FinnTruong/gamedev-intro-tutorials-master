@@ -22,6 +22,7 @@ void CGame::Init(HWND hWnd)
 	this->hWnd = hWnd;									
 
 	D3DPRESENT_PARAMETERS d3dpp;
+	
 
 	ZeroMemory(&d3dpp, sizeof(d3dpp));
 
@@ -59,6 +60,8 @@ void CGame::Init(HWND hWnd)
 */
 void CGame::Draw(int direction, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
 {
+	float cam_x, cam_y;
+	GetCurrentScene()->GetCamera()->GetPosition(cam_x, cam_y);
 	D3DXVECTOR3 p(x - cam_x, y - cam_y, 0);
 	RECT r;
 	r.left = left;

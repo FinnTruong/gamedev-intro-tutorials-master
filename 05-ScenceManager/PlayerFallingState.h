@@ -3,6 +3,7 @@
 
 class PlayerFallingState : public PlayerState
 {
+	float fallTime;
 public:
 	PlayerFallingState();
 	void Update(DWORD dt);

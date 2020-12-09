@@ -2,12 +2,15 @@
 
 #include <d3dx9.h>
 #include "KeyEventHandler.h"
+#include "Camera.h"
 
 class CScene
 {
 protected:
 	int id;
 	LPCWSTR sceneFilePath;
+	
+	Camera* camera;
 
 public: 
 	CScene(int id, LPCWSTR filePath);
@@ -19,5 +22,7 @@ public:
 	virtual void KeyState(BYTE* states) = 0;
 	virtual void OnKeyDown(int KeyCode) = 0;
 	virtual void OnKeyUp(int KeyCode) = 0;
+
+	Camera* GetCamera() { return camera;}
 };
 typedef CScene * LPSCENE;

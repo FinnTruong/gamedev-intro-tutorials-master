@@ -83,7 +83,10 @@ void Tilemap::Load()
 
 void Tilemap::Draw()
 {
-	int firstcol = (int)CGame::GetInstance()->GetCamPosX() / tileset_width;
+	float cam_x, cam_y;
+	CGame::GetInstance()->GetCurrentScene()->GetCamera()->GetPosition(cam_x, cam_y);
+
+	int firstcol = (int)cam_x / tileset_width;
 	int lastcol = firstcol + (SCREEN_WIDTH / tileset_width);
 	/*lastcol = lastcol > 175 ? 175 : lastcol;*/
 
@@ -92,8 +95,8 @@ void Tilemap::Draw()
 	{
 		for (UINT j = firstcol; j <= lastcol; j++)
 		{
-			int x = tileset_width * (j - firstcol) + CGame::GetInstance()->GetCamPosX() - (int)(CGame::GetInstance()->GetCamPosX()) % tileset_width;
-			int y = tileset_height * i - 184; 
+			int x = tileset_width * (j - firstcol) + cam_x - (int)cam_x % tileset_width;
+			int y = tileset_height * i - 168; 
 
 			tilemap[i][j]->Draw(1, x, y);
 		}

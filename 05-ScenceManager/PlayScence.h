@@ -17,12 +17,14 @@
 #include "Leaf.h"
 #include "Flower.h"
 #include "Coin.h"
+#include "HUD.h"
 
 
 class CPlayScene: public CScene
 {
 protected: 
 	Tilemap* tilemap;
+	HUD* hud;
 	Player *player;					// A play scene has to have player, right? 
 
 	vector<LPGAMEOBJECT> objects;

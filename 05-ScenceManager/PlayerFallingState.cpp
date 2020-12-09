@@ -10,10 +10,16 @@ PlayerFallingState::PlayerFallingState()
 	state = MARIO_STATE_FALLING;
 	Mario->isFlying = false;
 	Mario->isGrounded = false;
+	fallTime = GetTickCount64();
 }
 
 void PlayerFallingState::Update(DWORD dt)
 {
+	if (GetTickCount64() - fallTime > 200)
+	{
+		Mario->abilityBar -= dt;
+	}
+
 	if (Mario->vy < 0)
 	{
 		Mario->vy += 0.0005 * dt;

@@ -313,6 +313,7 @@ void CPlayScene::Load()
 	f.close();
 
 	CTextureDatabase::GetInstance()->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
+	CTextureDatabase::GetInstance()->Add(ID_TEX_HUD_BG, L"textures\\UI\\squarebox.png", D3DCOLOR_XRGB(255, 255, 255));
 
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
 }
@@ -368,13 +369,12 @@ void CPlayScene::Update(DWORD dt)
 	
 
 
-	CGame::GetInstance()->SetCamPos((int)cx, 64 /*cy*/);
+	CGame::GetInstance()->GetCurrentScene()->GetCamera()->SetPosition((int)cx, 64 /*cy*/);
 }
 
 void CPlayScene::Render()
 {
 	tilemap->Draw();
-
 	//Render objects
 	for (int i = 0; i < objects.size(); i++)
 	{
@@ -387,7 +387,7 @@ void CPlayScene::Render()
 		Mario->listFireball[i]->Render();
 	}
 
-
+	hud->Draw();
 
 
 }

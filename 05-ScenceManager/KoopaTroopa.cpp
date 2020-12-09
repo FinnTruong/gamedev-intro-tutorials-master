@@ -107,6 +107,9 @@ void KoopaTroopa::Render()
 	case KOOPA_STATE_SHELL:
 		ani = type == KoopaTroopaType::KOOPA_RED ? KOOPA_RED_ANI_SHELL : KOOPA_GREEN_ANI_SHELL;
 		break;
+	case KOOPA_STATE_SPIN:
+		ani = type == KoopaTroopaType::KOOPA_RED ? KOOPA_RED_ANI_SPIN : KOOPA_GREEN_ANI_SPIN;
+		break;
 	case KOOPA_STATE_DIE:
 		ani = type == KoopaTroopaType::KOOPA_RED ? KOOPA_RED_ANI_DIE : KOOPA_GREEN_ANI_DIE;
 		break;
