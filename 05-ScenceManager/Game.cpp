@@ -5,6 +5,7 @@
 #include "Utils.h"
 
 #include "PlayScence.h"
+#include "WorldSelectionScene.h"
 
 CGame * CGame::__instance = NULL;
 
@@ -246,8 +247,24 @@ void CGame::_ParseSection_SCENES(string line)
 	if (tokens.size() < 2) return;
 	int id = atoi(tokens[0].c_str());
 	LPCWSTR path = ToLPCWSTR(tokens[1]);
+	int sceneType = atoi(tokens[2].c_str());
 
-	LPSCENE scene = new CPlayScene(id, path);
+	LPSCENE scene;
+
+	switch (sceneType)
+	{
+	case 0:
+		scene = new CPlayScene(id, path);
+		break;
+	case 1:
+		scene = new WorldSelectionScene(id, path);
+		break;
+	default:
+		scene = new CPlayScene(id, path);
+		break;
+	}
+	//LPSCENE scene = new CPlayScene(id, path);
+	
 	scenes[id] = scene;
 }
 
@@ -304,4 +321,10 @@ void CGame::SwitchScene(int scene_id)
 	LPSCENE s = scenes[scene_id];
 	//CGame::GetInstance()->SetKeyHandler(s->GetKeyEventHandler());
 	s->Load();	
+}
+
+int CGame::GetTimer()
+{
+	int timer = MAX_PLAY_TIME - (GetTickCount64() - startSceneTime) / 1000;
+	return timer > 0? timer:0;
 }

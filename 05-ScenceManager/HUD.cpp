@@ -3,6 +3,7 @@
 #include "Sprites.h"
 #include "Textures.h"
 #include "GameObject.h"
+#include "Player.h"
 
 #include <string>
 
@@ -34,7 +35,7 @@ void HUD::DrawBackground()
 	size.right = size.left + SCREEN_WIDTH;
 	size.bottom = size.top + 100;
 
-	CGame::GetInstance()->Draw(0, cam_x, cam_y + 184 + 1, tex, size.left, size.top, size.right, size.bottom);
+	CGame::GetInstance()->Draw(0, cam_x, cam_y + 192, tex, size.left, size.top, size.right, size.bottom);
 }
 
 void HUD::DrawCard()
@@ -45,12 +46,12 @@ void HUD::DrawCard()
 	auto sprites = CSpriteDatabase::GetInstance();
 
 	CSprite* hud = sprites->Get(50);
-	hud->Draw(1, cam_x + 10, cam_y + 184 + 4);
+	hud->Draw(1, cam_x + 10, cam_y + 192 + 4);
 
 	for (size_t i = 0; i < 3; i++)
 	{
 		LPSPRITE card = sprites->Get(51);
-		card->Draw(1, cam_x + 10 + 152 + 12 + i * 24, cam_y + 184 + 4);
+		card->Draw(1, cam_x + 10 + 152 + 12 + i * 24, cam_y + 192 + 4);
 	}
 }
 
@@ -77,7 +78,7 @@ void HUD::DrawScore()
 				num = sprites->Get(j);
 			}
 		}
-		num->Draw(1, cam_x + 10 + 51 + i * 8, cam_y + 184 + 4 + 15);
+		num->Draw(1, cam_x + 10 + 51 + i * 8, cam_y + 192 + 4 + 15);
 	}
 }
 
@@ -89,10 +90,10 @@ void HUD::DrawTags()
 	auto sprites = CSpriteDatabase::GetInstance();
 
 	auto worldTag = sprites->Get(1);
-	worldTag->Draw(1, cam_x + 10 + 36, cam_y + 184 + 4 + 7);
+	worldTag->Draw(1, cam_x + 10 + 36, cam_y + 192 + 4 + 7);
 
 	auto characterTag = sprites->Get(55);
-	characterTag->Draw(1, cam_x + 10 + 4, cam_y + 184 + 4 + 15);
+	characterTag->Draw(1, cam_x + 10 + 4, cam_y + 192 + 4 + 15);
 }
 
 void HUD::DrawTimer()
@@ -103,7 +104,7 @@ void HUD::DrawTimer()
 	auto sprites = CSpriteDatabase::GetInstance();
 	LPSPRITE num = sprites->Get(0);
 
-	int time = 100;
+	int time = CGame::GetInstance()->GetTimer();
 	string scoreString = NumberToString(time, 3);
 	for (size_t i = 0; i < scoreString.length(); i++)
 	{
@@ -118,7 +119,7 @@ void HUD::DrawTimer()
 				num = sprites->Get(j);
 			}
 		}
-		num->Draw(1, cam_x + 10 + 124 + i * 8, cam_y + 184 + 4 + 15);
+		num->Draw(1, cam_x + 10 + 124 + i * 8, cam_y + 192 + 4 + 15);
 	}
 }
 
@@ -131,12 +132,13 @@ void HUD::DrawSpeedBar()
 
 	for (int i = 0; i < 6; i++)
 	{
-		auto barSegment = sprites->Get(57);
-		barSegment->Draw(1, cam_x + 10 + 51 + i * 8, cam_y + 184 + 4 + 6);
+
+		auto barSegment = Mario->abilityBar <= MARIO_FULL_ABILITY_BAR / (6 - i) ? sprites->Get(57) : sprites->Get(58);
+		barSegment->Draw(1, cam_x + 10 + 51 + i * 8, cam_y + 192 + 4 + 6);
 	}
 
-	auto p = sprites->Get(59);
-	p->Draw(1, cam_x + 10 + 99, cam_y + 184 + 4 + 6);
+	auto p = Mario->abilityBar >= MARIO_FULL_ABILITY_BAR ? sprites->Get(60) : sprites->Get(59);
+	p->Draw(1, cam_x + 10 + 99, cam_y + 192 + 4 + 6);
 }
 
 string HUD::NumberToString(int num, int numOfChar)

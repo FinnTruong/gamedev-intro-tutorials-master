@@ -125,15 +125,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="Cactus.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Flower.cpp" />
+    <ClCompile Include="HammerBrother.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="KoopaParatroopa.cpp" />
     <ClCompile Include="Leaf.cpp" />
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="Paragoomba.cpp" />
+    <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PiranhaPlant.cpp" />
+    <ClCompile Include="SpeechBubble.cpp" />
     <ClCompile Include="Tail.cpp" />
     <ClCompile Include="QuestionMarkBrick.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -168,14 +172,19 @@
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="VenusFireball.cpp" />
     <ClCompile Include="VenusFireTrap.cpp" />
+    <ClCompile Include="WorldMapMario.cpp" />
+    <ClCompile Include="WorldMapNode.cpp" />
+    <ClCompile Include="WorldSelectionScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cactus.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Fireball.h" />
     <ClInclude Include="Flower.h" />
     <ClInclude Include="GameGlobal.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="HammerBrother.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="KoopaParatroopa.h" />
@@ -183,12 +192,14 @@
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="OneWayPlatform.h" />
     <ClInclude Include="Paragoomba.h" />
+    <ClInclude Include="Pipe.h" />
     <ClInclude Include="PiranhaPlant.h" />
     <ClInclude Include="PlayerAttackingState.h" />
     <ClInclude Include="PlayerFallingState.h" />
     <ClInclude Include="PlayerFlyingState.h" />
     <ClInclude Include="PlayerIdleState.h" />
     <ClInclude Include="PlayerJumpingState.h" />
+    <ClInclude Include="SpeechBubble.h" />
     <ClInclude Include="Tail.h" />
     <ClInclude Include="PlayerRunningMaxState.h" />
     <ClInclude Include="PlayerRunningState.h" />
@@ -215,6 +226,9 @@
     <ClInclude Include="Textures.h" />
     <ClInclude Include="VenusFireball.h" />
     <ClInclude Include="VenusFireTrap.h" />
+    <ClInclude Include="WorldMapMario.h" />
+    <ClInclude Include="WorldMapNode.h" />
+    <ClInclude Include="WorldSelectionScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

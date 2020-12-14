@@ -1,0 +1,192 @@
+# id	file_path	transparent_color_r	g	b
+[TEXTURES]
+0	textures\UI\ui.png	255	127	39
+1	textures\World\overworld-maps.png	166	185	255
+
+
+
+
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+#----------------- HUD ------------------
+
+#[NUMBER + FONT]
+0	77	31	8	7	0
+1	87	31	8	7	0
+2	97	31	8	7	0
+3	107	31	8	7	0
+4	117	31	8	7	0
+5	127	31	8	7	0
+6	137	31	8	7	0
+7	147	31	8	7	0
+8	157	31	8	7	0
+9	167	31	8	7	0
+
+#[main card]
+50	12	128	152	29	0
+
+#[item card]
+#empty card
+51	160	159	24	28	0
+#mushroom card
+52
+#flower card
+53
+#star card
+54
+#mario tag
+55	16	161	16	7	0
+#luigi tag
+56	16	171	16	7	0
+#bar segment unfill
+57	91	162	8	7	0
+#bar segment fill
+58	64	162	8	7	0
+#p unfill
+59	100	162	15	7	0
+#p fill
+60	73	162	15	7	0
+
+
+#------------------ MARIO -----------------------
+#[small]
+1000	252	116	14	16	1
+1001	272	116	14	16	1
+#[big]
+1002	192	116	16	21	1
+1003	312	116	16	21	1
+#[raccoon]
+1004	333	113	16	24	1
+1005	354	113	16	24	1
+#[raccoon P]
+1006	375	113	16	24	1
+1007	396	113	16	24	1
+#[big fire]
+1008	333	168	16	21	1
+1009	354	168	16	21	1
+
+# ----------------- DECORATION ------------------
+#[Cactus]
+2000	252	14	16	16	1
+2001	272	14	16	16	1
+2002	292	14	16	16	1
+
+#[Hammer Brother]
+3000	333	74	16	16	1
+3001	354	74	16	16	1	
+
+#[Speech Bubble]
+4000	431	133	16	14	1
+
+#----------------- INTERACTION ------------------
+
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
+
+# ==== MARIO =========
+#small
+100	1000	100	1001	100
+#big
+101	1002	100	1003	100
+#raccoon
+102	1004	100	1005	100
+#raccoon P
+103	1006	100	1007	100
+#fire
+104	1008	100	1009	100
+
+# ===== DECORATION ======
+#[Cactus]
+200	2000	300	2001	300	2002	300	2001	300
+
+#[Hammer Brother]
+300	3000	100	3001	100
+
+#[Speech Bubble]
+400	4000	100
+
+[ANIMATION_SETS]
+# MARIO
+1	100	101	102	103	104
+# CACTUS
+2	200
+# HAMMER BROTHER
+3	300
+# SPEECH BUBBLE
+4	400
+
+[OBJECTS]
+# type	x	y	ani_set_id	extra_settings per object type
+# type: 0 = Mario , 1 = Cactus , 2 = Hammer Brother , 3 = Speech Bubble
+
+# CACTUS
+1	16	28	2
+1	32	28	2
+1	48	28	2
+1	16	44	2
+1	32	44	2
+1	48	44	2
+
+1	16	76	2
+1	32	76	2
+1	48	76	2
+1	16	92	2
+1	32	92	2
+1	48	92	2
+1	16	108	2
+
+1	80	44	2
+1	96	44	2
+1	112	44	2
+1	80	60	2
+1	96	60	2
+1	112	60	2
+1	80	76	2
+1	96	76	2
+1	112	76	2
+
+1	144	44	2
+1	160	44	2
+1	176	44	2
+
+1	96	108	2
+1	112	108	2
+1	128	108	2
+
+1	144	76	2
+1	160	76	2
+1	176	76	2
+1	192	76	2
+1	144	92	2
+1	160	92	2
+
+1	208	28	2
+1	224	28	2
+1	208	44	2
+1	224	44	2
+1	208	60	2
+1	224	60	2
+1	208	76	2
+1	224	76	2
+
+1	224	92	2
+1	224	108	2
+1	224	124	2
+1	224	140	2
+1	224	156	2
+
+#HAMMER BROTHER
+2	128	124	3
+
+#SPEECH BUBBLE
+3	208	108	4
+
+
+# MARIO
+0	33	60	1
+
+
+[TILEMAP]
+#id	file_texture			file_path			row_tex	col_tex	row_tilemap	num col tilemap	tile size
+1000	textures/World/map.png	textures/World/map.txt	4	11	15	17	16	16
+#2000	textures/World/world1-1_Full.png	textures/World/world1-1_Full.txt	9	11	40	177	16	16

@@ -7,6 +7,8 @@
 #include<string>
 #include <sstream>
 
+#define TILEMAP_Y_OFFSET -162.0
+
 class Tilemap
 {
 	CSpriteDatabase* sprites = CSpriteDatabase::GetInstance();
@@ -26,5 +28,5 @@ public:
 	int GetWidthTileMap();
 	void Load();
 	void LoadMap();
-	void Draw();
+	void Draw(int tilemap_x_offset,int tilemap_y_offset);
 };

@@ -25,6 +25,7 @@
 #include "Goomba.h"
 
 #include "PlayScence.h"
+#include "WorldSelectionScene.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"SAMPLE 05 - SCENCE MANAGER"

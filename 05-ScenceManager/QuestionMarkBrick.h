@@ -13,7 +13,7 @@ class QuestionMarkBrick : public CGameObject
 	float startY;
 	bool hasCollided;
 	bool hasItem = true;
-	bool hasSpawn;
+	bool hasSpawn = false;
 
 	Item* item = nullptr;
 

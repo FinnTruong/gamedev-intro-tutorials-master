@@ -75,6 +75,37 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	CheckCanAttack();
 
+	//Enter Pipe
+	float delta, start_y;
+	if (isEnteringSecretRoom)
+	{
+		y += MARIO_ENTER_PIPE_SPEED * dt;
+		if (y >= 190 && !inSecretRoom)
+		{
+			SetPosition(2120, 286);
+			inSecretRoom = true;
+		}
+		if (y >= 318)
+			isEnteringSecretRoom = false;
+
+		return;
+	}
+
+	if (isExitingSecretRoom)
+	{
+		float marioHeight = level == MARIO_LEVEL_SMALL ? MARIO_SMALL_BBOX_HEIGHT : MARIO_BIG_BBOX_HEIGHT;
+		y -= MARIO_ENTER_PIPE_SPEED * dt;
+		if (y <= 286 && inSecretRoom)
+		{
+			SetPosition(2344, 238 - marioHeight);
+			inSecretRoom = false;
+		}
+		if (y <= 206 - marioHeight)
+			isExitingSecretRoom = false;
+		return;
+	}
+
+
 	// Simple fall down
 	if (isSlowFalling && vy > 0)
 	{
@@ -130,6 +161,7 @@ void Player::SetState(PlayerState* newState)
 */
 void Player::Reset()
 {
+	inSecretRoom = false;
 	SetState(new PlayerIdleState());
 	SetLevel(MARIO_LEVEL_BIG);
 	SetPosition(start_x, start_y);
@@ -400,6 +432,26 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 
+			else if (e->obj->tag == Tag::PIPE)
+			{
+				Pipe* p = dynamic_cast<Pipe*>(e->obj);
+				if (e->ny < 0)
+				{
+					if (p->secretEntrance && keyCode[DIK_DOWN] && !isEnteringSecretRoom && !isExitingSecretRoom)
+					{
+						isEnteringSecretRoom = true;
+					}
+				}
+
+				if (e->ny > 0)
+				{
+					if (p->secretEntrance && keyCode[DIK_UP] && !isEnteringSecretRoom && !isExitingSecretRoom)
+					{
+						isExitingSecretRoom = true;
+					}
+				}
+			}
+
 			else if (dynamic_cast<CPortal*>(e->obj))
 			{
 				CPortal* p = dynamic_cast<CPortal*>(e->obj);
@@ -513,6 +565,16 @@ void Player::OnKeyDown(int keyCode)
 		}
 		break;
 
+	case DIK_1:
+		SetPosition(2112, 272 + 12);
+		inSecretRoom = true;
+		break;
+	/*case DIK_DOWN:
+		isEnteringSecretRoom = true;
+		break;
+	case DIK_UP:
+		isExitingSecretRoom = true;
+		break;*/
 	default:
 		break;
 	}
@@ -566,7 +628,7 @@ void Player::Render()
 	if (level == MARIO_LEVEL_RACCOON && nx == 1 && currentAnimation != MARIO_ANI_RACCOON_ATTACKING)
 		animation_set->at(currentAnimation)->Render(nx, x - 6, y, alpha);
 	else
-		animation_set->at(currentAnimation)->Render(nx, x, y, alpha);
+ 		animation_set->at(currentAnimation)->Render(nx, x, y, alpha);
 
 }
 
@@ -583,6 +645,9 @@ void Player::UpdateGlobalAnimation()
 	switch (level)
 	{
 	case MARIO_LEVEL_SMALL:
+		if (isEnteringSecretRoom || isExitingSecretRoom)
+			animation = MARIO_ANI_SMALL_ENTER_PIPE;
+
 		if (holdingObject)
 			animation = vx == 0 ? MARIO_ANI_SMALL_IDLE_HOLD : MARIO_ANI_SMALL_MOVING_HOLD;
 		else if (isKicking)
@@ -590,6 +655,9 @@ void Player::UpdateGlobalAnimation()
 		break;
 
 	case MARIO_LEVEL_BIG:
+		if (isEnteringSecretRoom || isExitingSecretRoom)
+			animation = MARIO_ANI_BIG_ENTER_PIPE;
+
 		if (holdingObject)
 			animation = vx == 0 ? MARIO_ANI_BIG_IDLE_HOLD : MARIO_ANI_BIG_MOVING_HOLD;
 		else if (isKicking)
@@ -597,6 +665,9 @@ void Player::UpdateGlobalAnimation()
 		break;
 
 	case MARIO_LEVEL_RACCOON:
+		if (isEnteringSecretRoom || isExitingSecretRoom)
+			animation = MARIO_ANI_RACCOON_ENTER_PIPE;
+
 		if (holdingObject)
 			animation = vx == 0 ? MARIO_ANI_RACCOON_IDLE_HOLD : MARIO_ANI_RACCOON_MOVING_HOLD;
 		else if (isKicking)
@@ -604,6 +675,9 @@ void Player::UpdateGlobalAnimation()
 		break;
 
 	case MARIO_LEVEL_FIRE:
+		if (isEnteringSecretRoom || isExitingSecretRoom)
+			animation = MARIO_ANI_FIRE_ENTER_PIPE;
+
 		if (holdingObject)
 			animation = vx == 0 ? MARIO_ANI_FIRE_IDLE_HOLD : MARIO_ANI_FIRE_MOVING_HOLD;
 		else if (isKicking)

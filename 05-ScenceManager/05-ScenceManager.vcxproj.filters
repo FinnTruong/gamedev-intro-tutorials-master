@@ -53,6 +53,9 @@
     <Filter Include="Game Component\HUD">
       <UniqueIdentifier>{2fbc849f-0ef2-44ff-a94a-d6b4e8193d03}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Objects\World Map Objects">
+      <UniqueIdentifier>{8ca0d5ef-b1c2-4701-adf3-d6dc0292ce65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp">
@@ -186,6 +189,27 @@
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Game Component\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Pipe.cpp">
+      <Filter>Game Objects\Object\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldSelectionScene.cpp">
+      <Filter>Game Component\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Cactus.cpp">
+      <Filter>Game Objects\World Map Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SpeechBubble.cpp">
+      <Filter>Game Objects\World Map Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="HammerBrother.cpp">
+      <Filter>Game Objects\World Map Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMapMario.cpp">
+      <Filter>Game Objects\World Map Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMapNode.cpp">
+      <Filter>Game Objects\World Map Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -323,6 +347,27 @@
     </ClInclude>
     <ClInclude Include="KoopaParatroopa.h">
       <Filter>Game Objects\Enemy\Koopa</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipe.h">
+      <Filter>Game Objects\Object\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldSelectionScene.h">
+      <Filter>Game Component\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Cactus.h">
+      <Filter>Game Objects\World Map Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SpeechBubble.h">
+      <Filter>Game Objects\World Map Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="HammerBrother.h">
+      <Filter>Game Objects\World Map Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMapMario.h">
+      <Filter>Game Objects\World Map Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMapNode.h">
+      <Filter>Game Objects\World Map Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

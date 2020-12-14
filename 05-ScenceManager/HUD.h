@@ -6,6 +6,7 @@
 
 class HUD
 {
+	float startTime;
 public:
 	void Load();
 	void Draw();

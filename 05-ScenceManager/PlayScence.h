@@ -18,6 +18,7 @@
 #include "Flower.h"
 #include "Coin.h"
 #include "HUD.h"
+#include "Pipe.h"
 
 
 class CPlayScene: public CScene
@@ -26,6 +27,8 @@ protected:
 	Tilemap* tilemap;
 	HUD* hud;
 	Player *player;					// A play scene has to have player, right? 
+
+	int startSceneTime;
 
 	vector<LPGAMEOBJECT> objects;
 	vector<LPGAMEOBJECT> items;
@@ -41,13 +44,17 @@ protected:
 public: 
 	CPlayScene(int id, LPCWSTR filePath);
 
-	virtual void Load();
-	virtual void Update(DWORD dt);
-	virtual void Render();
-	virtual void Unload();
-	virtual void KeyState(BYTE *states);
-	virtual void OnKeyDown(int KeyCode);
-	virtual void OnKeyUp(int KeyCode);
+	void Load();
+	void Update(DWORD dt);
+	void Render();
+	void Unload();
+
+	void ResetTimer();
+	int GetTimer();
+
+	void KeyState(BYTE *states);
+	void OnKeyDown(int KeyCode);
+	void OnKeyUp(int KeyCode);
 
 
 	//Add new game obj to active list

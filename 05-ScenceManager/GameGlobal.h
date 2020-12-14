@@ -11,7 +11,7 @@
 
 
 #define SCREEN_WIDTH 272
-#define SCREEN_HEIGHT 264
+#define SCREEN_HEIGHT 272
 //---------------PLAYER STATS-------------------
 #define Mario Player::GetInstance()
 
@@ -26,6 +26,7 @@ enum class Tag
 {
 	PLAYER,
 	GROUND,
+	PIPE,
 	ONE_WAY_PLATFORM,
 	QUESTION_MARK_BRICK,
 	GOOMBA,

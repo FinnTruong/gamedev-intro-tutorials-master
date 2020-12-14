@@ -18,6 +18,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 	CScene(id, filePath)
 {
 	/*key_handler = new CPlayScenceKeyHandler(this);*/
+	CGame::GetInstance()->ResetTimer();
 }
 
 /*
@@ -47,10 +48,15 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_PIRANHA_PLANT			11
 #define OBJECT_TYPE_VENUS_FIRE_TRAP			12
 #define OBJECT_TYPE_PARAGOOMBA				13
+#define OBJECT_TYPE_PIPE					14
 
 #define OBJECT_TYPE_PORTAL	50
 
 #define MAX_SCENE_LINE 1024
+
+#define TILEMAP_X_OFFSET 0
+#define TILEMAP_Y_OFFSET -162
+
 
 
 #pragma region  PARSE GAME DATA
@@ -171,17 +177,24 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
+
 	case OBJECT_TYPE_GOOMBA: obj = new Goomba(); break;
+
 	case OBJECT_TYPE_PARAGOOMBA: obj = new Paragoomba(); break;
+
 	case OBJECT_TYPE_BRICK: obj = new QuestionMarkBrick(x,y); break;
+
 	case OBJECT_TYPE_KOOPAS: obj = new KoopaTroopa(); break;
+
 	case OBJECT_TYPE_PIRANHA_PLANT: obj = new PiranhaPlant(x, y); break;
+
 	case OBJECT_TYPE_VENUS_FIRE_TRAP: 
 	{
 		int type = atof(tokens[4].c_str());
 		obj = new VenusFireTrap(x, y, type); 
 	}
 	break;
+
 	case OBJECT_TYPE_GROUND:
 	{
 		float width = atof(tokens[4].c_str());
@@ -189,11 +202,22 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new Ground(width,height);
 	}
 	break;
+
 	case OBJECT_TYPE_ONEWAYPLATFORM:
 	{
 		float width = atof(tokens[4].c_str());
 		float height = atof(tokens[5].c_str());
 		obj = new OneWayPlatform(width, height);
+	}
+	break;
+
+	case OBJECT_TYPE_PIPE:
+	{
+		float width = atof(tokens[4].c_str());
+		float height = atof(tokens[5].c_str());
+		int type = atof(tokens[6].c_str());
+		bool hasSecretEntrance = atof(tokens[7].c_str());
+		obj = new Pipe(width, height, type, hasSecretEntrance);
 	}
 	break;
 	case OBJECT_TYPE_LEAF: obj = new Leaf(x, y); break;
@@ -243,6 +267,7 @@ void CPlayScene::_ParseSection_TILEMAP(string line)
 	//grid->Resize(widthGrid, heightGrid);
 	//grid->PushGrid(allObject);
 	tilemap = new Tilemap(ID, filePath_texture.c_str(), filePath_data.c_str(), num_row_on_texture, num_col_on_texture, num_row_on_tilemap, num_col_on_tilemap, tileset_width, tileset_height);
+
 }
 
 #pragma endregion
@@ -369,12 +394,13 @@ void CPlayScene::Update(DWORD dt)
 	
 
 
-	CGame::GetInstance()->GetCurrentScene()->GetCamera()->SetPosition((int)cx, 64 /*cy*/);
+	CGame::GetInstance()->GetCurrentScene()->GetCamera()->SetPosition((int)cx, !Mario->inSecretRoom ? 64 : 272 + 14);
+	//CGame::GetInstance()->GetCurrentScene()->GetCamera()->SetPosition(1984, SCREEN_HEIGHT + 12/*cy*/);
 }
 
 void CPlayScene::Render()
 {
-	tilemap->Draw();
+	tilemap->Draw(TILEMAP_X_OFFSET,TILEMAP_Y_OFFSET);
 	//Render objects
 	for (int i = 0; i < objects.size(); i++)
 	{

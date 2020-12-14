@@ -16,6 +16,9 @@ using namespace std;
 
 #define KEYBOARD_BUFFER_SIZE 1024
 
+#define MAX_PLAY_TIME 300
+
+
 class CGame
 {
 	static CGame * __instance;
@@ -35,8 +38,7 @@ class CGame
 
 	LPKEYEVENTHANDLER keyHandler;
 
-	//float cam_x = 0.0f;
-	//float cam_y = 0.0f;
+	int score, bonusScore, startSceneTime;
 
 	int screen_width;
 	int screen_height; 
@@ -62,6 +64,9 @@ public:
 
 	int GetScreenWidth() { return screen_width; }
 	int GetScreenHeight() { return screen_height; }
+
+	void ResetTimer() { startSceneTime = GetTickCount64(); }
+	int GetTimer();
 
 	
 
