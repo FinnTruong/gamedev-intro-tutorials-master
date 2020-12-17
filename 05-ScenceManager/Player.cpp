@@ -7,13 +7,16 @@
 #include "PlayScence.h"
 
 #include "Ground.h"
-#include "QuestionMarkBrick.h"
+#include "QuestionBlock.h"
 #include "OneWayPlatform.h"
 #include "Goomba.h"
 #include "Paragoomba.h"
 #include "KoopaTroopa.h"
 #include "Fireball.h"
 #include "Mushroom.h"
+#include "Brick.h"
+#include "PBlock.h"
+#include "PSwitch.h"
 #include "Portal.h"
 
 #include "PlayerIdleState.h"
@@ -320,13 +323,47 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 
-			else if (e->obj->tag == Tag::QUESTION_MARK_BRICK)
+			else if (e->obj->tag == Tag::QUESTION_BLOCK)
 			{
-				QuestionMarkBrick* brick = dynamic_cast<QuestionMarkBrick*>(e->obj);
+				QuestionBlock* brick = dynamic_cast<QuestionBlock*>(e->obj);
 
 				if (e->ny > 0)
 				{
 					brick->SetState(BRICK_STATE_COLLISION);
+				}
+			}
+
+			else if (e->obj->tag == Tag::P_BLOCK)
+			{
+				PBlock* brick = dynamic_cast<PBlock*>(e->obj);
+
+				if (e->ny > 0)
+				{
+					brick->SetState(P_BLOCK_STATE_EMPTY);
+				}
+			}
+
+			else if (e->obj->tag == Tag::P_SWITCH)
+			{
+				PSwitch* p_switch = dynamic_cast<PSwitch*>(e->obj);
+
+				if (e->ny < 0)
+				{
+					if (p_switch->state == SWITCH_STATE_NOT_ACTIVATE)
+					{
+						p_switch->SetState(SWITCH_STATE_ACTIVATE);
+						vy = -MARIO_JUMP_DEFLECT_SPEED;
+						//Set All brick to coin
+						auto scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
+						auto obj = scene->GetObjList();
+						for (size_t i = 0; i < obj.size(); i++)
+						{
+							if (obj[i]->tag == Tag::BRICK)
+							{
+								obj[i]->SetState(1);
+							}
+						}
+					}
 				}
 			}
 
@@ -340,6 +377,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					if (goomba->GetState() != GOOMBA_STATE_DIE)
 					{
 						goomba->OnSteppedOn();
+						auto pointEffect = new PointEffect(e->obj->x, e->obj->y, 0);
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
 				}
@@ -491,6 +529,15 @@ void Player::OnOverlapped(LPGAMEOBJECT other)
 		other->DisableGameObject();
 		SetLevel(MARIO_LEVEL_BIG);
 		break;
+	case Tag::BRICK:
+		if (other->GetState() == BRICK_STATE_COIN)
+		{
+			other->SetActive(false);
+			other->DisableGameObject();
+		}
+		break;
+	default:
+		break;
 	}
 	
 
@@ -511,6 +558,7 @@ void Player::KeyState(BYTE* states)
 
 void Player::OnKeyDown(int keyCode)
 {
+
 	//Transition from any State
 	switch (keyCode)
 	{
@@ -575,7 +623,16 @@ void Player::OnKeyDown(int keyCode)
 	case DIK_UP:
 		isExitingSecretRoom = true;
 		break;*/
-	default:
+	case DIK_P:
+		auto scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
+		auto obj = scene->GetObjList();
+		for (size_t i = 0; i < obj.size(); i++)
+		{
+			if (obj[i]->tag == Tag::BRICK)
+			{
+				obj[i]->SetState(1);
+			}
+		}
 		break;
 	}
 }

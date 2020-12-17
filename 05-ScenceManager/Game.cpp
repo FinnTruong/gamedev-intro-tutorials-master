@@ -325,6 +325,6 @@ void CGame::SwitchScene(int scene_id)
 
 int CGame::GetTimer()
 {
-	int timer = MAX_PLAY_TIME - (GetTickCount64() - startSceneTime) / 1000;
+	timer = MAX_PLAY_TIME - (GetTickCount64() - startSceneTime) / 1000;
 	return timer > 0? timer:0;
 }

@@ -21,7 +21,7 @@
 #include "Textures.h"
 
 #include "Player.h"
-#include "QuestionMarkBrick.h"
+#include "QuestionBlock.h"
 #include "Goomba.h"
 
 #include "PlayScence.h"
@@ -67,6 +67,7 @@ void Render()
 	LPDIRECT3DDEVICE9 d3ddv = game->GetDirect3DDevice();
 	LPDIRECT3DSURFACE9 bb = game->GetBackBuffer();
 	LPD3DXSPRITE spriteHandler = game->GetSpriteHandler();
+
 
 	if (d3ddv->BeginScene())
 	{

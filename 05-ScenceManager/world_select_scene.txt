@@ -3,9 +3,6 @@
 0	textures\UI\ui.png	255	127	39
 1	textures\World\overworld-maps.png	166	185	255
 
-
-
-
 # id	left	top	right	bottom	texture_id
 [SPRITES]
 #----------------- HUD ------------------
@@ -181,12 +178,13 @@
 #SPEECH BUBBLE
 3	208	108	4
 
-
 # MARIO
 0	33	60	1
 
+[GRID]
+#file 
+textures/World/map-grid.txt
 
 [TILEMAP]
 #id	file_texture			file_path			row_tex	col_tex	row_tilemap	num col tilemap	tile size
 1000	textures/World/map.png	textures/World/map.txt	4	11	15	17	16	16
-#2000	textures/World/world1-1_Full.png	textures/World/world1-1_Full.txt	9	11	40	177	16	16

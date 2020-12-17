@@ -66,6 +66,8 @@ public:
 	bool isActive;
 	bool isTrigger;
 
+	int sortingLayer = 1;
+
 	RECT boundingBox;
 
 	Tag tag;

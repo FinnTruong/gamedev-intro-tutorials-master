@@ -3,7 +3,6 @@
 WorldSelectionScene::WorldSelectionScene(int id, LPCWSTR filePath) :
 	CScene(id, filePath)
 {
-
 }
 #pragma region  PARSE GAME DATA
 
@@ -165,7 +164,14 @@ void WorldSelectionScene::_ParseSection_TILEMAP(string line)
 
 void WorldSelectionScene::_ParseSection_GRID(string line)
 {
+	vector<string> tokens = split(line);
 
+	if (tokens.size() < 1)
+		return;
+
+	wstring filePath_grid = ToWSTR(tokens[0]);
+
+	LoadGrid(filePath_grid);
 }
 
 #pragma endregion
@@ -173,6 +179,8 @@ void WorldSelectionScene::_ParseSection_GRID(string line)
 void WorldSelectionScene::Load()
 {
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
+
+	CGame::GetInstance()->SetTimer(0);
 
 	ifstream f;
 	f.open(sceneFilePath);
@@ -217,6 +225,11 @@ void WorldSelectionScene::Load()
 			section = SCENE_SECTION_TILEMAP;
 			continue;
 		}
+		if (line == "[GRID]")
+		{
+			section = SCENE_SECTION_GRID;
+			continue;
+		}
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		//
@@ -230,6 +243,8 @@ void WorldSelectionScene::Load()
 		case SCENE_SECTION_ANIMATION_SETS: _ParseSection_ANIMATION_SETS(line); break;
 		case SCENE_SECTION_OBJECTS: _ParseSection_OBJECTS(line); break;
 		case SCENE_SECTION_TILEMAP: _ParseSection_TILEMAP(line); break;
+		case SCENE_SECTION_GRID: _ParseSection_GRID(line); break;
+		default: break;
 		}
 	}
 
@@ -345,7 +360,7 @@ bool WorldSelectionScene::CheckIfCanMove(Vector2 dir)
 {
 	if (dir.x == 1)
 	{
-		if (curNodeY + 1 > GRID_TOTAL_COLUMNS - 1)
+		if (curNodeY + 1 > grid_columns - 1)
 			return false;
 		else if (mapGrid[curNodeX][curNodeY + 1] == 1)
 			return false;
@@ -373,11 +388,53 @@ bool WorldSelectionScene::CheckIfCanMove(Vector2 dir)
 	}
 	else if (dir.y == -1)
 	{
-		if (curNodeX + 1 > GRID_TOTAL_ROWS - 1)
+		if (curNodeX + 1 > grid_rows - 1)
 			return false;
 		else if (mapGrid[curNodeX + 1][curNodeY] == 1)
 			return false;
 		else
 			return true;
+	}
+}
+
+void WorldSelectionScene::LoadGrid(wstring filePath)
+{
+	if (hasLoadGrid)
+		return;
+
+
+	ifstream fs(filePath, ios::in);
+	fs >> grid_rows >> grid_columns;
+
+	vector<vector<int>> grid(grid_rows, vector<int>(grid_columns, 0));
+
+	for (size_t i = 0; i < grid_rows; i++)
+	{
+		for (size_t j = 0; j < grid_columns; j++)
+		{
+			fs >> grid[i][j];
+		}
+	}
+
+	mapGrid.clear();
+	mapGrid = grid;
+
+	fs.close();
+
+	hasLoadGrid = true;
+
+	//Find Start Node
+
+	for (size_t i = 0; i < grid_rows; i++)
+	{
+		for (size_t j = 0; j < grid_columns; j++)
+		{
+			if (mapGrid[i][j] == MapNode::START)
+			{
+				curNodeX = i;
+				curNodeY = j;
+			}
+
+		}
 	}
 }

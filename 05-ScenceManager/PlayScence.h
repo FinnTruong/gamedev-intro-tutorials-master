@@ -3,7 +3,7 @@
 #include "Textures.h"
 #include "Scence.h"
 #include "GameObject.h"
-#include "QuestionMarkBrick.h"
+#include "QuestionBlock.h"
 #include "Ground.h"
 #include "Player.h"
 #include "Goomba.h"
@@ -30,8 +30,7 @@ protected:
 
 	int startSceneTime;
 
-	vector<LPGAMEOBJECT> objects;
-	vector<LPGAMEOBJECT> items;
+	vector<LPGAMEOBJECT> objects;	
 
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);
@@ -76,6 +75,11 @@ public:
 	}
 
 	Player * GetPlayer() { return player; } 
+
+	vector<LPGAMEOBJECT> GetObjList()
+	{
+		return objects;
+	}
 
 	friend class CPlayScenceKeyHandler;
 };

@@ -6,6 +6,7 @@ Item::Item(float x,float y)
 {
 	startX = x;
 	startY = y;	
+	sortingLayer = 0;
 }
 
 void Item::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -33,4 +34,5 @@ void Item::OnSproutComplete()
 	spawnTime = GetTickCount64();
 	hasSproutCompleted = true;
 	isSprouting = false;
+	sortingLayer = 1;
 }

@@ -9,22 +9,8 @@
 #include "GameGlobal.h"
 #include "Fireball.h"
 #include "OneWayPlatform.h"
-
-
-
-using namespace std;
-
-CPlayScene::CPlayScene(int id, LPCWSTR filePath):
-	CScene(id, filePath)
-{
-	/*key_handler = new CPlayScenceKeyHandler(this);*/
-	CGame::GetInstance()->ResetTimer();
-}
-
-/*
-	Load scene resources from scene file (textures, sprites, animations and objects)
-	See scene1.txt, scene2.txt for detail format specification
-*/
+#include "Brick.h"
+#include "PBlock.h"
 
 #define SCENE_SECTION_UNKNOWN -1
 #define SCENE_SECTION_TEXTURES 2
@@ -36,7 +22,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 
 #define OBJECT_TYPE_MARIO					0
 #define OBJECT_TYPE_GROUND					1
-#define OBJECT_TYPE_BRICK					2
+#define OBJECT_TYPE_QUESTION_BLOCK					2
 #define OBJECT_TYPE_ONEWAYPLATFORM			3
 #define OBJECT_TYPE_GOOMBA					4
 #define OBJECT_TYPE_KOOPAS					5
@@ -49,6 +35,8 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_VENUS_FIRE_TRAP			12
 #define OBJECT_TYPE_PARAGOOMBA				13
 #define OBJECT_TYPE_PIPE					14
+#define OBJECT_TYPE_BRICK					15
+#define OBJECT_TYPE_P_BLOCK					16
 
 #define OBJECT_TYPE_PORTAL	50
 
@@ -56,6 +44,19 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 
 #define TILEMAP_X_OFFSET 0
 #define TILEMAP_Y_OFFSET -162
+
+#define SORTING_LAYERS_SIZE	2
+
+CPlayScene::CPlayScene(int id, LPCWSTR filePath):
+	CScene(id, filePath)
+{
+	/*key_handler = new CPlayScenceKeyHandler(this);*/
+}
+
+/*
+	Load scene resources from scene file (textures, sprites, animations and objects)
+	See scene1.txt, scene2.txt for detail format specification
+*/
 
 
 
@@ -182,7 +183,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	case OBJECT_TYPE_PARAGOOMBA: obj = new Paragoomba(); break;
 
-	case OBJECT_TYPE_BRICK: obj = new QuestionMarkBrick(x,y); break;
+	case OBJECT_TYPE_QUESTION_BLOCK: obj = new QuestionBlock(x,y); break;
+
+	case OBJECT_TYPE_BRICK:	obj = new Brick(); break;
+
+	case OBJECT_TYPE_P_BLOCK: obj = new PBlock(x,y); break;
 
 	case OBJECT_TYPE_KOOPAS: obj = new KoopaTroopa(); break;
 
@@ -276,6 +281,8 @@ void CPlayScene::Load()
 {
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
 
+	CGame::GetInstance()->ResetTimer();
+
 	ifstream f;
 	f.open(sceneFilePath);
 
@@ -360,10 +367,7 @@ void CPlayScene::Update(DWORD dt)
 		objects[i]->Update(dt, &coObjects);
 	}
 
-	for (size_t i = 0; i < items.size(); i++)
-	{
-		items[i]->Update(dt, &coObjects);
-	}
+
 
 	for (size_t i = 0; i < Mario->listFireball.size(); i++)
 	{
@@ -402,10 +406,17 @@ void CPlayScene::Render()
 {
 	tilemap->Draw(TILEMAP_X_OFFSET,TILEMAP_Y_OFFSET);
 	//Render objects
-	for (int i = 0; i < objects.size(); i++)
+
+	for (size_t j = 0; j < SORTING_LAYERS_SIZE; j++)
 	{
-		objects[i]->Render();
+		for (int i = 0; i < objects.size(); i++)
+		{
+			if (objects[i]->sortingLayer == j)
+				objects[i]->Render();
+
+		}
 	}
+	
 
 	//Render fireball
 	for (size_t i = 0; i < Mario->listFireball.size(); i++)

@@ -5,6 +5,7 @@
 #include "KoopaTroopa.h"
 #include "Tail.h"
 #include "Fireball.h"
+#include "PointEffect.h"
 
 
 #define MARIO_WALKING_SPEED			0.1f

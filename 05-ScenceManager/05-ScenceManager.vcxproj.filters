@@ -56,6 +56,9 @@
     <Filter Include="Game Objects\World Map Objects">
       <UniqueIdentifier>{8ca0d5ef-b1c2-4701-adf3-d6dc0292ce65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Objects\VFX">
+      <UniqueIdentifier>{309c5b9a-9a5e-4a82-87a4-36f00e616867}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp">
@@ -107,9 +110,6 @@
       <Filter>Game Objects\Object\Platform</Filter>
     </ClCompile>
     <ClCompile Include="OneWayPlatform.cpp">
-      <Filter>Game Objects\Object\Platform</Filter>
-    </ClCompile>
-    <ClCompile Include="QuestionMarkBrick.cpp">
       <Filter>Game Objects\Object\Platform</Filter>
     </ClCompile>
     <ClCompile Include="Leaf.cpp">
@@ -211,6 +211,24 @@
     <ClCompile Include="WorldMapNode.cpp">
       <Filter>Game Objects\World Map Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Game Objects\VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="PointEffect.cpp">
+      <Filter>Game Objects\VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestionBlock.cpp">
+      <Filter>Game Objects\Object\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="PBlock.cpp">
+      <Filter>Game Objects\Object\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Game Objects\Object\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="PSwitch.cpp">
+      <Filter>Game Objects\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -262,9 +280,6 @@
       <Filter>Game Objects\Object\Platform</Filter>
     </ClInclude>
     <ClInclude Include="OneWayPlatform.h">
-      <Filter>Game Objects\Object\Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="QuestionMarkBrick.h">
       <Filter>Game Objects\Object\Platform</Filter>
     </ClInclude>
     <ClInclude Include="Leaf.h">
@@ -368,6 +383,24 @@
     </ClInclude>
     <ClInclude Include="WorldMapNode.h">
       <Filter>Game Objects\World Map Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Game Objects\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="PointEffect.h">
+      <Filter>Game Objects\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestionBlock.h">
+      <Filter>Game Objects\Object\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="PBlock.h">
+      <Filter>Game Objects\Object\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Game Objects\Object\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="PSwitch.h">
+      <Filter>Game Objects\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

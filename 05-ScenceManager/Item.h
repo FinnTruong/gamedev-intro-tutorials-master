@@ -23,7 +23,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void OnSproutComplete();
 
-	void SproutOut();
+	virtual void SproutOut();
 
 	bool CheckIsSprouting() { return isSprouting; }
 

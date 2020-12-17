@@ -242,17 +242,17 @@ void LoadResources()
 
 	for (int i = 0; i < 5; i++)
 	{
-		QuestionMarkBrick *brick = new QuestionMarkBrick();
+		QuestionBlock *brick = new QuestionBlock();
 		brick->AddAnimation(601);
 		brick->SetPosition(100.0f + i*60.0f, 74.0f);
 		objects.push_back(brick);
 
-		brick = new QuestionMarkBrick();
+		brick = new QuestionBlock();
 		brick->AddAnimation(601);
 		brick->SetPosition(100.0f + i*60.0f, 90.0f);
 		objects.push_back(brick);
 
-		brick = new QuestionMarkBrick();
+		brick = new QuestionBlock();
 		brick->AddAnimation(601);
 		brick->SetPosition(84.0f + i*60.0f, 90.0f);
 		objects.push_back(brick);
@@ -261,7 +261,7 @@ void LoadResources()
 
 	for (int i = 0; i < 30; i++)
 	{
-		QuestionMarkBrick *brick = new QuestionMarkBrick();
+		QuestionBlock *brick = new QuestionBlock();
 		brick->AddAnimation(601);
 		brick->SetPosition(0 + i*16.0f, 150);
 		objects.push_back(brick);

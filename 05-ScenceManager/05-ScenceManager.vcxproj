@@ -125,8 +125,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Cactus.cpp" />
     <ClCompile Include="Coin.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Flower.cpp" />
     <ClCompile Include="HammerBrother.cpp" />
     <ClCompile Include="HUD.cpp" />
@@ -135,11 +137,14 @@
     <ClCompile Include="Leaf.cpp" />
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="Paragoomba.cpp" />
+    <ClCompile Include="PBlock.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PiranhaPlant.cpp" />
+    <ClCompile Include="PointEffect.cpp" />
+    <ClCompile Include="PSwitch.cpp" />
     <ClCompile Include="SpeechBubble.cpp" />
     <ClCompile Include="Tail.cpp" />
-    <ClCompile Include="QuestionMarkBrick.cpp" />
+    <ClCompile Include="QuestionBlock.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Fireball.cpp" />
     <ClCompile Include="GameGlobal.cpp" />
@@ -177,9 +182,11 @@
     <ClCompile Include="WorldSelectionScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Brick.h" />
     <ClInclude Include="Cactus.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Coin.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="Fireball.h" />
     <ClInclude Include="Flower.h" />
     <ClInclude Include="GameGlobal.h" />
@@ -192,6 +199,7 @@
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="OneWayPlatform.h" />
     <ClInclude Include="Paragoomba.h" />
+    <ClInclude Include="PBlock.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="PiranhaPlant.h" />
     <ClInclude Include="PlayerAttackingState.h" />
@@ -199,6 +207,8 @@
     <ClInclude Include="PlayerFlyingState.h" />
     <ClInclude Include="PlayerIdleState.h" />
     <ClInclude Include="PlayerJumpingState.h" />
+    <ClInclude Include="PointEffect.h" />
+    <ClInclude Include="PSwitch.h" />
     <ClInclude Include="SpeechBubble.h" />
     <ClInclude Include="Tail.h" />
     <ClInclude Include="PlayerRunningMaxState.h" />
@@ -207,7 +217,7 @@
     <ClInclude Include="PlayerSkiddingState.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="Animations.h" />
-    <ClInclude Include="QuestionMarkBrick.h" />
+    <ClInclude Include="QuestionBlock.h" />
     <ClInclude Include="KoopaTroopa.h" />
     <ClInclude Include="PlayerWalkingState.h" />
     <ClInclude Include="Portal.h" />

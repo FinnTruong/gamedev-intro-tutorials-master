@@ -8,18 +8,18 @@
 #define	BRICK_STATE_COLLISION 10
 
 
-class QuestionMarkBrick : public CGameObject
+class QuestionBlock : public CGameObject
 {
 	float startY;
 	bool hasCollided;
-	bool hasItem = true;
+	bool hasPowerUp = false;
 	bool hasSpawn = false;
 
 	Item* item = nullptr;
 
 public:
-	QuestionMarkBrick(float x, float y, bool hasItem = 0);
-	~QuestionMarkBrick();
+	QuestionBlock(float x, float y, bool hasItem = 0);
+	~QuestionBlock();
 
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

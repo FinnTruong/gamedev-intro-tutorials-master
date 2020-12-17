@@ -20,6 +20,7 @@
 #define SCENE_SECTION_ANIMATION_SETS	5
 #define SCENE_SECTION_OBJECTS	6
 #define SCENE_SECTION_TILEMAP	7
+#define SCENE_SECTION_GRID		8
 
 #define OBJECT_TYPE_MARIO					0
 #define OBJECT_TYPE_CACTUS					1
@@ -45,21 +46,25 @@ protected:
 	HUD* hud;
 	WorldMapMario* player;			// A play scene has to have player, right? 
 
-	vector<vector<int>> mapGrid =
-	{	
-		{1,	1,	3,	0,	2,	0,	2,	0,	2,	0,	2},
-		{1,	1,	0,	1,	1,	1,	0,	1,	1,	1,	0},
-		{2,	0,	2,	1,	1,	1,	2,	0,	2,	0,	2},
-		{1,	1,	0,	1,	1,	1,	0,	1,	1,	1,	1},
-		{1,	1,	2,	0,	2,	0,	2,	1,	1,	1,	1},
-		{1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1},
-		{1,	1,	2,	1,	0,	0,	0,	0,	0,	0,	0},
-		{1,	1,	0,	1,	1,	1,	0,	1,	1,	1,	1},
-		{1,	1,	2,	0,	2,	0,	2,	1,	1,	1,	1} 
-	};
+	vector<vector<int>> mapGrid;
+	//{	
+	//	{1,	1,	3,	0,	2,	0,	2,	0,	2,	0,	2},
+	//	{1,	1,	0,	1,	1,	1,	0,	1,	1,	1,	0},
+	//	{2,	0,	2,	1,	1,	1,	2,	0,	2,	0,	2},
+	//	{1,	1,	0,	1,	1,	1,	0,	1,	1,	1,	1},
+	//	{1,	1,	2,	0,	2,	0,	2,	1,	1,	1,	1},
+	//	{1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1},
+	//	{1,	1,	2,	1,	0,	0,	0,	0,	0,	0,	0},
+	//	{1,	1,	0,	1,	1,	1,	0,	1,	1,	1,	1},
+	//	{1,	1,	2,	0,	2,	0,	2,	1,	1,	1,	1} 
+	//};
 
-	int curNodeX = 2;
-	int curNodeY = 0;
+	int grid_rows, grid_columns;
+
+	int curNodeX;
+	int curNodeY;
+
+	bool hasLoadGrid = false;
 
 
 	int startSceneTime;
@@ -86,6 +91,16 @@ public:
 	void OnKeyDown(int KeyCode);
 	void OnKeyUp(int KeyCode);
 
+	void LoadGrid(wstring filePath);
 	bool CheckIfCanMove(Vector2);
 };
 
+
+enum MapNode
+{	
+	EMPTY,
+	BLOCK,
+	STOP,
+	INTERACTABLE,
+	START
+};

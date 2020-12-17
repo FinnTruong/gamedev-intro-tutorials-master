@@ -1,7 +1,7 @@
 ﻿#include "Tilemap.h"
 #include "GameGlobal.h"
 #include "Game.h"
-#include "QuestionMarkBrick.h"
+
 Tilemap::Tilemap(int ID, LPCWSTR filePath_texture, LPCWSTR filePath_data, int num_row_on_texture, int num_col_on_textture, int num_row_on_tilemap, int num_col_on_tilemap, int tileset_width, int tileset_height)
 {
 	id = ID;
@@ -86,7 +86,7 @@ void Tilemap::Draw(int tilemap_x_offset,int tilemap_y_offset)
 	float cam_x, cam_y;
 	CGame::GetInstance()->GetCurrentScene()->GetCamera()->GetPosition(cam_x, cam_y);
 
-	int firstcol = 0; //(int)cam_x / tileset_width;
+	int firstcol = (int)cam_x / tileset_width;
 	int lastcol = firstcol + (SCREEN_WIDTH / tileset_width);
 	/*lastcol = lastcol > 175 ? 175 : lastcol;*/
 
