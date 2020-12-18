@@ -125,13 +125,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="Background.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Cactus.cpp" />
     <ClCompile Include="Coin.cpp" />
+    <ClCompile Include="Curtain.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Flower.cpp" />
     <ClCompile Include="HammerBrother.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="KoopaParatroopa.cpp" />
     <ClCompile Include="Leaf.cpp" />
@@ -165,6 +169,7 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Tilemap.cpp" />
+    <ClCompile Include="Title.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -182,17 +187,21 @@
     <ClCompile Include="WorldSelectionScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Background.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Cactus.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Coin.h" />
+    <ClInclude Include="Curtain.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Fireball.h" />
+    <ClInclude Include="Floor.h" />
     <ClInclude Include="Flower.h" />
     <ClInclude Include="GameGlobal.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="HammerBrother.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="IntroScene.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="KoopaParatroopa.h" />
     <ClInclude Include="Leaf.h" />
@@ -224,6 +233,7 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Tilemap.h" />
+    <ClInclude Include="Title.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />

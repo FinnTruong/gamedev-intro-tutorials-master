@@ -6,6 +6,7 @@
 
 #include "PlayScence.h"
 #include "WorldSelectionScene.h"
+#include "IntroScene.h"
 
 CGame * CGame::__instance = NULL;
 
@@ -61,7 +62,7 @@ void CGame::Init(HWND hWnd)
 */
 void CGame::Draw(int direction, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
 {
-	float cam_x, cam_y;
+	int cam_x, cam_y;
 	GetCurrentScene()->GetCamera()->GetPosition(cam_x, cam_y);
 	D3DXVECTOR3 p(x - cam_x, y - cam_y, 0);
 	RECT r;
@@ -259,6 +260,9 @@ void CGame::_ParseSection_SCENES(string line)
 	case 1:
 		scene = new WorldSelectionScene(id, path);
 		break;
+	case 2:
+		scene = new IntroScene(id, path);
+		break;
 	default:
 		scene = new CPlayScene(id, path);
 		break;
@@ -323,8 +327,4 @@ void CGame::SwitchScene(int scene_id)
 	s->Load();	
 }
 
-int CGame::GetTimer()
-{
-	timer = MAX_PLAY_TIME - (GetTickCount64() - startSceneTime) / 1000;
-	return timer > 0? timer:0;
-}
+

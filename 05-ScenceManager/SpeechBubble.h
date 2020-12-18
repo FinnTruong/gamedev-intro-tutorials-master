@@ -10,8 +10,8 @@
 class SpeechBubble : public CGameObject
 {
 	bool isVisible = true;
-	float visibleStartTime = 0;
-	float invisibleStartTime = 0;
+	ULONGLONG visibleStartTime = 0;
+	ULONGLONG invisibleStartTime = 0;
 public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
 	void Render();

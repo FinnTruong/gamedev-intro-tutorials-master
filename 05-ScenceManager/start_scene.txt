@@ -1,0 +1,57 @@
+# id	file_path	transparent_color_r	g	b
+[TEXTURES]
+0	textures\Title\title-screen.png	255	242	0
+1	textures\Title\Title.png	255	255	255
+
+# id	left	top	right	bottom	texture_id
+
+[SPRITES]
+# -------------- BACKGROUND -----------------
+0	782	226	256	224	0
+
+
+#----------------- CURTAIN ------------------
+1000	0	0	256	182	0
+
+# --------------- FLOOR ------------------
+2000	0	187	256	37	0
+
+#---------------- TITLE --------------------
+#[blink]
+3000	0	0	179	113	1
+3001	184	0	179	113	1
+3002	368	0	179	113	1
+3003	552	0	179	113	1
+
+# ----------- OPTIONS -------------
+4000	8	306	112	24	0
+4001	133	306	112	24	0
+
+
+
+
+
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
+
+# CURTAIN
+100	0	100
+
+#TITLE
+300	3000	100	3001	100	3002	100	3003	100	3002	100
+
+[ANIMATION_SETS]
+# CURTAIN
+1	100
+# TITLE
+3	300
+
+[OBJECTS]
+# type	x	y	ani_set_id	extra_settings per object type
+# type: 0 = Mario , 1 = Cactus , 2 = Hammer Brother , 3 = Speech Bubble
+3	38.5	26	3
+
+
+[TILEMAP]
+#id	file_texture			file_path			row_tex	col_tex	row_tilemap	num col tilemap	tile size
+#1000	textures/World/map.png	textures/World/map.txt	4	11	15	17	16	16

@@ -79,7 +79,6 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CheckCanAttack();
 
 	//Enter Pipe
-	float delta, start_y;
 	if (isEnteringSecretRoom)
 	{
 		y += MARIO_ENTER_PIPE_SPEED * dt;
@@ -96,7 +95,7 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	if (isExitingSecretRoom)
 	{
-		float marioHeight = level == MARIO_LEVEL_SMALL ? MARIO_SMALL_BBOX_HEIGHT : MARIO_BIG_BBOX_HEIGHT;
+		int marioHeight = level == MARIO_LEVEL_SMALL ? MARIO_SMALL_BBOX_HEIGHT : MARIO_BIG_BBOX_HEIGHT;
 		y -= MARIO_ENTER_PIPE_SPEED * dt;
 		if (y <= 286 && inSecretRoom)
 		{
@@ -449,7 +448,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						else
 						{
 							//isKick = true;
-							e->obj->nx = nx;
+							e->obj->nx = (int)nx;
 							if (!keyCode[DIK_A])
 							{
 								isKicking = true;

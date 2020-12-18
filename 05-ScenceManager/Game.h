@@ -38,8 +38,7 @@ class CGame
 
 	LPKEYEVENTHANDLER keyHandler;
 
-	int timer;
-	int score, bonusScore, startSceneTime;
+	int score, bonusScore;
 
 	int screen_width;
 	int screen_height; 
@@ -65,10 +64,6 @@ public:
 
 	int GetScreenWidth() { return screen_width; }
 	int GetScreenHeight() { return screen_height; }
-
-	void ResetTimer() { startSceneTime = GetTickCount64(); }
-	int GetTimer();
-	void SetTimer(int time) { timer = time; }
 
 	
 

@@ -10,7 +10,7 @@
 
 class Coin : public Item
 {
-	bool hasPointEffect;
+	bool hasPlayedPointEffect = false;
 public:
 	Coin(float x, float y);
 	~Coin();

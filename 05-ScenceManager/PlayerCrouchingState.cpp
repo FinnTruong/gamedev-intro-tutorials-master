@@ -12,12 +12,12 @@ void PlayerCrouchingState::Update(DWORD dt)
 {
 	if (Mario->vx > 0)
 	{
-		Mario->vx -= 0.00015 * dt;
+		Mario->vx -= 0.00015f * dt;
 		if (Mario->vx < 0)
 			Mario->vx = 0;
 	}
 	else if (Mario->vx < 0) {
-		Mario->vx += 0.00015 * dt;
+		Mario->vx += 0.00015f * dt;
 		if (Mario->vx > 0)
 			Mario->vx = 0;
 	}

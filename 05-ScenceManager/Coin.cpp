@@ -29,12 +29,12 @@ void Coin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	
 	if (isSprouting)
 	{
-		vy += 0.0005 * dt;
+		vy += (float)(0.0005 * dt);
 		if (vy > 0 && startY - y <= 10)
 		{
-			if (!hasPointEffect)
+			if (!hasPlayedPointEffect)
 			{
-				hasPointEffect = true;
+				hasPlayedPointEffect = true;
 				auto pointEffect = new PointEffect(x, y, 4);
 			}
 			isActive = false;
@@ -57,5 +57,5 @@ void Coin::Render()
 void Coin::SproutOut()
 {
 	Item::SproutOut();
-	vy = -0.22;
+	vy = -0.22f;
 }

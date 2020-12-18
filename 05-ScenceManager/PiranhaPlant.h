@@ -15,16 +15,16 @@
 #define PIRANHA_ATTACK_TIME		1000
 #define PIRANHA_COOLDOWN_TIME	1000
 
-#define MIN_DISTANCE_TO_PLAYER	32
-#define MAX_DISTANCE_TO_PLAYER	128
+#define PIRANHA_MIN_DISTANCE_TO_PLAYER	32
+#define PIRANHA_MAX_DISTANCE_TO_PLAYER	128
 
 class PiranhaPlant : public CGameObject
 {
 public:
 	float plantHeight;
 
-	float attackTime;
-	float cooldownTime;
+	ULONGLONG attackTime;
+	ULONGLONG cooldownTime;
 
 	bool isMoving;
 	bool isCoolingDown;

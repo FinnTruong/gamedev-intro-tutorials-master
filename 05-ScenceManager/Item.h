@@ -8,7 +8,7 @@ protected:
 	float startX;
 	float startY;
 
-	float spawnTime;
+	ULONGLONG spawnTime;
 
 	bool isSprouting;
 	bool hasSproutCompleted;

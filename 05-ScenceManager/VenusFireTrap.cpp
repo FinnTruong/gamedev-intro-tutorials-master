@@ -52,9 +52,9 @@ void VenusFireTrap::Attack()
 	//Calculate fireball direction by degree base on Player position (start from [0,-1] to [0,1])
 	float delta = abs(y - Mario->y);
 	if (delta <= 24)
-		degrees = y < Mario->y ? 105 : 75;
+		degrees = y < Mario->y ? 105.f : 75.f;
 	else
-		degrees = y < Mario->y ? 135 : 45;
+		degrees = y < Mario->y ? 135.f : 45.f;
 
 	//Convert degree to direction Vector2
 

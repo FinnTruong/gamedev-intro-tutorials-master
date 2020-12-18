@@ -10,7 +10,7 @@ public:
 	virtual void Update(DWORD dt) = 0;
 	virtual void HandleKeyboard(DWORD dt) = 0;
 	virtual void UpdateAnimation() = 0;
-	int state;
-	int animation;
+	int state = 0;
+	int animation = 0;
 };
 

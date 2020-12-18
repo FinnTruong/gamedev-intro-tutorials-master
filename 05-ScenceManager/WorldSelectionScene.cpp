@@ -3,6 +3,7 @@
 WorldSelectionScene::WorldSelectionScene(int id, LPCWSTR filePath) :
 	CScene(id, filePath)
 {
+
 }
 #pragma region  PARSE GAME DATA
 
@@ -55,7 +56,7 @@ void WorldSelectionScene::_ParseSection_ANIMATIONS(string line)
 	LPANIMATION ani = new CAnimation();
 
 	int ani_id = atoi(tokens[0].c_str());
-	for (auto i = 1; i < tokens.size(); i += 2)	// why i+=2 ?  sprite_id | frame_time  
+	for (auto i = 1; (unsigned)i < tokens.size(); i += 2)	// why i+=2 ?  sprite_id | frame_time  
 	{
 		int sprite_id = atoi(tokens[i].c_str());
 		int frame_time = atoi(tokens[i + 1].c_str());
@@ -77,7 +78,7 @@ void WorldSelectionScene::_ParseSection_ANIMATION_SETS(string line)
 
 	CAnimations* animations = CAnimations::GetInstance();
 
-	for (int i = 1; i < tokens.size(); i++)
+	for (auto i = 1; (unsigned)i < tokens.size(); i++)
 	{
 		int ani_id = atoi(tokens[i].c_str());
 
@@ -100,8 +101,8 @@ void WorldSelectionScene::_ParseSection_OBJECTS(string line)
 	if (tokens.size() < 3) return; // skip invalid lines - an object set must have at least id, x, y
 
 	int object_type = atoi(tokens[0].c_str());
-	float x = atof(tokens[1].c_str());
-	float y = atof(tokens[2].c_str());
+	float x = (float)atof(tokens[1].c_str());
+	float y = (float)atof(tokens[2].c_str());
 
 	int ani_set_id = atoi(tokens[3].c_str());
 
@@ -179,8 +180,6 @@ void WorldSelectionScene::_ParseSection_GRID(string line)
 void WorldSelectionScene::Load()
 {
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
-
-	CGame::GetInstance()->SetTimer(0);
 
 	ifstream f;
 	f.open(sceneFilePath);
@@ -275,10 +274,10 @@ void WorldSelectionScene::Update(DWORD dt)
 
 void WorldSelectionScene::Render()
 {
-	tilemap->Draw(TILEMAP_X_OFFSET, TILEMAP_Y_OFFSET);
+	tilemap->Draw(WORLD_MAP_TILEMAP_X_OFFSET, WORLD_MAP_TILEMAP_Y_OFFSET);
 
 	//Render objects
-	for (int i = 0; i < objects.size(); i++)
+	for (auto i = 0; (unsigned)i < objects.size(); i++)
 	{
 		objects[i]->Render();
 	}
@@ -291,7 +290,7 @@ void WorldSelectionScene::Render()
 */
 void WorldSelectionScene::Unload()
 {
-	for (int i = 0; i < objects.size(); i++)
+	for (auto i = 0; (unsigned)i < objects.size(); i++)
 		delete objects[i];
 
 	objects.clear();
@@ -395,6 +394,7 @@ bool WorldSelectionScene::CheckIfCanMove(Vector2 dir)
 		else
 			return true;
 	}
+	return false;
 }
 
 void WorldSelectionScene::LoadGrid(wstring filePath)
@@ -408,9 +408,9 @@ void WorldSelectionScene::LoadGrid(wstring filePath)
 
 	vector<vector<int>> grid(grid_rows, vector<int>(grid_columns, 0));
 
-	for (size_t i = 0; i < grid_rows; i++)
+	for (auto i = 0; i < grid_rows; i++)
 	{
-		for (size_t j = 0; j < grid_columns; j++)
+		for (auto j = 0; j < grid_columns; j++)
 		{
 			fs >> grid[i][j];
 		}
@@ -425,9 +425,9 @@ void WorldSelectionScene::LoadGrid(wstring filePath)
 
 	//Find Start Node
 
-	for (size_t i = 0; i < grid_rows; i++)
+	for (auto i = 0; i < grid_rows; i++)
 	{
-		for (size_t j = 0; j < grid_columns; j++)
+		for (auto j = 0; j < grid_columns; j++)
 		{
 			if (mapGrid[i][j] == MapNode::START)
 			{

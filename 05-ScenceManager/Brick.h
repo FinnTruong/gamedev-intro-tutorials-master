@@ -16,10 +16,10 @@
 
 class Brick : public CGameObject
 {
-	float startTransformTime;
+	ULONGLONG startTransformTime;
 public:
 	Brick();
-	~Brick();
+	~Brick() {}
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();

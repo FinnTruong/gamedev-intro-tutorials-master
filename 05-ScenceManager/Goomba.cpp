@@ -106,7 +106,7 @@ void Goomba::SetState(int state)
 			break;
 		case GOOMBA_STATE_DIE_ONESHOT:
 			vx = -GOOMBA_WALKING_SPEED + 0.04f;
-			vy = -0.35;
+			vy = -0.35f;
 			break;
 	}
 }
@@ -117,7 +117,7 @@ void Goomba::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return;
 
 	//Apply Gravity
-	vy += 0.0005 * dt;
+	vy += 0.0005f * dt;
 
 	coEvents.clear();
 
@@ -187,7 +187,7 @@ void Goomba::UpdateParagoomba()
 	if (level != GOOMBA_LEVEL_PARAGOOMBA)
 		return;
 
-	float timeSinceFinishAttack = GetTickCount64() - finishAttackTime;
+	ULONGLONG timeSinceFinishAttack = GetTickCount64() - finishAttackTime;
 
 	if (IsPlayerInRange() && state != PARAGOOMBA_STATE_ATTACKING && timeSinceFinishAttack > PARAGOOMBA_ATTACK_COOLDOWN)
 	{

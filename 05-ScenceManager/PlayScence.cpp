@@ -42,8 +42,8 @@
 
 #define MAX_SCENE_LINE 1024
 
-#define TILEMAP_X_OFFSET 0
-#define TILEMAP_Y_OFFSET -162
+#define PLAY_TILEMAP_X_OFFSET 0
+#define PLAY_TILEMAP_Y_OFFSET -162
 
 #define SORTING_LAYERS_SIZE	2
 
@@ -111,7 +111,7 @@ void CPlayScene::_ParseSection_ANIMATIONS(string line)
 	LPANIMATION ani = new CAnimation();
 
 	int ani_id = atoi(tokens[0].c_str());
-	for (auto i = 1; i < tokens.size(); i += 2)	// why i+=2 ?  sprite_id | frame_time  
+	for (auto i = 1; (unsigned)i < tokens.size(); i += 2)	// why i+=2 ?  sprite_id | frame_time  
 	{
 		int sprite_id = atoi(tokens[i].c_str());
 		int frame_time = atoi(tokens[i+1].c_str());
@@ -133,7 +133,7 @@ void CPlayScene::_ParseSection_ANIMATION_SETS(string line)
 
 	CAnimations *animations = CAnimations::GetInstance();
 
-	for (int i = 1; i < tokens.size(); i++)
+	for (int i = 1; (unsigned)i < tokens.size(); i++)
 	{
 		int ani_id = atoi(tokens[i].c_str());
 		
@@ -156,8 +156,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	if (tokens.size() < 3) return; // skip invalid lines - an object set must have at least id, x, y
 
 	int object_type = atoi(tokens[0].c_str());
-	float x = atof(tokens[1].c_str());
-	float y = atof(tokens[2].c_str());
+	float x = (float)atof(tokens[1].c_str());
+	float y = (float)atof(tokens[2].c_str());
 
 	int ani_set_id = atoi(tokens[3].c_str());
 
@@ -195,32 +195,32 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	case OBJECT_TYPE_VENUS_FIRE_TRAP: 
 	{
-		int type = atof(tokens[4].c_str());
+		int type = (int)atof(tokens[4].c_str());
 		obj = new VenusFireTrap(x, y, type); 
 	}
 	break;
 
 	case OBJECT_TYPE_GROUND:
 	{
-		float width = atof(tokens[4].c_str());
-		float height= atof(tokens[5].c_str());
+		int width = (int)atof(tokens[4].c_str());
+		int height= (int)atof(tokens[5].c_str());
 		obj = new Ground(width,height);
 	}
 	break;
 
 	case OBJECT_TYPE_ONEWAYPLATFORM:
 	{
-		float width = atof(tokens[4].c_str());
-		float height = atof(tokens[5].c_str());
+		int width = (int)atof(tokens[4].c_str());
+		int height = (int)atof(tokens[5].c_str());
 		obj = new OneWayPlatform(width, height);
 	}
 	break;
 
 	case OBJECT_TYPE_PIPE:
 	{
-		float width = atof(tokens[4].c_str());
-		float height = atof(tokens[5].c_str());
-		int type = atof(tokens[6].c_str());
+		float width = (float)atof(tokens[4].c_str());
+		float height = (float)atof(tokens[5].c_str());
+		int type = (int)atof(tokens[6].c_str());
 		bool hasSecretEntrance = atof(tokens[7].c_str());
 		obj = new Pipe(width, height, type, hasSecretEntrance);
 	}
@@ -230,9 +230,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_MUSHROOM: obj = new Mushroom(x, y); break;
 	case OBJECT_TYPE_PORTAL:
 		{	
-			float r = atof(tokens[4].c_str());
-			float b = atof(tokens[5].c_str());
-			int scene_id = atoi(tokens[6].c_str());
+			float r = (float)atof(tokens[4].c_str());
+			float b = (float)atof(tokens[5].c_str());
+			int scene_id = (int)atoi(tokens[6].c_str());
 			obj = new CPortal(x, y, r, b, scene_id);
 		}
 		break;
@@ -281,7 +281,7 @@ void CPlayScene::Load()
 {
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
 
-	CGame::GetInstance()->ResetTimer();
+	startSceneTime = GetTickCount64();
 
 	ifstream f;
 	f.open(sceneFilePath);
@@ -392,24 +392,24 @@ void CPlayScene::Update(DWORD dt)
 	}
 	else if (cx + SCREEN_WIDTH >= tilemap->GetWidthTileMap())
 	{
-		cx = tilemap->GetWidthTileMap() - SCREEN_WIDTH;
+		cx = (float)tilemap->GetWidthTileMap() - SCREEN_WIDTH;
 	}
 
 	
 
 
-	CGame::GetInstance()->GetCurrentScene()->GetCamera()->SetPosition((int)cx, !Mario->inSecretRoom ? 64 : 272 + 14);
+	CGame::GetInstance()->GetCurrentScene()->GetCamera()->SetPosition((int)cx, !Mario->inSecretRoom ? 64 : 286);
 	//CGame::GetInstance()->GetCurrentScene()->GetCamera()->SetPosition(1984, SCREEN_HEIGHT + 12/*cy*/);
 }
 
 void CPlayScene::Render()
 {
-	tilemap->Draw(TILEMAP_X_OFFSET,TILEMAP_Y_OFFSET);
+	tilemap->Draw(PLAY_TILEMAP_X_OFFSET,PLAY_TILEMAP_Y_OFFSET);
 	//Render objects
 
 	for (size_t j = 0; j < SORTING_LAYERS_SIZE; j++)
 	{
-		for (int i = 0; i < objects.size(); i++)
+		for (int i = 0; (unsigned)i < objects.size(); i++)
 		{
 			if (objects[i]->sortingLayer == j)
 				objects[i]->Render();
@@ -434,7 +434,7 @@ void CPlayScene::Render()
 */
 void CPlayScene::Unload()
 {
-	for (int i = 0; i < objects.size(); i++)
+	for (int i = 0; (unsigned)i < objects.size(); i++)
 		delete objects[i];
 
 	objects.clear();
@@ -463,4 +463,10 @@ void CPlayScene::KeyState(BYTE *states)
 {
 	/*Player *mario = ((CPlayScene*)scence)->GetPlayer();*/
 	player->KeyState(states);
+}
+
+int CPlayScene::GetTimer()
+{
+	timer = (int)(MAX_PLAY_TIME - (GetTickCount64() - startSceneTime) / 1000);
+	return timer > 0 ? timer : 0;
 }

@@ -141,17 +141,17 @@ public:
 	int currentAnimation;
 	int previousState;
 
-	float releaseMoveInputTime;
-	float releaseJumpInputTime;
-	float startKickingAnimationTime;
-	float attackTime;
+	ULONGLONG releaseMoveInputTime;
+	ULONGLONG releaseJumpInputTime;
+	ULONGLONG startKickingAnimationTime;
+	ULONGLONG attackTime;
 	int facingDirection;
 
 	bool inSecretRoom;
 	bool isEnteringSecretRoom;
 	bool isExitingSecretRoom;
 
-	float abilityBar;
+	double abilityBar;
 
 	PlayerState* playerState;
 	std::unordered_map<int, bool> allow;
@@ -176,7 +176,7 @@ public:
 	void SetState(PlayerState* newState);
 	void SetLevel(int l) { level = l; }
 
-	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
+	void StartUntouchable() { untouchable = 1; untouchable_start = (DWORD)GetTickCount64(); }
 
 	void CheckCanAttack();
 

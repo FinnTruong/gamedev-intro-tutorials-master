@@ -5,8 +5,8 @@
 class Effect : public CGameObject
 {
 protected:
-	float startTime;
-	float duration;
+	ULONGLONG startTime;
+	ULONGLONG duration;
 
 	bool hasDone;
 public:

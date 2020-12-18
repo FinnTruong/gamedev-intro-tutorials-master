@@ -22,12 +22,12 @@ void Leaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	Item::Update(dt, coObjects);
 	if (isSprouting)
 		return;
-	vy = 0.026;
+	vy = 0.026f;
 
 	float timeElapsed = GetTickCount64() - spawnTime;
 
-	x = start_x + 20 * cos(0.004 * timeElapsed);
-	nx = -2 * LEAF_VELOCITY * 20 * sin(0.004 * timeElapsed);
+	x = (float)(start_x + 20 * cos(0.004 * timeElapsed));
+	nx = (int)(-2 * LEAF_VELOCITY * 20 * sin(0.004 * timeElapsed));
 	x += dx;
 	y += dy;
 

@@ -42,14 +42,14 @@ protected:
 
 	bool isGrounded;
 
-	float deadTime;
-	float timeElapsed;
+	ULONGLONG deadTime;
+	ULONGLONG timeElapsed;
 	bool hasBeenSteppedOn, hasBeenAttacked;
 	
 	//Paragoomba Variable
 	int numOfLowJump;
 	int lowJumpMax = 3;
-	float finishAttackTime;
+	ULONGLONG finishAttackTime;
 	bool highJump;
 
 public: 	

@@ -32,8 +32,8 @@
 
 #define MAX_SCENE_LINE 1024
 
-#define TILEMAP_X_OFFSET 0
-#define TILEMAP_Y_OFFSET -20
+#define WORLD_MAP_TILEMAP_X_OFFSET 0
+#define WORLD_MAP_TILEMAP_Y_OFFSET -20
 
 #define GRID_TOTAL_ROWS			9
 #define GRID_TOTAL_COLUMNS		11
@@ -47,27 +47,13 @@ protected:
 	WorldMapMario* player;			// A play scene has to have player, right? 
 
 	vector<vector<int>> mapGrid;
-	//{	
-	//	{1,	1,	3,	0,	2,	0,	2,	0,	2,	0,	2},
-	//	{1,	1,	0,	1,	1,	1,	0,	1,	1,	1,	0},
-	//	{2,	0,	2,	1,	1,	1,	2,	0,	2,	0,	2},
-	//	{1,	1,	0,	1,	1,	1,	0,	1,	1,	1,	1},
-	//	{1,	1,	2,	0,	2,	0,	2,	1,	1,	1,	1},
-	//	{1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1},
-	//	{1,	1,	2,	1,	0,	0,	0,	0,	0,	0,	0},
-	//	{1,	1,	0,	1,	1,	1,	0,	1,	1,	1,	1},
-	//	{1,	1,	2,	0,	2,	0,	2,	1,	1,	1,	1} 
-	//};
 
-	int grid_rows, grid_columns;
+	int grid_rows = 0, grid_columns = 0;
 
-	int curNodeX;
-	int curNodeY;
+	int curNodeX = 0;
+	int curNodeY = 0;
 
 	bool hasLoadGrid = false;
-
-
-	int startSceneTime;
 
 	vector<LPGAMEOBJECT> objects;
 

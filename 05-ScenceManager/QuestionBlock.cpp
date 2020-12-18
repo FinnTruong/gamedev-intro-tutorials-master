@@ -60,7 +60,7 @@ void QuestionBlock::SetState(int state)
 			if (!hasPowerUp)
 				SpawnItem();
 			y -= 12;
-			vy = 0.05;
+			vy = 0.05f;
 			hasCollided = true;
 		}
 		break;

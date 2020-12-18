@@ -31,9 +31,9 @@ void Tilemap::LoadMap()
 
 
 	int id_sprite = 0;
-	for (UINT i = 0; i < num_row_on_texture; i++)
+	for (int i = 0; i < num_row_on_texture; i++)
 	{
-		for (UINT j = 0; j < num_col_on_textture; j++)
+		for (int j = 0; j < num_col_on_textture; j++)
 		{
 			int id_SPRITE = id + id_sprite;
 			sprites->Add(id_SPRITE, tileset_width * j, tileset_height * i, tileset_width * (j + 1), tileset_height * (i + 1), texTileMap);
@@ -83,7 +83,7 @@ void Tilemap::Load()
 
 void Tilemap::Draw(int tilemap_x_offset,int tilemap_y_offset)
 {
-	float cam_x, cam_y;
+	int cam_x, cam_y;
 	CGame::GetInstance()->GetCurrentScene()->GetCamera()->GetPosition(cam_x, cam_y);
 
 	int firstcol = (int)cam_x / tileset_width;
@@ -91,12 +91,12 @@ void Tilemap::Draw(int tilemap_x_offset,int tilemap_y_offset)
 	/*lastcol = lastcol > 175 ? 175 : lastcol;*/
 
 
-	for (UINT i = 0; i < num_row_on_tilemap; i++)
+	for (int i = 0; i < num_row_on_tilemap; i++)
 	{
-		for (UINT j = firstcol; j < lastcol; j++)
+		for (int j = firstcol; j < lastcol; j++)
 		{
-			int x = tileset_width * (j - firstcol) + cam_x - (int)cam_x % tileset_width + tilemap_x_offset;
-			int y = tileset_height * i + tilemap_y_offset;
+			float x = (float)(tileset_width * (j - firstcol) + cam_x - (int)cam_x % tileset_width + tilemap_x_offset);
+			float y = (float)(tileset_height * i + tilemap_y_offset);
 			
 			if (j >= num_col_on_tilemap)
 				continue;

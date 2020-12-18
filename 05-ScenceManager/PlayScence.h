@@ -28,7 +28,7 @@ protected:
 	HUD* hud;
 	Player *player;					// A play scene has to have player, right? 
 
-	int startSceneTime;
+	ULONGLONG startSceneTime = 0;
 
 	vector<LPGAMEOBJECT> objects;	
 
@@ -48,7 +48,6 @@ public:
 	void Render();
 	void Unload();
 
-	void ResetTimer();
 	int GetTimer();
 
 	void KeyState(BYTE *states);
@@ -81,7 +80,6 @@ public:
 		return objects;
 	}
 
-	friend class CPlayScenceKeyHandler;
 };
 
 //class CPlayScenceKeyHandler : public CScenceKeyHandler

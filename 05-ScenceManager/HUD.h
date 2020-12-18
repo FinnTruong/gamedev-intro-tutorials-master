@@ -11,7 +11,6 @@ public:
 	void Load();
 	void Draw();
 
-	void DrawBackground();
 	void DrawCard();
 	void DrawScore();
 	void DrawTimer();

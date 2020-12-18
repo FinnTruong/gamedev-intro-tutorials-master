@@ -17,9 +17,6 @@
     <Filter Include="Game Objects\Enemy">
       <UniqueIdentifier>{a03a1d2f-1f11-4c01-bded-984a093acea0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game Objects\Object">
-      <UniqueIdentifier>{dea7c69d-3f33-4426-af5b-f549ae9bf09c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game Component\Scene">
       <UniqueIdentifier>{1818b5ed-7b0e-4d4e-9d97-586cee23b053}</UniqueIdentifier>
     </Filter>
@@ -28,15 +25,6 @@
     </Filter>
     <Filter Include="Game Objects\Item">
       <UniqueIdentifier>{0cb206ba-4adf-487d-87b2-927b6079c922}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game Objects\Object\Platform">
-      <UniqueIdentifier>{f7b830ad-961f-4c53-88a2-6a1b43a82e19}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game Objects\Object\Projectile">
-      <UniqueIdentifier>{1af29866-c028-4f61-9ddb-252a3397930a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game Objects\Object\PlayerWeapon">
-      <UniqueIdentifier>{e55661e3-4a33-436c-860b-7f04ac9a2b24}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game Objects\Player\PlayerStateMachine">
       <UniqueIdentifier>{53d367cc-75c5-4275-8083-7aac4bb19874}</UniqueIdentifier>
@@ -53,11 +41,26 @@
     <Filter Include="Game Component\HUD">
       <UniqueIdentifier>{2fbc849f-0ef2-44ff-a94a-d6b4e8193d03}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Objects\VFX">
+      <UniqueIdentifier>{309c5b9a-9a5e-4a82-87a4-36f00e616867}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Game Objects\World Map Objects">
       <UniqueIdentifier>{8ca0d5ef-b1c2-4701-adf3-d6dc0292ce65}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game Objects\VFX">
-      <UniqueIdentifier>{309c5b9a-9a5e-4a82-87a4-36f00e616867}</UniqueIdentifier>
+    <Filter Include="Game Objects\Intro Objects">
+      <UniqueIdentifier>{82b3492d-edd8-438c-a93f-902e78b265de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\PlayScene Objects">
+      <UniqueIdentifier>{dea7c69d-3f33-4426-af5b-f549ae9bf09c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\PlayScene Objects\Platform">
+      <UniqueIdentifier>{f7b830ad-961f-4c53-88a2-6a1b43a82e19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\PlayScene Objects\Projectile">
+      <UniqueIdentifier>{1af29866-c028-4f61-9ddb-252a3397930a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\PlayScene Objects\PlayerWeapon">
+      <UniqueIdentifier>{e55661e3-4a33-436c-860b-7f04ac9a2b24}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -98,19 +101,19 @@
       <Filter>Game Component\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Projectile.cpp">
-      <Filter>Game Objects\Object\Projectile</Filter>
+      <Filter>Game Objects\PlayScene Objects\Projectile</Filter>
     </ClCompile>
     <ClCompile Include="Fireball.cpp">
-      <Filter>Game Objects\Object\Projectile</Filter>
+      <Filter>Game Objects\PlayScene Objects\Projectile</Filter>
     </ClCompile>
     <ClCompile Include="Tilemap.cpp">
       <Filter>Game Component\Map</Filter>
     </ClCompile>
     <ClCompile Include="Ground.cpp">
-      <Filter>Game Objects\Object\Platform</Filter>
+      <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClCompile>
     <ClCompile Include="OneWayPlatform.cpp">
-      <Filter>Game Objects\Object\Platform</Filter>
+      <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClCompile>
     <ClCompile Include="Leaf.cpp">
       <Filter>Game Objects\Item</Filter>
@@ -128,7 +131,7 @@
       <Filter>Game Objects\Item</Filter>
     </ClCompile>
     <ClCompile Include="Portal.cpp">
-      <Filter>Game Objects\Object\Platform</Filter>
+      <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClCompile>
     <ClCompile Include="PlayerAttackingState.cpp">
       <Filter>Game Objects\Player\PlayerStateMachine</Filter>
@@ -173,7 +176,7 @@
       <Filter>Game Objects\Enemy\Piranha Plant</Filter>
     </ClCompile>
     <ClCompile Include="VenusFireball.cpp">
-      <Filter>Game Objects\Object\Projectile</Filter>
+      <Filter>Game Objects\PlayScene Objects\Projectile</Filter>
     </ClCompile>
     <ClCompile Include="Paragoomba.cpp">
       <Filter>Game Objects\Enemy\Goomba</Filter>
@@ -191,7 +194,7 @@
       <Filter>Game Component\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Pipe.cpp">
-      <Filter>Game Objects\Object\Platform</Filter>
+      <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClCompile>
     <ClCompile Include="WorldSelectionScene.cpp">
       <Filter>Game Component\Scene</Filter>
@@ -218,16 +221,31 @@
       <Filter>Game Objects\VFX</Filter>
     </ClCompile>
     <ClCompile Include="QuestionBlock.cpp">
-      <Filter>Game Objects\Object\Platform</Filter>
+      <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClCompile>
     <ClCompile Include="PBlock.cpp">
-      <Filter>Game Objects\Object\Platform</Filter>
+      <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClCompile>
     <ClCompile Include="Brick.cpp">
-      <Filter>Game Objects\Object\Platform</Filter>
+      <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClCompile>
     <ClCompile Include="PSwitch.cpp">
       <Filter>Game Objects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroScene.cpp">
+      <Filter>Game Component\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Curtain.cpp">
+      <Filter>Game Objects\Intro Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Floor.cpp">
+      <Filter>Game Objects\Intro Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>Game Objects\Intro Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>Game Objects\Intro Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -268,19 +286,19 @@
       <Filter>Game Component\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Projectile.h">
-      <Filter>Game Objects\Object\Projectile</Filter>
+      <Filter>Game Objects\PlayScene Objects\Projectile</Filter>
     </ClInclude>
     <ClInclude Include="Fireball.h">
-      <Filter>Game Objects\Object\Projectile</Filter>
+      <Filter>Game Objects\PlayScene Objects\Projectile</Filter>
     </ClInclude>
     <ClInclude Include="Tilemap.h">
       <Filter>Game Component\Map</Filter>
     </ClInclude>
     <ClInclude Include="Ground.h">
-      <Filter>Game Objects\Object\Platform</Filter>
+      <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClInclude>
     <ClInclude Include="OneWayPlatform.h">
-      <Filter>Game Objects\Object\Platform</Filter>
+      <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClInclude>
     <ClInclude Include="Leaf.h">
       <Filter>Game Objects\Item</Filter>
@@ -301,7 +319,7 @@
       <Filter>Game Objects\Item</Filter>
     </ClInclude>
     <ClInclude Include="Portal.h">
-      <Filter>Game Objects\Object\Platform</Filter>
+      <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClInclude>
     <ClInclude Include="PlayerAttackingState.h">
       <Filter>Game Objects\Player\PlayerStateMachine</Filter>
@@ -349,7 +367,7 @@
       <Filter>Game Objects\Enemy\Piranha Plant</Filter>
     </ClInclude>
     <ClInclude Include="VenusFireball.h">
-      <Filter>Game Objects\Object\Projectile</Filter>
+      <Filter>Game Objects\PlayScene Objects\Projectile</Filter>
     </ClInclude>
     <ClInclude Include="Paragoomba.h">
       <Filter>Game Objects\Enemy\Goomba</Filter>
@@ -364,7 +382,7 @@
       <Filter>Game Objects\Enemy\Koopa</Filter>
     </ClInclude>
     <ClInclude Include="Pipe.h">
-      <Filter>Game Objects\Object\Platform</Filter>
+      <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClInclude>
     <ClInclude Include="WorldSelectionScene.h">
       <Filter>Game Component\Scene</Filter>
@@ -391,16 +409,31 @@
       <Filter>Game Objects\VFX</Filter>
     </ClInclude>
     <ClInclude Include="QuestionBlock.h">
-      <Filter>Game Objects\Object\Platform</Filter>
+      <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClInclude>
     <ClInclude Include="PBlock.h">
-      <Filter>Game Objects\Object\Platform</Filter>
+      <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClInclude>
     <ClInclude Include="Brick.h">
-      <Filter>Game Objects\Object\Platform</Filter>
+      <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClInclude>
     <ClInclude Include="PSwitch.h">
       <Filter>Game Objects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroScene.h">
+      <Filter>Game Component\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Curtain.h">
+      <Filter>Game Objects\Intro Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Floor.h">
+      <Filter>Game Objects\Intro Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>Game Objects\Intro Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Title.h">
+      <Filter>Game Objects\Intro Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

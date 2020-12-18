@@ -22,7 +22,7 @@ void PlayerFallingState::Update(DWORD dt)
 
 	if (Mario->vy < 0)
 	{
-		Mario->vy += 0.0005 * dt;
+		Mario->vy += 0.0005f * dt;
 	}
 
 	if (Mario->vy == 0)

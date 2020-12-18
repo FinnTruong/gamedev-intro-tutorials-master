@@ -170,8 +170,8 @@ LPCOLLISIONEVENT CGameObject::SweptAABBEx(LPGAMEOBJECT coO)
 
 bool CGameObject::IsOverlapped(LPGAMEOBJECT other) 
 {
-	D3DXVECTOR2 boundingBoxSize = D3DXVECTOR2(boundingBox.right - boundingBox.left, boundingBox.bottom - boundingBox.top);
-	D3DXVECTOR2 otherBoundingBoxSize = D3DXVECTOR2(other->boundingBox.right - other->boundingBox.left, other->boundingBox.bottom - other->boundingBox.top);
+	D3DXVECTOR2 boundingBoxSize = D3DXVECTOR2((float)(boundingBox.right - boundingBox.left), (float)(boundingBox.bottom - boundingBox.top));
+	D3DXVECTOR2 otherBoundingBoxSize = D3DXVECTOR2((float)(other->boundingBox.right - other->boundingBox.left), (float)(other->boundingBox.bottom - other->boundingBox.top));
 	return (abs(x - other->x) < (boundingBoxSize.x + otherBoundingBoxSize.x) / 2)
 		&& abs(y - other->y) < (boundingBoxSize.y + otherBoundingBoxSize.y) / 2;
 	

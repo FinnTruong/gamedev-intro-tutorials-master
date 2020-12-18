@@ -6,14 +6,14 @@
 #include "GameGlobal.h"
 class Camera
 {
-	float cam_x, cam_y;
+	int cam_x, cam_y;
 public:
 	Camera();
 	~Camera();
 
 	void Update();
-	void SetPosition(float posX, float posY) { cam_x = posX; cam_y = posY; }
-	void GetPosition(float& posX, float& posY) { posX = cam_x; posY = cam_y; }
+	void SetPosition(int posX, int posY) { cam_x = posX; cam_y = posY; }
+	void GetPosition(int& posX, int& posY) { posX = cam_x; posY = cam_y; }
 
-	Vector2 ViewportToWorld(float& x, float& y) { return Vector2(x + cam_x, y + cam_y); }
+	Vector2 ViewportToWorld(float& x, float& y) { return Vector2((float)(x + cam_x), (float)(y + cam_y)); }
 };

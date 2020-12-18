@@ -12,7 +12,7 @@
 class Pipe: public CGameObject
 {
 	int type;
-	int width, height;
+	float width, height;
 
 public:
 	bool secretEntrance = false;

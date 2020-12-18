@@ -59,7 +59,7 @@ void PBlock::SetState(int state)
 		if (!isEmpty)
 		{
 			y -= 12;
-			vy = 0.05;
+			vy = 0.05f;
 			isEmpty = true;
 		}
 		break;

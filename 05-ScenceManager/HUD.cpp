@@ -14,7 +14,6 @@ void HUD::Load()
 
 void HUD::Draw()
 {
-	DrawBackground();
 	DrawCard();
 	DrawScore();
 	DrawSpeedBar();
@@ -22,25 +21,11 @@ void HUD::Draw()
 	DrawTimer();
 }
 
-void HUD::DrawBackground()
-{
-	LPDIRECT3DTEXTURE9 tex = CTextureDatabase::GetInstance()->Get(-200);
 
-	float cam_x, cam_y;
-	CGame::GetInstance()->GetCurrentScene()->GetCamera()->GetPosition(cam_x, cam_y);
-
-	RECT size;
-	size.left = 0;
-	size.top = 0;
-	size.right = size.left + SCREEN_WIDTH;
-	size.bottom = size.top + 100;
-
-	CGame::GetInstance()->Draw(0, cam_x, cam_y + 192, tex, size.left, size.top, size.right, size.bottom);
-}
 
 void HUD::DrawCard()
 {
-	float cam_x, cam_y;
+	int cam_x, cam_y;
 	CGame::GetInstance()->GetCurrentScene()->GetCamera()->GetPosition(cam_x, cam_y);
 
 	auto sprites = CSpriteDatabase::GetInstance();
@@ -57,7 +42,7 @@ void HUD::DrawCard()
 
 void HUD::DrawScore()
 {
-	float cam_x, cam_y;
+	int cam_x, cam_y;
 	CGame::GetInstance()->GetCurrentScene()->GetCamera()->GetPosition(cam_x, cam_y);
 
 	auto sprites = CSpriteDatabase::GetInstance();
@@ -84,7 +69,7 @@ void HUD::DrawScore()
 
 void HUD::DrawTags()
 {
-	float cam_x, cam_y;
+	int cam_x, cam_y;
 	CGame::GetInstance()->GetCurrentScene()->GetCamera()->GetPosition(cam_x, cam_y);
 
 	auto sprites = CSpriteDatabase::GetInstance();
@@ -98,13 +83,13 @@ void HUD::DrawTags()
 
 void HUD::DrawTimer()
 {
-	float cam_x, cam_y;
+	int cam_x, cam_y;
 	CGame::GetInstance()->GetCurrentScene()->GetCamera()->GetPosition(cam_x, cam_y);
 
 	auto sprites = CSpriteDatabase::GetInstance();
 	LPSPRITE num = sprites->Get(0);
 
-	int time = CGame::GetInstance()->GetTimer();
+	int time = CGame::GetInstance()->GetCurrentScene()->GetTimer();
 	string scoreString = NumberToString(time, 3);
 	for (size_t i = 0; i < scoreString.length(); i++)
 	{
@@ -125,7 +110,7 @@ void HUD::DrawTimer()
 
 void HUD::DrawSpeedBar()
 {
-	float cam_x, cam_y;
+	int cam_x, cam_y;
 	CGame::GetInstance()->GetCurrentScene()->GetCamera()->GetPosition(cam_x, cam_y);
 
 	auto sprites = CSpriteDatabase::GetInstance();

@@ -45,7 +45,7 @@ void PiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//ATTACK
 	if (delta == plantHeight && vy == 0)
 	{
-		float dt = GetTickCount64() - attackTime;
+		ULONGLONG dt = GetTickCount64() - attackTime;
 		//DELAY BEFORE ATTACK
 		if (dt > PIRANHA_ATTACK_TIME / 2 && !hasAttacked)
 		{
@@ -71,7 +71,7 @@ void PiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	//CHECK COOLDOWN
 
-	float cooldownTimer = GetTickCount64() - cooldownTime;
+	ULONGLONG cooldownTimer = GetTickCount64() - cooldownTime;
 	if (cooldownTimer > PIRANHA_COOLDOWN_TIME && isCoolingDown)
 	{		
 		isCoolingDown = false;		
@@ -116,5 +116,5 @@ void PiranhaPlant::Attack()
 bool PiranhaPlant::IsPlayerInRange()
 {
 	float distanceToPlayer = abs(x - Mario->x);
-	return (distanceToPlayer >= MIN_DISTANCE_TO_PLAYER && distanceToPlayer <= MAX_DISTANCE_TO_PLAYER);
+	return (distanceToPlayer >= PIRANHA_MIN_DISTANCE_TO_PLAYER && distanceToPlayer <= PIRANHA_MAX_DISTANCE_TO_PLAYER);
 }

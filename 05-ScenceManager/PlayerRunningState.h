@@ -9,7 +9,7 @@ public:
 	void HandleKeyboard(DWORD dt);
 	void UpdateAnimation();
 
-	float moveInput;
+	int moveInput;
 	bool isSkiding;
 	float previousSpeed;
 };

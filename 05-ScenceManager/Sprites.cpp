@@ -24,8 +24,8 @@ void CSprite::Draw(int direction,float x, float y, int alpha)
 {
 	CGame * game = CGame::GetInstance();
 
-	float width = right - left;
-	float height = bottom - top;
+	float width = (float)right - left;
+	float height = (float)bottom - top;
 
    	game->Draw(direction, x, y, texture, left, top, right, bottom, alpha);
 }

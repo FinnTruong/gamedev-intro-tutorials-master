@@ -12,6 +12,9 @@ protected:
 	
 	Camera* camera;
 
+	int timer;
+	int maxPlayTime;
+
 public: 
 	CScene(int id, LPCWSTR filePath);
 
@@ -24,5 +27,6 @@ public:
 	virtual void OnKeyUp(int KeyCode) = 0;
 
 	Camera* GetCamera() { return camera;}
+	virtual int GetTimer() { return 0; }
 };
 typedef CScene * LPSCENE;

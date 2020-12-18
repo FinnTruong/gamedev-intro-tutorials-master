@@ -51,7 +51,7 @@ void KoopaTroopa::GetBoundingBox(float& left, float& top, float& right, float& b
 
 void KoopaTroopa::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	vy += 0.0005 * dt;
+	vy += 0.0005f * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -139,7 +139,7 @@ void KoopaTroopa::SetState(int state)
 		break;
 
 	case KOOPA_STATE_SPIN:
-		vx = -nx * 0.1;
+		vx = -nx * 0.1f;
 		break;
 	case KOOPA_STATE_DIE:
 		vx = -KOOPA_WALKING_SPEED + 0.04f;
