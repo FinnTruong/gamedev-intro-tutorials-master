@@ -20,6 +20,40 @@
 #include "HUD.h"
 #include "Pipe.h"
 
+#define SCENE_SECTION_UNKNOWN -1
+#define SCENE_SECTION_TEXTURES 2
+#define SCENE_SECTION_SPRITES 3
+#define SCENE_SECTION_ANIMATIONS 4
+#define SCENE_SECTION_ANIMATION_SETS	5
+#define SCENE_SECTION_OBJECTS	6
+#define SCENE_SECTION_TILEMAP	7
+
+#define OBJECT_TYPE_MARIO					0
+#define OBJECT_TYPE_GROUND					1
+#define OBJECT_TYPE_QUESTION_BLOCK					2
+#define OBJECT_TYPE_ONEWAYPLATFORM			3
+#define OBJECT_TYPE_GOOMBA					4
+#define OBJECT_TYPE_KOOPAS					5
+#define OBJECT_TYPE_FIREBALL				6
+#define OBJECT_TYPE_LEAF					7
+#define OBJECT_TYPE_COIN					8
+#define OBJECT_TYPE_MUSHROOM				9
+#define OBJECT_TYPE_FLOWER					10
+#define OBJECT_TYPE_PIRANHA_PLANT			11
+#define OBJECT_TYPE_VENUS_FIRE_TRAP			12
+#define OBJECT_TYPE_PARAGOOMBA				13
+#define OBJECT_TYPE_PIPE					14
+#define OBJECT_TYPE_BRICK					15
+#define OBJECT_TYPE_P_BLOCK					16
+
+#define OBJECT_TYPE_PORTAL	50
+
+#define MAX_SCENE_LINE 1024
+
+#define PLAY_TILEMAP_X_OFFSET 0
+#define PLAY_TILEMAP_Y_OFFSET -162
+
+#define SORTING_LAYERS_SIZE	2
 
 class CPlayScene: public CScene
 {
@@ -48,7 +82,6 @@ public:
 	void Render();
 	void Unload();
 
-	int GetTimer();
 
 	void KeyState(BYTE *states);
 	void OnKeyDown(int KeyCode);
@@ -73,6 +106,8 @@ public:
 		}
 	}
 
+	int GetTimer();
+	Tilemap* GetTilemap() { return tilemap; }
 	Player * GetPlayer() { return player; } 
 
 	vector<LPGAMEOBJECT> GetObjList()

@@ -106,7 +106,7 @@ void Goomba::SetState(int state)
 			break;
 		case GOOMBA_STATE_DIE_ONESHOT:
 			vx = -GOOMBA_WALKING_SPEED + 0.04f;
-			vy = -0.35f;
+			vy = -0.2f;
 			break;
 	}
 }

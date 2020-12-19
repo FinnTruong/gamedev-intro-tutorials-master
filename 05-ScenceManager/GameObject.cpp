@@ -12,7 +12,14 @@
 CGameObject::CGameObject()
 {
 	x = y = 0;
+	start_x = start_y = 0;
 	vx = vy = 0;
+	dx = dy = 0;
+	state = 0;
+	tag = Tag::NONE;
+	boundingBox.left = boundingBox.right = boundingBox.top = boundingBox.bottom = 0;
+	animation_set = 0;
+	dt = 0;
 	nx = 1;	
 	isActive = true;
 	isTrigger = false;

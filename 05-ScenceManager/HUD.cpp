@@ -14,6 +14,7 @@ void HUD::Load()
 
 void HUD::Draw()
 {
+	DrawBackground();
 	DrawCard();
 	DrawScore();
 	DrawSpeedBar();
@@ -21,7 +22,21 @@ void HUD::Draw()
 	DrawTimer();
 }
 
+void HUD::DrawBackground()
+{
+	LPDIRECT3DTEXTURE9 tex = CTextureDatabase::GetInstance()->Get(-200);
 
+	int cam_x, cam_y;
+	CGame::GetInstance()->GetCurrentScene()->GetCamera()->GetPosition(cam_x, cam_y);
+
+	RECT size;
+	size.left = 0;
+	size.top = 0;
+	size.right = size.left + SCREEN_WIDTH;
+	size.bottom = size.top + 100;
+
+	CGame::GetInstance()->Draw(0, cam_x, cam_y + 192, tex, size.left, size.top, size.right, size.bottom);
+}
 
 void HUD::DrawCard()
 {
@@ -56,7 +71,7 @@ void HUD::DrawScore()
 		if (scoreString[i] == ' ')
 			continue;
 
-		for (size_t j = 0; j < 10; j++)
+		for (int j = 0; j < 10; j++)
 		{
 			if (scoreString[i] == 48 + j)
 			{
@@ -91,13 +106,13 @@ void HUD::DrawTimer()
 
 	int time = CGame::GetInstance()->GetCurrentScene()->GetTimer();
 	string scoreString = NumberToString(time, 3);
-	for (size_t i = 0; i < scoreString.length(); i++)
+	for (int i = 0; (unsigned)i < scoreString.length(); i++)
 	{
 
 		if (scoreString[i] == ' ')
 			continue;
 
-		for (size_t j = 0; j < 10; j++)
+		for (int j = 0; j < 10; j++)
 		{
 			if (scoreString[i] == 48 + j)
 			{

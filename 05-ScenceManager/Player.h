@@ -18,7 +18,7 @@
 #define MARIO_SKID_ACCELERATION		0.00204f
 
 #define MARIO_JUMP_SPEED_Y		0.23f
-#define MARIO_JUMP_DEFLECT_SPEED 0.2f
+#define MARIO_JUMP_DEFLECT_SPEED 0.15f
 #define MARIO_GRAVITY			0.0004f
 #define MARIO_DIE_DEFLECT_SPEED	 0.5f
 #define MARIO_ACCELERATION_MULTIPLIER	 0.005f
@@ -130,26 +130,28 @@ public:
 	static Player* GetInstance();
 
 
-	bool isFlip;
-	bool isGrounded;
-	bool isAttacking;
-	bool isKicking;
-	bool isFlying;
-	bool isSlowFalling;
-
-	int level;
-	int currentAnimation;
-	int previousState;
-
-	ULONGLONG releaseMoveInputTime;
-	ULONGLONG releaseJumpInputTime;
-	ULONGLONG startKickingAnimationTime;
-	ULONGLONG attackTime;
-	int facingDirection;
+	bool isFlip = false;
+	bool isGrounded = false;
+	bool isAttacking = false;
+	bool isKicking = false;
+	bool isFlying = false;
+	bool isSlowFalling = false;
 
 	bool inSecretRoom;
 	bool isEnteringSecretRoom;
 	bool isExitingSecretRoom;
+
+	int level;
+	int currentAnimation = 0;
+	int previousState = 0;
+
+	ULONGLONG releaseMoveInputTime = 0;
+	ULONGLONG releaseJumpInputTime = 0;
+	ULONGLONG startKickingAnimationTime = 0;
+	ULONGLONG attackTime = 0;
+	int facingDirection = 1;
+
+
 
 	double abilityBar;
 

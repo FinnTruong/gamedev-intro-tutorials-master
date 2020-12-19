@@ -24,6 +24,7 @@ extern std::unordered_map<int, bool> keyCode;
 
 enum class Tag
 {
+	NONE,
 	PLAYER,
 	GROUND,
 	PIPE,

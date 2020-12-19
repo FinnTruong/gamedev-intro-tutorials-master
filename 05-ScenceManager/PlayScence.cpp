@@ -12,40 +12,7 @@
 #include "Brick.h"
 #include "PBlock.h"
 
-#define SCENE_SECTION_UNKNOWN -1
-#define SCENE_SECTION_TEXTURES 2
-#define SCENE_SECTION_SPRITES 3
-#define SCENE_SECTION_ANIMATIONS 4
-#define SCENE_SECTION_ANIMATION_SETS	5
-#define SCENE_SECTION_OBJECTS	6
-#define SCENE_SECTION_TILEMAP	7
 
-#define OBJECT_TYPE_MARIO					0
-#define OBJECT_TYPE_GROUND					1
-#define OBJECT_TYPE_QUESTION_BLOCK					2
-#define OBJECT_TYPE_ONEWAYPLATFORM			3
-#define OBJECT_TYPE_GOOMBA					4
-#define OBJECT_TYPE_KOOPAS					5
-#define OBJECT_TYPE_FIREBALL				6
-#define OBJECT_TYPE_LEAF					7
-#define OBJECT_TYPE_COIN					8
-#define OBJECT_TYPE_MUSHROOM				9
-#define OBJECT_TYPE_FLOWER					10
-#define OBJECT_TYPE_PIRANHA_PLANT			11
-#define OBJECT_TYPE_VENUS_FIRE_TRAP			12
-#define OBJECT_TYPE_PARAGOOMBA				13
-#define OBJECT_TYPE_PIPE					14
-#define OBJECT_TYPE_BRICK					15
-#define OBJECT_TYPE_P_BLOCK					16
-
-#define OBJECT_TYPE_PORTAL	50
-
-#define MAX_SCENE_LINE 1024
-
-#define PLAY_TILEMAP_X_OFFSET 0
-#define PLAY_TILEMAP_Y_OFFSET -162
-
-#define SORTING_LAYERS_SIZE	2
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 	CScene(id, filePath)
@@ -379,26 +346,27 @@ void CPlayScene::Update(DWORD dt)
 	if (player == NULL) return; 
 
 	// Update camera to follow mario
-	float cx, cy;
-	player->GetPosition(cx, cy);
+	camera->Update(dt);
+	//float cx, cy;
+	//player->GetPosition(cx, cy);
 
-	CGame *game = CGame::GetInstance();
-	cx -= game->GetScreenWidth() / 2;
-	cy -= game->GetScreenHeight() / 2;
+	//CGame *game = CGame::GetInstance();
+	//cx -= game->GetScreenWidth() / 2;
+	//cy -= game->GetScreenHeight() / 2;
 
-	if (cx <= 0)
-	{
-		cx = 0;
-	}
-	else if (cx + SCREEN_WIDTH >= tilemap->GetWidthTileMap())
-	{
-		cx = (float)tilemap->GetWidthTileMap() - SCREEN_WIDTH;
-	}
+	//if (cx <= 0)
+	//{
+	//	cx = 0;
+	//}
+	//else if (cx + SCREEN_WIDTH >= tilemap->GetWidthTileMap())
+	//{
+	//	cx = (float)tilemap->GetWidthTileMap() - SCREEN_WIDTH;
+	//}
 
-	
+	//
 
 
-	CGame::GetInstance()->GetCurrentScene()->GetCamera()->SetPosition((int)cx, !Mario->inSecretRoom ? 64 : 286);
+	//CGame::GetInstance()->GetCurrentScene()->GetCamera()->SetPosition((int)cx, !Mario->inSecretRoom ? 64 : 286);
 	//CGame::GetInstance()->GetCurrentScene()->GetCamera()->SetPosition(1984, SCREEN_HEIGHT + 12/*cy*/);
 }
 

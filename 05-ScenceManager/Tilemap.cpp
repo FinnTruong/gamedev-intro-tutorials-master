@@ -108,9 +108,12 @@ void Tilemap::Draw(int tilemap_x_offset,int tilemap_y_offset)
 
 int Tilemap::GetWidthTileMap()
 {
-
 	return num_col_on_tilemap * tileset_width;
+}
 
+int Tilemap::GetHeightTileMap()
+{
+	return num_row_on_tilemap * tileset_height;
 }
 
 Tilemap::~Tilemap()

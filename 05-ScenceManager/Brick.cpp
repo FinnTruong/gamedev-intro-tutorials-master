@@ -104,6 +104,7 @@ void Brick::OnOverlapped(LPGAMEOBJECT obj)
 		DebugOut(L"Hit");
 		//Disable Brick
 		SetActive(false);
+		DisableGameObject();
 		//Play Effect
 	}
 }

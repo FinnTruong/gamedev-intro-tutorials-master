@@ -591,6 +591,7 @@ void Player::OnKeyDown(int keyCode)
 			attackTime = GetTickCount64();
 			if (level == MARIO_LEVEL_RACCOON)			
 			{
+				isAttacking = true;
 				tail->ActivateGameObject();
 				SetState(new PlayerAttackingState());
 				return;
@@ -682,7 +683,11 @@ void Player::Render()
 		alpha = 128;
 
 	if (level == MARIO_LEVEL_RACCOON && nx == 1 && currentAnimation != MARIO_ANI_RACCOON_ATTACKING)
+		animation_set->at(currentAnimation)->Render(nx, x - 6, y, alpha);	
+	else if (nx == -1 && animation_set->at(MARIO_ANI_RACCOON_ATTACKING)->GetCurrentFrame() == 1)
+	{
 		animation_set->at(currentAnimation)->Render(nx, x - 6, y, alpha);
+	}
 	else
  		animation_set->at(currentAnimation)->Render(nx, x, y, alpha);
 
