@@ -18,7 +18,6 @@ Camera::Camera()
 
 void Camera::Update(DWORD dt)
 {
-	float cx, cy;
 	CheckBoundaries(dt, cam_x, cam_y);
 
 	if (Mario->isFlying)

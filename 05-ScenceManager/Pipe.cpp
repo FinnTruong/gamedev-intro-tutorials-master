@@ -7,6 +7,7 @@ Pipe::Pipe(float w, float h, int pipeType, bool hasSecretEntrance)
 	height = h;
 	type = pipeType;
 	secretEntrance = hasSecretEntrance;
+	sortingLayer = 1;
 }
 
 void Pipe::GetBoundingBox(float& l, float& t, float& r, float& b)

@@ -15,8 +15,18 @@ VenusFireTrap::VenusFireTrap(float posX, float posY, int venusType) : PiranhaPla
 	plantHeight = VENUS_HEIGHT;
 }
 
+void VenusFireTrap::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+	left = x;
+	top = y;
+	right = x + VENUS_WIDTH;
+	bottom = y + VENUS_HEIGHT;
+}
+
+
 void VenusFireTrap::Render()
 {
+	RenderBoundingBox();
 	int ani = VENUS_ANI_IDLE_DOWN_RED;
 	if (type == VenusType::VENUS_RED)
 	{

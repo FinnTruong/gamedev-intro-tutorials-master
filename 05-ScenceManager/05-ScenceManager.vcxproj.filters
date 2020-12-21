@@ -11,32 +11,11 @@
     <Filter Include="Game Objects">
       <UniqueIdentifier>{b4abbde6-7b57-4c95-91ac-808ccf612938}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game Objects\Player">
-      <UniqueIdentifier>{1f13fd44-4ee2-405c-a254-458dde4f32d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game Objects\Enemy">
-      <UniqueIdentifier>{a03a1d2f-1f11-4c01-bded-984a093acea0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game Component\Scene">
       <UniqueIdentifier>{1818b5ed-7b0e-4d4e-9d97-586cee23b053}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game Component\Map">
       <UniqueIdentifier>{4dc13cf5-3ecb-4857-942d-b06907174d27}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game Objects\Item">
-      <UniqueIdentifier>{0cb206ba-4adf-487d-87b2-927b6079c922}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game Objects\Player\PlayerStateMachine">
-      <UniqueIdentifier>{53d367cc-75c5-4275-8083-7aac4bb19874}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game Objects\Enemy\Goomba">
-      <UniqueIdentifier>{3812098a-710d-4859-8465-35ec3365a253}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game Objects\Enemy\Koopa">
-      <UniqueIdentifier>{7dff5416-5169-4d26-8263-256b8f69640a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game Objects\Enemy\Piranha Plant">
-      <UniqueIdentifier>{e07b82e8-539b-414a-88a2-3d44ee68f95d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game Component\HUD">
       <UniqueIdentifier>{2fbc849f-0ef2-44ff-a94a-d6b4e8193d03}</UniqueIdentifier>
@@ -59,8 +38,26 @@
     <Filter Include="Game Objects\PlayScene Objects\Projectile">
       <UniqueIdentifier>{1af29866-c028-4f61-9ddb-252a3397930a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game Objects\PlayScene Objects\PlayerWeapon">
-      <UniqueIdentifier>{e55661e3-4a33-436c-860b-7f04ac9a2b24}</UniqueIdentifier>
+    <Filter Include="Game Objects\PlayScene Objects\Item">
+      <UniqueIdentifier>{0cb206ba-4adf-487d-87b2-927b6079c922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\PlayScene Objects\Enemy">
+      <UniqueIdentifier>{a03a1d2f-1f11-4c01-bded-984a093acea0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\PlayScene Objects\Enemy\Goomba">
+      <UniqueIdentifier>{3812098a-710d-4859-8465-35ec3365a253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\PlayScene Objects\Enemy\Koopa">
+      <UniqueIdentifier>{7dff5416-5169-4d26-8263-256b8f69640a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\PlayScene Objects\Enemy\Piranha Plant">
+      <UniqueIdentifier>{e07b82e8-539b-414a-88a2-3d44ee68f95d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\PlayScene Objects\Player">
+      <UniqueIdentifier>{1f13fd44-4ee2-405c-a254-458dde4f32d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\PlayScene Objects\Player\PlayerStateMachine">
+      <UniqueIdentifier>{53d367cc-75c5-4275-8083-7aac4bb19874}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -77,7 +74,7 @@
       <Filter>Game Component</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Game Objects\Player</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player</Filter>
     </ClCompile>
     <ClCompile Include="Sprites.cpp">
       <Filter>Game Graphics</Filter>
@@ -116,79 +113,79 @@
       <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClCompile>
     <ClCompile Include="Leaf.cpp">
-      <Filter>Game Objects\Item</Filter>
+      <Filter>Game Objects\PlayScene Objects\Item</Filter>
     </ClCompile>
     <ClCompile Include="Mushroom.cpp">
-      <Filter>Game Objects\Item</Filter>
+      <Filter>Game Objects\PlayScene Objects\Item</Filter>
     </ClCompile>
     <ClCompile Include="Coin.cpp">
-      <Filter>Game Objects\Item</Filter>
+      <Filter>Game Objects\PlayScene Objects\Item</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
-      <Filter>Game Objects\Item</Filter>
+      <Filter>Game Objects\PlayScene Objects\Item</Filter>
     </ClCompile>
     <ClCompile Include="Flower.cpp">
-      <Filter>Game Objects\Item</Filter>
+      <Filter>Game Objects\PlayScene Objects\Item</Filter>
     </ClCompile>
     <ClCompile Include="Portal.cpp">
       <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClCompile>
     <ClCompile Include="PlayerAttackingState.cpp">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="PlayerCrouchingState.cpp">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="PlayerFallingState.cpp">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="PlayerFlyingState.cpp">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="PlayerIdleState.cpp">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="PlayerJumpingState.cpp">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="PlayerRunningMaxState.cpp">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="PlayerRunningState.cpp">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="PlayerSkiddingState.cpp">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="PlayerWalkingState.cpp">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="Tail.cpp">
-      <Filter>Game Objects\Player</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player</Filter>
     </ClCompile>
     <ClCompile Include="PiranhaPlant.cpp">
-      <Filter>Game Objects\Enemy\Piranha Plant</Filter>
+      <Filter>Game Objects\PlayScene Objects\Enemy\Piranha Plant</Filter>
     </ClCompile>
     <ClCompile Include="Goomba.cpp">
-      <Filter>Game Objects\Enemy\Goomba</Filter>
+      <Filter>Game Objects\PlayScene Objects\Enemy\Goomba</Filter>
     </ClCompile>
     <ClCompile Include="VenusFireTrap.cpp">
-      <Filter>Game Objects\Enemy\Piranha Plant</Filter>
+      <Filter>Game Objects\PlayScene Objects\Enemy\Piranha Plant</Filter>
     </ClCompile>
     <ClCompile Include="VenusFireball.cpp">
       <Filter>Game Objects\PlayScene Objects\Projectile</Filter>
     </ClCompile>
     <ClCompile Include="Paragoomba.cpp">
-      <Filter>Game Objects\Enemy\Goomba</Filter>
+      <Filter>Game Objects\PlayScene Objects\Enemy\Goomba</Filter>
     </ClCompile>
     <ClCompile Include="KoopaTroopa.cpp">
-      <Filter>Game Objects\Enemy\Koopa</Filter>
+      <Filter>Game Objects\PlayScene Objects\Enemy\Koopa</Filter>
     </ClCompile>
     <ClCompile Include="HUD.cpp">
       <Filter>Game Component\HUD</Filter>
     </ClCompile>
     <ClCompile Include="KoopaParatroopa.cpp">
-      <Filter>Game Objects\Enemy\Koopa</Filter>
+      <Filter>Game Objects\PlayScene Objects\Enemy\Koopa</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Game Component\Scene</Filter>
@@ -230,7 +227,7 @@
       <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClCompile>
     <ClCompile Include="PSwitch.cpp">
-      <Filter>Game Objects\Item</Filter>
+      <Filter>Game Objects\PlayScene Objects\Item</Filter>
     </ClCompile>
     <ClCompile Include="IntroScene.cpp">
       <Filter>Game Component\Scene</Filter>
@@ -246,6 +243,12 @@
     </ClCompile>
     <ClCompile Include="Title.cpp">
       <Filter>Game Objects\Intro Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickShatterEffect.cpp">
+      <Filter>Game Objects\VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplodeEffect.cpp">
+      <Filter>Game Objects\VFX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -265,7 +268,7 @@
       <Filter>Game Component</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Game Objects\Player</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player</Filter>
     </ClInclude>
     <ClInclude Include="Sprites.h">
       <Filter>Game Graphics</Filter>
@@ -301,85 +304,85 @@
       <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClInclude>
     <ClInclude Include="Leaf.h">
-      <Filter>Game Objects\Item</Filter>
+      <Filter>Game Objects\PlayScene Objects\Item</Filter>
     </ClInclude>
     <ClInclude Include="Mushroom.h">
-      <Filter>Game Objects\Item</Filter>
+      <Filter>Game Objects\PlayScene Objects\Item</Filter>
     </ClInclude>
     <ClInclude Include="Coin.h">
-      <Filter>Game Objects\Item</Filter>
+      <Filter>Game Objects\PlayScene Objects\Item</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
-      <Filter>Game Objects\Item</Filter>
+      <Filter>Game Objects\PlayScene Objects\Item</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>Game Component\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Flower.h">
-      <Filter>Game Objects\Item</Filter>
+      <Filter>Game Objects\PlayScene Objects\Item</Filter>
     </ClInclude>
     <ClInclude Include="Portal.h">
       <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClInclude>
     <ClInclude Include="PlayerAttackingState.h">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="PlayerCrouchingState.h">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="PlayerFallingState.h">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="PlayerFlyingState.h">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="PlayerIdleState.h">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="PlayerJumpingState.h">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="PlayerRunningMaxState.h">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="PlayerRunningState.h">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="PlayerSkiddingState.h">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="PlayerState.h">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="PlayerWalkingState.h">
-      <Filter>Game Objects\Player\PlayerStateMachine</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player\PlayerStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="Tail.h">
-      <Filter>Game Objects\Player</Filter>
+      <Filter>Game Objects\PlayScene Objects\Player</Filter>
     </ClInclude>
     <ClInclude Include="PiranhaPlant.h">
-      <Filter>Game Objects\Enemy\Piranha Plant</Filter>
+      <Filter>Game Objects\PlayScene Objects\Enemy\Piranha Plant</Filter>
     </ClInclude>
     <ClInclude Include="Goomba.h">
-      <Filter>Game Objects\Enemy\Goomba</Filter>
+      <Filter>Game Objects\PlayScene Objects\Enemy\Goomba</Filter>
     </ClInclude>
     <ClInclude Include="VenusFireTrap.h">
-      <Filter>Game Objects\Enemy\Piranha Plant</Filter>
+      <Filter>Game Objects\PlayScene Objects\Enemy\Piranha Plant</Filter>
     </ClInclude>
     <ClInclude Include="VenusFireball.h">
       <Filter>Game Objects\PlayScene Objects\Projectile</Filter>
     </ClInclude>
     <ClInclude Include="Paragoomba.h">
-      <Filter>Game Objects\Enemy\Goomba</Filter>
+      <Filter>Game Objects\PlayScene Objects\Enemy\Goomba</Filter>
     </ClInclude>
     <ClInclude Include="KoopaTroopa.h">
-      <Filter>Game Objects\Enemy\Koopa</Filter>
+      <Filter>Game Objects\PlayScene Objects\Enemy\Koopa</Filter>
     </ClInclude>
     <ClInclude Include="HUD.h">
       <Filter>Game Component\HUD</Filter>
     </ClInclude>
     <ClInclude Include="KoopaParatroopa.h">
-      <Filter>Game Objects\Enemy\Koopa</Filter>
+      <Filter>Game Objects\PlayScene Objects\Enemy\Koopa</Filter>
     </ClInclude>
     <ClInclude Include="Pipe.h">
       <Filter>Game Objects\PlayScene Objects\Platform</Filter>
@@ -418,7 +421,7 @@
       <Filter>Game Objects\PlayScene Objects\Platform</Filter>
     </ClInclude>
     <ClInclude Include="PSwitch.h">
-      <Filter>Game Objects\Item</Filter>
+      <Filter>Game Objects\PlayScene Objects\Item</Filter>
     </ClInclude>
     <ClInclude Include="IntroScene.h">
       <Filter>Game Component\Scene</Filter>
@@ -434,6 +437,12 @@
     </ClInclude>
     <ClInclude Include="Title.h">
       <Filter>Game Objects\Intro Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickShatterEffect.h">
+      <Filter>Game Objects\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplodeEffect.h">
+      <Filter>Game Objects\VFX</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

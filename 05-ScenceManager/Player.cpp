@@ -17,6 +17,7 @@
 #include "Brick.h"
 #include "PBlock.h"
 #include "PSwitch.h"
+#include "Coin.h"
 #include "Portal.h"
 
 #include "PlayerIdleState.h"
@@ -29,10 +30,12 @@
 
 Player* Player::instance = NULL;
 
-Player::Player(float x, float y) : CGameObject()
+Player::Player(float posX, float posY) : CGameObject()
 {
 	tag = Tag::PLAYER;
-	level = MARIO_LEVEL_BIG;
+	isDead = false;
+	sortingLayer = 1;
+	level = MARIO_LEVEL_SMALL;
 	untouchable = 0;
 	instance = this;
 	isFlip = false;
@@ -56,10 +59,11 @@ Player::Player(float x, float y) : CGameObject()
 	}
 
 	playerState = new PlayerIdleState();
-	start_x = x; 
-	start_y = y; 
-	this->x = x; 
-	this->y = y; 
+	start_x = posX; 
+	start_y = posY; 
+	this->x = posX; 
+	this->y = posY; 
+
 }
 
 Player* Player::GetInstance()
@@ -78,11 +82,24 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	CheckCanAttack();
 
+	//Check Dead
+	if (isDead)
+	{
+		if (GetTickCount64() - deadTime >= 1500)
+		{
+			CGame::GetInstance()->SwitchScene(4);
+			CGame::GetInstance()->SubtractLives();
+			return;
+		}
+		
+	}
+
 	//Enter Pipe
 	if (isEnteringSecretRoom)
 	{
+		int marioHeight = level == MARIO_LEVEL_SMALL ? MARIO_SMALL_BBOX_HEIGHT : MARIO_BIG_BBOX_HEIGHT;
 		y += MARIO_ENTER_PIPE_SPEED * dt;
-		if (y >= 190 && !inSecretRoom)
+		if (abs(onPipeYPos - y) >= marioHeight && !inSecretRoom)
 		{
 			SetPosition(2120, 286);
 			inSecretRoom = true;
@@ -148,15 +165,31 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	HandleCollision(dt, coObjects);
 }
 
+void Player::SetLevel(int l)
+{
+	if (level == MARIO_LEVEL_SMALL && l != MARIO_LEVEL_SMALL)
+	{
+		SetPosition(x, y - (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT));
+	}
 
+	if (l == MARIO_LEVEL_SMALL && level != MARIO_LEVEL_SMALL)
+	{
+		SetPosition(x, y + (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT));
+	}
+
+	level = l;
+}
 
 void Player::SetState(PlayerState* newState)
 {	
+	if (state == MARIO_STATE_DIE)
+		return;
 	previousState = state;
 	delete playerState;
 	playerState = newState;
 	state = newState->state;	
 }
+
 
 /*
 	Reset Mario status to the beginning state of a scene
@@ -164,8 +197,9 @@ void Player::SetState(PlayerState* newState)
 void Player::Reset()
 {
 	inSecretRoom = false;
+	state = 0;
 	SetState(new PlayerIdleState());
-	SetLevel(MARIO_LEVEL_BIG);
+	SetLevel(MARIO_LEVEL_SMALL);
 	SetPosition(start_x, start_y);
 	SetSpeed(0, 0);
 }
@@ -188,6 +222,9 @@ void Player::CheckCanAttack()
 
 void Player::HandleMovement(DWORD dt)
 {
+	if (state == MARIO_STATE_DIE)
+		return;
+
 	float targetVelocity = 0;
 	float curVelocity = vx;
 	float acceleration = 0;
@@ -248,11 +285,14 @@ void Player::GetBoundingBox(float& left, float& top, float& right, float& bottom
 		right = x + MARIO_BIG_BBOX_WIDTH;
 		bottom = y + MARIO_BIG_BBOX_HEIGHT;
 	}
-	else
+	else if(level == MARIO_LEVEL_SMALL)
 	{
 		right = x + MARIO_SMALL_BBOX_WIDTH;
 		bottom = y + MARIO_SMALL_BBOX_HEIGHT;
 	}
+	
+	if (state == MARIO_STATE_DIE)
+		left = right = top = bottom = 0;
 }
 
 
@@ -260,12 +300,8 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
 	coEvents.clear();
 
-	// turn off collision when die 
-	if (state != MARIO_STATE_DIE)
-	{
-		CalcPotentialCollisions(coObjects, coEvents);
-		CalcPotentialOverlapped(coObjects);
-	}
+	CalcPotentialCollisions(coObjects, coEvents);
+	CalcPotentialOverlapped(coObjects);
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -328,7 +364,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 				if (e->ny > 0)
 				{
-					brick->SetState(BRICK_STATE_COLLISION);
+					brick->SetState(QUESTION_BLOCK_STATE_HIT_FROM_BOTTOM);
 				}
 			}
 
@@ -376,7 +412,8 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					if (goomba->GetState() != GOOMBA_STATE_DIE)
 					{
 						goomba->OnSteppedOn();
-						auto pointEffect = new PointEffect(e->obj->x, e->obj->y, 0);
+						auto pointEffect = new PointEffect(e->obj->x, e->obj->y, 100);
+						CGame::GetInstance()->AddScore(100);
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
 				}
@@ -384,16 +421,8 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					if (untouchable == 0)
 					{
-						if (goomba->GetState() != GOOMBA_STATE_DIE)
-						{
-							if (level > MARIO_LEVEL_SMALL)
-							{
-								level = MARIO_LEVEL_SMALL;
-								StartUntouchable();
-							}
-							/*else
-								SetState(MARIO_STATE_DIE);*/
-						}
+						if (goomba->state != GOOMBA_STATE_DIE)
+							TakeDamage();
 					}
 				}
 			}
@@ -429,21 +458,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					{
 						if (koopa->GetState() == KOOPA_STATE_WALKING || koopa->GetState() == KOOPA_STATE_SPIN)
 						{
-							if (level > MARIO_LEVEL_BIG)
-							{
-								level = MARIO_LEVEL_BIG;
-								StartUntouchable();
-							}
-							else if (level == MARIO_LEVEL_BIG)
-							{
-								level = MARIO_LEVEL_SMALL;
-								StartUntouchable();
-							}
-							/*else
-							{
-								SetState(MARIO_STATE_DIE);
-								return;
-							}*/
+							TakeDamage();
 						}
 						else
 						{
@@ -477,6 +492,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					if (p->secretEntrance && keyCode[DIK_DOWN] && !isEnteringSecretRoom && !isExitingSecretRoom)
 					{
 						isEnteringSecretRoom = true;
+						onPipeYPos = y;
 					}
 				}
 
@@ -485,6 +501,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					if (p->secretEntrance && keyCode[DIK_UP] && !isEnteringSecretRoom && !isExitingSecretRoom)
 					{
 						isExitingSecretRoom = true;
+						onPipeYPos = y;
 					}
 				}
 			}
@@ -511,22 +528,29 @@ void Player::OnOverlapped(LPGAMEOBJECT other)
 			return;
 	}
 
+
 	switch (other->tag)
 	{
+	case Tag::PIRANHA_PLANT: case Tag::VENUS_FIRE_TRAP:
+		if (dynamic_cast<PiranhaPlant*>(other)->canDamagePlayer)
+			TakeDamage();
+		break;
+	case Tag::VENUS_FIREBALL:
+		TakeDamage();
+		break;
 	case Tag::ITEM:
-		other->SetActive(false);
-		other->DisableGameObject();
+		dynamic_cast<Item*>(other)->OnCollected();
 		break;
 	case Tag::LEAF:
-		other->SetActive(false);
-		other->DisableGameObject();
+		dynamic_cast<Item*>(other)->OnCollected();
 		SetLevel(MARIO_LEVEL_RACCOON);
 		break;
 	case Tag::MUSHROOM:
-		DebugOut(L"Mushroom\n");
-		other->SetActive(false);
-		other->DisableGameObject();
+		dynamic_cast<Item*>(other)->OnCollected();
 		SetLevel(MARIO_LEVEL_BIG);
+		break;
+	case Tag::COIN:
+		dynamic_cast<Coin*>(other)->OnCollected();
 		break;
 	case Tag::BRICK:
 		if (other->GetState() == BRICK_STATE_COIN)
@@ -537,8 +561,9 @@ void Player::OnOverlapped(LPGAMEOBJECT other)
 		break;
 	default:
 		break;
+
 	}
-	
+
 
 }
 
@@ -557,7 +582,6 @@ void Player::KeyState(BYTE* states)
 
 void Player::OnKeyDown(int keyCode)
 {
-
 	//Transition from any State
 	switch (keyCode)
 	{
@@ -617,22 +641,12 @@ void Player::OnKeyDown(int keyCode)
 		SetPosition(2112, 272 + 12);
 		inSecretRoom = true;
 		break;
-	/*case DIK_DOWN:
-		isEnteringSecretRoom = true;
+	case DIK_2:
+		SetPosition(2272, -66 - 32);
+		CGame::GetInstance()->GetCurrentScene()->GetCamera()->cameraFolowYAxis = true;
 		break;
-	case DIK_UP:
-		isExitingSecretRoom = true;
-		break;*/
-	case DIK_P:
-		auto scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
-		auto obj = scene->GetObjList();
-		for (size_t i = 0; i < obj.size(); i++)
-		{
-			if (obj[i]->tag == Tag::BRICK)
-			{
-				obj[i]->SetState(1);
-			}
-		}
+	case DIK_M:
+		CGame::GetInstance()->SwitchScene(4);
 		break;
 	}
 }
@@ -703,6 +717,12 @@ void Player::UpdateGlobalAnimation()
 {
 	auto animation = currentAnimation;
 
+	if (state == MARIO_STATE_DIE)
+	{
+		currentAnimation = MARIO_ANI_DIE;
+		return;
+	}
+
 	switch (level)
 	{
 	case MARIO_LEVEL_SMALL:
@@ -753,5 +773,29 @@ void Player::UpdateGlobalAnimation()
 
 #pragma endregion
 
+void Player::TakeDamage()
+{
+	if (untouchable != 0)
+		return;
 
+	if (level > MARIO_LEVEL_BIG)
+	{
+		SetLevel(MARIO_LEVEL_BIG);
+		StartUntouchable();
+	}
+	else if (level == MARIO_LEVEL_BIG)
+	{
+		SetLevel(MARIO_LEVEL_SMALL);
+		StartUntouchable();
+	}
+	else if (state != MARIO_STATE_DIE)
+	{
+		state = MARIO_STATE_DIE;
+		vy = -0.2f;
+		vx = 0.0f;
+		isDead = true;
+		deadTime = GetTickCount64();
+		return;
+	}
+}
 

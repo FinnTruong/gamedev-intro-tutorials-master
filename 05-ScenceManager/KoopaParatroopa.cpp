@@ -1,6 +1,6 @@
 #include "KoopaParatroopa.h"
 
-KoopaParatroopa::KoopaParatroopa() :KoopaTroopa()
+KoopaParatroopa::KoopaParatroopa() :KoopaTroopa(0)
 {
 	tag = Tag::KOOPA;
 	type = KoopaTroopaType::KOOPA_GREEN;

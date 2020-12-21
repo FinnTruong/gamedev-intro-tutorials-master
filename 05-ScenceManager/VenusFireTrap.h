@@ -4,8 +4,8 @@
 
 #define PI 3.14159265358979323846f
 
-#define VENUS_HEIGHT 32
-#define VENUS_WIDTH	 64
+#define VENUS_WIDTH		 16
+#define VENUS_HEIGHT	 32
 
 #define VENUS_ANI_IDLE_DOWN_RED				0
 #define VENUS_ANI_IDLE_UP_RED				1
@@ -24,6 +24,7 @@ public:
 	VenusFireTrap(float, float, int);
 	~VenusFireTrap();
 
+	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void Render();
 	void Attack();
 

@@ -41,6 +41,7 @@ protected:
 	int level;
 
 	bool isGrounded;
+	Vector2 boundary = Vector2(0, 0);
 
 	ULONGLONG deadTime;
 	ULONGLONG timeElapsed;

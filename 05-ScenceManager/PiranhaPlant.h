@@ -30,6 +30,7 @@ public:
 	bool isCoolingDown;
 
 	bool hasAttacked;
+	bool canDamagePlayer = false;
 
 
 public:

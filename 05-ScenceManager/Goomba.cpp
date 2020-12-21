@@ -149,6 +149,26 @@ void Goomba::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (ny < 0)
 			isGrounded = true;
 
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+			if (ny < 0)
+			{
+				//Expand Boundary by half object width  on each side if smaller than object width
+				if (e->obj->boundingBox.right - e->obj->boundingBox.left <= GOOMBA_BBOX_WIDTH)
+					boundary = Vector2(e->obj->boundingBox.left + e->obj->x - this->boundingBox.left - GOOMBA_BBOX_WIDTH / 2.f,
+						e->obj->boundingBox.right + e->obj->x - this->boundingBox.right + GOOMBA_BBOX_WIDTH / 2.f);
+				else
+					boundary = Vector2(e->obj->boundingBox.left + e->obj->x - this->boundingBox.left,
+						e->obj->boundingBox.right + e->obj->x - this->boundingBox.right);
+			}
+
+			if (state == GOOMBA_STATE_WALKING && (x <= boundary.x || x >= boundary.y))
+			{
+				vx *= -1;
+			}
+		}
+
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }

@@ -20,6 +20,7 @@
 class PointEffect : public Effect
 {
 	int point;
+
 public:
 	PointEffect(float x, float y, int point);
 

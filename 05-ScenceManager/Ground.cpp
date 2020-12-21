@@ -5,6 +5,12 @@ Ground::Ground(int width, int height)
 	tag = Tag::GROUND;
 	this->width = width;
 	this->height = height;
+	isTrigger = true;
+}
+
+void Ground::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	CalcPotentialOverlapped(coObjects);
 }
 
 void Ground::Render()

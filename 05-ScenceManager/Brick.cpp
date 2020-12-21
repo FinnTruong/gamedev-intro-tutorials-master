@@ -1,10 +1,12 @@
 #include "Brick.h"
 #include "Utils.h"
 #include "KoopaTroopa.h"
+#include "BrickShatterEffect.h"
 
 Brick::Brick()
 {
 	tag = Tag::BRICK;
+
 	SetState(BRICK_STATE_NORMAL);
 }
 
@@ -64,47 +66,27 @@ void Brick::SetState(int state)
 		startTransformTime = GetTickCount64();
 		isTrigger = true;
 		break;
-	default:
+	case BRICK_STATE_SHATTER:
+		//Disable Brick
+		SetActive(false);
+		DisableGameObject();
+		auto topLeftPiece = new BrickShatterEffect(x - 1, y - 2, -1, 2.f);
+		auto topRightPiece = new BrickShatterEffect(x + 9, y - 2, 1, 2.f);
+		auto bottomLeftPiece = new BrickShatterEffect(x - 1, y + 8, -1, 1.f);
+		auto bottomRightPiece = new BrickShatterEffect(x + 9, y + 8, 1, 1.f);
 		break;
 	}
 }
 
 void Brick::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	coEvents.clear();
-
-	CalcPotentialCollisions(coObjects, coEvents);
 	CalcPotentialOverlapped(coObjects);
-
-	// No collision occured, proceed normally
-	if (coEvents.size() == 0)
-	{
-		x += (float)dx;
-		y += (float)dy;
-	}
-	else
-	{
-		float min_tx, min_ty, nx = 0, ny;
-		float rdx = 0;
-		float rdy = 0;
-
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
-		x += min_tx * dx + nx * 0.4f;
-		y += min_ty * dy + ny * 0.4f;
-
-	}
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void Brick::OnOverlapped(LPGAMEOBJECT obj)
 {
 	if (obj->tag == Tag::TAIL)
 	{
-		DebugOut(L"Hit");
-		//Disable Brick
-		SetActive(false);
-		DisableGameObject();
-		//Play Effect
+		SetState(BRICK_STATE_SHATTER);
 	}
 }

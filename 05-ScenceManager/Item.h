@@ -5,15 +5,12 @@
 class Item : public CGameObject
 {
 protected:
-	float startX;
-	float startY;
+	ULONGLONG spawnTime = 0;
 
-	ULONGLONG spawnTime;
-
-	bool isSprouting;
-	bool hasSproutCompleted;
-	float sproutHeight;
-	float sproutSpeed;	
+	bool isSprouting = false;
+	bool hasSproutCompleted = false;
+	float sproutHeight = 0;
+	float sproutSpeed = 0;	
 
 public:
 	Item();
@@ -26,6 +23,8 @@ public:
 	virtual void SproutOut();
 
 	bool CheckIsSprouting() { return isSprouting; }
+
+	void OnCollected();
 
 
 };

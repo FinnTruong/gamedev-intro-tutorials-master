@@ -3,7 +3,7 @@
 #include "GameObject.h"
 
 #define KOOPA_WALKING_SPEED 0.03f;
-#define KOOPA_JUMPING_SPEED	0.25f;
+#define KOOPA_JUMPING_SPEED	0.17f;
 
 #define KOOPA_BBOX_WIDTH 16
 #define KOOPA_BBOX_HEIGHT 25
@@ -33,10 +33,11 @@ class KoopaTroopa : public CGameObject
 protected:
 	int type;
 
+	Vector2 boundary = Vector2(0, 0);
 	bool isGrounded;
 	bool hasBeenSteppedOn, hasBeenAttacked;
 public:
-	KoopaTroopa();
+	KoopaTroopa(int type);
 	~KoopaTroopa();
 
 	bool isBeingHeld;
@@ -47,6 +48,7 @@ public:
 	virtual void HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void SetState(int state);
 
+	void OnOverlapped(LPGAMEOBJECT obj);
 	void OnSteppedOn();
 	void OnAttacked();
 };

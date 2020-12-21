@@ -1,9 +1,7 @@
 [SETTINGS]
-start	1
+start	5
 #scene list
 [SCENES]
-1	scene1.txt	0
-2	scene2.txt	0
-3	scene-test.txt	0
+1	world1-1.txt	0
 4	world_select_scene.txt	1
-5	start_scene	2
+5	start_scene.txt	2

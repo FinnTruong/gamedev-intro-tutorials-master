@@ -17,6 +17,8 @@ public:
 	void DrawTimer();
 	void DrawTags();
 	void DrawSpeedBar();
+	void DrawLife();
+	void DrawCoinCollected();
 
 	std::string NumberToString(int, int);
 

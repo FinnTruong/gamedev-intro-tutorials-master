@@ -5,7 +5,8 @@
 #define BRICK_BBOX_WIDTH  16
 #define BRICK_BBOX_HEIGHT 16
 
-#define	BRICK_STATE_COLLISION 10
+#define	QUESTION_BLOCK_STATE_HIT_FROM_BOTTOM		0
+#define	QUESTION_BLOCK_STATE_HIT_FROM_SIDE			1
 
 
 class QuestionBlock : public CGameObject
@@ -27,5 +28,6 @@ public:
 	virtual void SetState(int state);
 	virtual void GetBoundingBox(float &l, float &t, float &r, float &b);
 
+	void OnOverlapped(LPGAMEOBJECT obj);
 	void SpawnItem();
 };

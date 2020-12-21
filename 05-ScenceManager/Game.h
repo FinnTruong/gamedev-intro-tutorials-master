@@ -38,7 +38,9 @@ class CGame
 
 	LPKEYEVENTHANDLER keyHandler;
 
-	int score, bonusScore;
+	int lives = 4;
+	int score = 0;
+	int coinCollected = 0;
 
 	int screen_width;
 	int screen_height; 
@@ -65,6 +67,14 @@ public:
 	int GetScreenWidth() { return screen_width; }
 	int GetScreenHeight() { return screen_height; }
 
+	int GetScore() { return score; }
+	void AddScore(int _score) { score += _score; }
+
+	int GetCoinCollected() { return coinCollected; }
+	void AddCoinCollected() { coinCollected += 1; }
+
+	int GetLives() { return lives; }
+	void SubtractLives() { lives -= 1; }
 	
 
 	LPDIRECT3DDEVICE9 GetDirect3DDevice() { return this->d3ddv; }

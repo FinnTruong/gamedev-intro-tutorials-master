@@ -144,5 +144,7 @@ public:
 	void ActivateGameObject();
 	void DisableGameObject();
 
+	bool ObjectInCameraRange();
+
 };
 

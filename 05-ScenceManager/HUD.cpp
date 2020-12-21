@@ -20,6 +20,8 @@ void HUD::Draw()
 	DrawSpeedBar();
 	DrawTags();
 	DrawTimer();
+	DrawLife();
+	DrawCoinCollected();
 }
 
 void HUD::DrawBackground()
@@ -63,7 +65,7 @@ void HUD::DrawScore()
 	auto sprites = CSpriteDatabase::GetInstance();
 	LPSPRITE num = sprites->Get(0);
 
-	int score = 23451;
+	int score = CGame::GetInstance()->GetScore();
 	string scoreString = NumberToString(score, 7);
 	for (size_t i = 0; i < scoreString.length(); i++)
 	{
@@ -139,6 +141,45 @@ void HUD::DrawSpeedBar()
 
 	auto p = Mario->abilityBar >= MARIO_FULL_ABILITY_BAR ? sprites->Get(60) : sprites->Get(59);
 	p->Draw(1, cam_x + 10 + 99, cam_y + 192 + 4 + 6);
+}
+
+void HUD::DrawLife()
+{
+	int cam_x, cam_y;
+	CGame::GetInstance()->GetCurrentScene()->GetCamera()->GetPosition(cam_x, cam_y);
+
+	auto sprites = CSpriteDatabase::GetInstance();
+
+	int lives = CGame::GetInstance()->GetLives();
+	auto livesSprite = sprites->Get(lives);
+	livesSprite->Draw(1, cam_x + 42 + 4, cam_y + 192 + 4 + 15);
+}
+
+void HUD::DrawCoinCollected()
+{
+	int cam_x, cam_y;
+	CGame::GetInstance()->GetCurrentScene()->GetCamera()->GetPosition(cam_x, cam_y);
+
+	auto sprites = CSpriteDatabase::GetInstance();
+	LPSPRITE num = sprites->Get(0);
+
+	int coinCollected = CGame::GetInstance()->GetCoinCollected();
+	string coinString = NumberToString(coinCollected, 1);
+	for (int i = 0; (unsigned)i < coinString.length(); i++)
+	{
+		if (coinString[i] == ' ')
+			continue;
+
+		for (int j = 0; j < 10; j++)
+		{
+			if (coinString[i] == 48 + j)
+			{
+				num = sprites->Get(j);
+			}
+		}
+		num->Draw(1, cam_x + 24 + 124 + i * 8, cam_y + 184 + 4 + 15);
+	}
+
 }
 
 string HUD::NumberToString(int num, int numOfChar)

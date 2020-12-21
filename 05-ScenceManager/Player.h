@@ -10,7 +10,7 @@
 
 #define MARIO_WALKING_SPEED			0.1f
 #define MARIO_RUNNING_SPEED			0.15f
-#define MARIO_ENTER_PIPE_SPEED		0.05f
+#define MARIO_ENTER_PIPE_SPEED		0.03f
 
 #define MARIO_DRAG_FORCE	0.00015f
 
@@ -92,7 +92,6 @@
 
 
 
-
 #define MARIO_ANI_DIE				50
 
 #define	MARIO_LEVEL_SMALL	1
@@ -137,9 +136,11 @@ public:
 	bool isFlying = false;
 	bool isSlowFalling = false;
 
-	bool inSecretRoom;
-	bool isEnteringSecretRoom;
-	bool isExitingSecretRoom;
+	bool inSecretRoom = false;
+	bool isEnteringSecretRoom = false;
+	bool isExitingSecretRoom = false;
+
+	bool isDead = false;
 
 	int level;
 	int currentAnimation = 0;
@@ -149,7 +150,10 @@ public:
 	ULONGLONG releaseJumpInputTime = 0;
 	ULONGLONG startKickingAnimationTime = 0;
 	ULONGLONG attackTime = 0;
+	ULONGLONG deadTime = 0;
 	int facingDirection = 1;
+
+	float onPipeYPos = 0;
 
 
 
@@ -176,7 +180,7 @@ public:
 	void OnOverlapped(LPGAMEOBJECT other);
 
 	void SetState(PlayerState* newState);
-	void SetLevel(int l) { level = l; }
+	void SetLevel(int l);
 
 	void StartUntouchable() { untouchable = 1; untouchable_start = (DWORD)GetTickCount64(); }
 
@@ -192,5 +196,7 @@ public:
 
 	void UpdatePlayerStateAnimation();
 	void UpdateGlobalAnimation();
+
+	void TakeDamage();
 	
 };

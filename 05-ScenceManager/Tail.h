@@ -4,7 +4,7 @@
 
 
 #define TAIL_WIDTH 10
-#define TAIL_HEIGHT 9
+#define TAIL_HEIGHT 8
 
 #define TAIL_PHASE_TIME 150
 

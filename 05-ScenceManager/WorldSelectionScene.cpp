@@ -294,6 +294,10 @@ void WorldSelectionScene::Unload()
 		delete objects[i];
 
 	objects.clear();
+	mapGrid.clear();
+	hasLoadGrid = false;
+
+	player = NULL;
 
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }

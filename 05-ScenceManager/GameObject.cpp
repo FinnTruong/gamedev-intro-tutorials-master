@@ -13,6 +13,7 @@ CGameObject::CGameObject()
 {
 	x = y = 0;
 	start_x = start_y = 0;
+	sortingLayer = 0;
 	vx = vy = 0;
 	dx = dy = 0;
 	state = 0;
@@ -293,6 +294,17 @@ void CGameObject::DisableGameObject()
 	{
 		dynamic_cast<CPlayScene*>(curScene)->DisableGameObject(this);
 	}
+}
+
+bool CGameObject::ObjectInCameraRange()
+{
+	auto camera = CGame::GetInstance()->GetCurrentScene()->GetCamera();
+	int cam_x = 0, cam_y = 0;
+	camera->GetPosition(cam_x, cam_y);
+	if (x >= cam_x + SCREEN_WIDTH + 96 || x <= cam_x - 96)
+		return false;
+
+	return true;
 }
 
 CGameObject::~CGameObject()

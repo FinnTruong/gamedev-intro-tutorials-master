@@ -150,13 +150,24 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	case OBJECT_TYPE_PARAGOOMBA: obj = new Paragoomba(); break;
 
-	case OBJECT_TYPE_QUESTION_BLOCK: obj = new QuestionBlock(x,y); break;
+	case OBJECT_TYPE_QUESTION_BLOCK: 
+	{
+		int hasPowerup = (int)atof(tokens[4].c_str());
+		obj = new QuestionBlock(x, y, hasPowerup);
+	}
+	break;
 
 	case OBJECT_TYPE_BRICK:	obj = new Brick(); break;
 
 	case OBJECT_TYPE_P_BLOCK: obj = new PBlock(x,y); break;
 
-	case OBJECT_TYPE_KOOPAS: obj = new KoopaTroopa(); break;
+	case OBJECT_TYPE_KOOPAS: 
+	{
+		int type = atoi(tokens[4].c_str());
+		obj = new KoopaTroopa(type);
+	}
+	break;
+
 
 	case OBJECT_TYPE_PIRANHA_PLANT: obj = new PiranhaPlant(x, y); break;
 
@@ -328,10 +339,12 @@ void CPlayScene::Update(DWORD dt)
 		coObjects.push_back(objects[i]);
 	}
 
+
 	for (size_t i = 0; i < objects.size(); i++)
 	{		
-		//objects[i]->CalcPotentialCollisions(&coObjects, objects[i]->coEvents);
-		objects[i]->Update(dt, &coObjects);
+		if (objects[i]->ObjectInCameraRange())
+			//objects[i]->CalcPotentialCollisions(&coObjects, objects[i]->coEvents);
+			objects[i]->Update(dt, &coObjects);
 	}
 
 
@@ -347,27 +360,7 @@ void CPlayScene::Update(DWORD dt)
 
 	// Update camera to follow mario
 	camera->Update(dt);
-	//float cx, cy;
-	//player->GetPosition(cx, cy);
 
-	//CGame *game = CGame::GetInstance();
-	//cx -= game->GetScreenWidth() / 2;
-	//cy -= game->GetScreenHeight() / 2;
-
-	//if (cx <= 0)
-	//{
-	//	cx = 0;
-	//}
-	//else if (cx + SCREEN_WIDTH >= tilemap->GetWidthTileMap())
-	//{
-	//	cx = (float)tilemap->GetWidthTileMap() - SCREEN_WIDTH;
-	//}
-
-	//
-
-
-	//CGame::GetInstance()->GetCurrentScene()->GetCamera()->SetPosition((int)cx, !Mario->inSecretRoom ? 64 : 286);
-	//CGame::GetInstance()->GetCurrentScene()->GetCamera()->SetPosition(1984, SCREEN_HEIGHT + 12/*cy*/);
 }
 
 void CPlayScene::Render()
@@ -407,6 +400,13 @@ void CPlayScene::Unload()
 
 	objects.clear();
 
+	for (int i = 0; (unsigned)i < disabledObjects.size(); i++)
+		delete disabledObjects[i];
+
+	disabledObjects.clear();
+
+	//Mario->listFireball.clear();
+
 	player = NULL;
 
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
@@ -414,15 +414,12 @@ void CPlayScene::Unload()
 
 void CPlayScene::OnKeyDown(int key)
 {
-	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	keyCode[key] = true;
 	player->OnKeyDown(key);
 }
 
 void CPlayScene::OnKeyUp(int key)
 {
-	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
-
 	keyCode[key] = false;
 	player->OnKeyUp(key);
 }

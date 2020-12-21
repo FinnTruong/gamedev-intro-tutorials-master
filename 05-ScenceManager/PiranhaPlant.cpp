@@ -15,7 +15,10 @@ PiranhaPlant::PiranhaPlant(float posX, float posY)
 
 void PiranhaPlant::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = right = top = bottom = 0;
+	left = x;
+	top = y;
+	right = x + PIRANHA_WIDTH;
+	bottom = y + PIRANHA_HEIGHT;
 }
 
 void PiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -45,6 +48,7 @@ void PiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//ATTACK
 	if (delta == plantHeight && vy == 0)
 	{
+		canDamagePlayer = true;
 		ULONGLONG dt = GetTickCount64() - attackTime;
 		//DELAY BEFORE ATTACK
 		if (dt > PIRANHA_ATTACK_TIME / 2 && !hasAttacked)
@@ -54,6 +58,7 @@ void PiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		//SINK AFTER ATTACK
 		if (dt > PIRANHA_ATTACK_TIME)
 		{
+			canDamagePlayer = false;
 			isMoving = true;
 			hasAttacked = false;
 			vy = PIRANHA_SPEED;
@@ -68,6 +73,7 @@ void PiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		cooldownTime = GetTickCount64();
 		isCoolingDown = true;
 	}
+
 
 	//CHECK COOLDOWN
 

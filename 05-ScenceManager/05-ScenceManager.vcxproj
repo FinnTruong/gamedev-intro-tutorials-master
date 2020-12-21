@@ -127,10 +127,12 @@
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="BrickShatterEffect.cpp" />
     <ClCompile Include="Cactus.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Curtain.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="ExplodeEffect.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Flower.cpp" />
     <ClCompile Include="HammerBrother.cpp" />
@@ -189,11 +191,13 @@
   <ItemGroup>
     <ClInclude Include="Background.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="BrickShatterEffect.h" />
     <ClInclude Include="Cactus.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Curtain.h" />
     <ClInclude Include="Effect.h" />
+    <ClInclude Include="ExplodeEffect.h" />
     <ClInclude Include="Fireball.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Flower.h" />

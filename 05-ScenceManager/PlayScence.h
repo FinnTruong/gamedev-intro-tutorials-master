@@ -9,6 +9,7 @@
 #include "Goomba.h"
 #include "Paragoomba.h"
 #include "KoopaTroopa.h"
+#include "KoopaParaTroopa.h"
 #include "PiranhaPlant.h"
 #include "VenusFireTrap.h"
 #include "Tilemap.h"
@@ -20,6 +21,7 @@
 #include "HUD.h"
 #include "Pipe.h"
 
+
 #define SCENE_SECTION_UNKNOWN -1
 #define SCENE_SECTION_TEXTURES 2
 #define SCENE_SECTION_SPRITES 3
@@ -30,7 +32,7 @@
 
 #define OBJECT_TYPE_MARIO					0
 #define OBJECT_TYPE_GROUND					1
-#define OBJECT_TYPE_QUESTION_BLOCK					2
+#define OBJECT_TYPE_QUESTION_BLOCK			2
 #define OBJECT_TYPE_ONEWAYPLATFORM			3
 #define OBJECT_TYPE_GOOMBA					4
 #define OBJECT_TYPE_KOOPAS					5
@@ -45,6 +47,7 @@
 #define OBJECT_TYPE_PIPE					14
 #define OBJECT_TYPE_BRICK					15
 #define OBJECT_TYPE_P_BLOCK					16
+#define OBJECT_TYPE_PARATROOPA				17
 
 #define OBJECT_TYPE_PORTAL	50
 
@@ -64,7 +67,8 @@ protected:
 
 	ULONGLONG startSceneTime = 0;
 
-	vector<LPGAMEOBJECT> objects;	
+	vector<LPGAMEOBJECT> objects;
+	vector<LPGAMEOBJECT> disabledObjects;
 
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);
@@ -99,6 +103,11 @@ public:
 	{
 		for (size_t i = 0; i < objects.size(); i++)
 		{
+			disabledObjects.push_back(objects[i]);
+		}
+
+		for (size_t i = 0; i < objects.size(); i++)
+		{
 			if (objects[i] == gameObj)
 			{
 				objects.erase(objects.begin() + i);
@@ -125,4 +134,3 @@ public:
 //	virtual void OnKeyUp(int KeyCode);
 //	CPlayScenceKeyHandler(CScene *s) :CScenceKeyHandler(s) {};
 //};
-

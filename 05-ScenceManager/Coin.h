@@ -2,7 +2,8 @@
 #include "GameObject.h"
 #include "Item.h"
 
-#define COIN_ANI_IDLE		0
+#define SMALL_COIN_ANI_IDLE			0
+#define BIG_COIN_ANI_IDLE			1
 #define ANIMATION_SET_COIN	12
 
 #define COIN_GRAVITY	0.002
@@ -11,6 +12,7 @@
 class Coin : public Item
 {
 	bool hasPlayedPointEffect = false;
+	bool hiddenCoin = false;
 public:
 	Coin(float x, float y);
 	~Coin();
@@ -20,6 +22,8 @@ public:
 	void Render();
 
 	void SproutOut();
+
+	void OnCollected();
 
 };
 

@@ -7,11 +7,13 @@
 class Camera
 {
 	float cam_x, cam_y;
-	bool cameraFolowYAxis = false;
+
 	float camSpeed = 0.0f;
 public:
 	Camera();
 	~Camera();
+
+	bool cameraFolowYAxis = false;
 
 	void Update(DWORD dt);
 	void CheckBoundaries(DWORD dt, float&, float&);

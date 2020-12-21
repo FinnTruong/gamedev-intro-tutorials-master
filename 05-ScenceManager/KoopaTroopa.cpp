@@ -1,10 +1,13 @@
 #include "KoopaTroopa.h"
 #include "Player.h"
+#include "OneWayPlatform.h"
+#include "Brick.h"
+#include "QuestionBlock.h"
 
-KoopaTroopa::KoopaTroopa()
+KoopaTroopa::KoopaTroopa(int _type)
 {
 	tag = Tag::KOOPA;
-	type = KoopaTroopaType::KOOPA_RED;
+	type = _type;
 	SetState(KOOPA_STATE_WALKING);
 }
 
@@ -59,6 +62,7 @@ void KoopaTroopa::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	coEvents.clear();
 
 	CalcPotentialCollisions(coObjects, coEvents);
+	CalcPotentialOverlapped(coObjects);
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -83,10 +87,75 @@ void KoopaTroopa::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			vx *= -1; //Change direction when hit object
 		}
 
-		if (ny != 0) vy = 0;
+		if (ny != 0)
+			vy = 0;
 
 		if (ny < 0)
 			isGrounded = true;
+
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+
+
+			if (e->obj->tag != Tag::ONE_WAY_PLATFORM)
+			{
+				if (ny != 0) vy = 0;
+			}
+
+			if (e->obj->tag == Tag::ONE_WAY_PLATFORM)
+			{
+
+				//Collision from top
+				if (e->ny != 0)
+				{
+					if (e->ny < 0)
+					{
+						vy = 0;
+					}
+					else
+					{
+						y += dy;
+					}
+				}
+			}
+
+			if (ny < 0)
+			{
+				//Expand Boundary by half object width  on each side if smaller than object width
+				if (e->obj->boundingBox.right - e->obj->boundingBox.left <= KOOPA_BBOX_WIDTH)
+					boundary = Vector2(e->obj->boundingBox.left + e->obj->x - this->boundingBox.left - KOOPA_BBOX_WIDTH/4.f,
+						e->obj->boundingBox.right + e->obj->x - this->boundingBox.right + KOOPA_BBOX_WIDTH / 4.f);
+				else
+					boundary = Vector2(e->obj->boundingBox.left + e->obj->x - this->boundingBox.left,
+						e->obj->boundingBox.right + e->obj->x - this->boundingBox.right);
+			}
+
+			if (state == KOOPA_STATE_WALKING && (x <= boundary.x || x >= boundary.y))
+			{
+				vx *= -1;
+			}
+
+			if (nx != 0)
+			{
+				if (state == KOOPA_STATE_SPIN)
+				{
+					if (e->obj->tag == Tag::BRICK)
+					{
+						auto brick = dynamic_cast<Brick*>(e->obj);
+						brick->SetState(BRICK_STATE_SHATTER);
+					}
+
+					if (e->obj->tag == Tag::QUESTION_BLOCK)
+					{
+						auto questionBlock = dynamic_cast<QuestionBlock*>(e->obj);
+						questionBlock->SetState(QUESTION_BLOCK_STATE_HIT_FROM_SIDE);
+					}
+				}
+
+				
+			}
+		}
 
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
@@ -147,6 +216,15 @@ void KoopaTroopa::SetState(int state)
 		break;
 	}
 
+}
+
+void KoopaTroopa::OnOverlapped(LPGAMEOBJECT obj)
+{
+	if (obj->tag == Tag::TAIL)
+	{
+		SetState(KOOPA_STATE_SHELL);		
+		vy = -0.15f;
+	}
 }
 
 void KoopaTroopa::OnSteppedOn()
