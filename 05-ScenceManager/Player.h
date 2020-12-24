@@ -118,8 +118,8 @@ class Player : public CGameObject
 {
 private:
 	static Player* instance;
-	int untouchable;
-	DWORD untouchable_start;
+	int untouchable = 0;
+	DWORD untouchable_start = 0;
 
 
 	float start_x;			// initial position of Mario at scene
@@ -141,8 +141,9 @@ public:
 	bool isExitingSecretRoom = false;
 
 	bool isDead = false;
+	bool hasHitGoal = false;
 
-	int level;
+	int level = 1;
 	int currentAnimation = 0;
 	int previousState = 0;
 

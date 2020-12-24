@@ -20,6 +20,7 @@
 #include "Coin.h"
 #include "HUD.h"
 #include "Pipe.h"
+#include "Goal.h"
 
 
 #define SCENE_SECTION_UNKNOWN -1
@@ -48,6 +49,7 @@
 #define OBJECT_TYPE_BRICK					15
 #define OBJECT_TYPE_P_BLOCK					16
 #define OBJECT_TYPE_PARATROOPA				17
+#define OBJECT_TYPE_GOAL					18
 
 #define OBJECT_TYPE_PORTAL	50
 

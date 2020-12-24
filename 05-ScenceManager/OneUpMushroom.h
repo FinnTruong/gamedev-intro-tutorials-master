@@ -1,10 +1,13 @@
 #pragma once
 #include "Mushroom.h"
 
-class OneUpMushroom
+class OneUpMushroom : public Mushroom
 {
 public:
 	OneUpMushroom(float, float);
+	~OneUpMushroom();
+
+	void OnCollected();
 
 };
 

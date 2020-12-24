@@ -153,7 +153,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_QUESTION_BLOCK: 
 	{
 		int hasPowerup = (int)atof(tokens[4].c_str());
-		obj = new QuestionBlock(x, y, hasPowerup);
+		int hasOneUp = (int)atof(tokens[5].c_str());
+		obj = new QuestionBlock(x, y, hasPowerup, hasOneUp);
 	}
 	break;
 
@@ -168,6 +169,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	break;
 
+	case OBJECT_TYPE_PARATROOPA: obj = new KoopaParatroopa();break;
 
 	case OBJECT_TYPE_PIRANHA_PLANT: obj = new PiranhaPlant(x, y); break;
 
@@ -206,6 +208,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_LEAF: obj = new Leaf(x, y); break;
 	case OBJECT_TYPE_COIN: obj = new Coin(x, y); break;
 	case OBJECT_TYPE_MUSHROOM: obj = new Mushroom(x, y); break;
+	case OBJECT_TYPE_GOAL: obj = new Goal(); break;
 	case OBJECT_TYPE_PORTAL:
 		{	
 			float r = (float)atof(tokens[4].c_str());
@@ -342,7 +345,7 @@ void CPlayScene::Update(DWORD dt)
 
 	for (size_t i = 0; i < objects.size(); i++)
 	{		
-		if (objects[i]->ObjectInCameraRange())
+		if (objects[i]->ObjectInCameraRange() || objects[i]->tag == Tag::TAIL)
 			//objects[i]->CalcPotentialCollisions(&coObjects, objects[i]->coEvents);
 			objects[i]->Update(dt, &coObjects);
 	}

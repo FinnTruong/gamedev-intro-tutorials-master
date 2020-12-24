@@ -1,8 +1,9 @@
 #include "QuestionBlock.h"
 #include "Game.h"
 #include "PlayScence.h"
+#include "OneUpMushroom.h"
 
-QuestionBlock::QuestionBlock(float posX, float posY, bool _hasPowerup)
+QuestionBlock::QuestionBlock(float posX, float posY, bool _hasPowerup, bool _hasOneUp)
 {
 	x = posX;
 	y = posY;
@@ -10,6 +11,7 @@ QuestionBlock::QuestionBlock(float posX, float posY, bool _hasPowerup)
 	tag = Tag::QUESTION_BLOCK;
 	hasCollided = false;
 	hasPowerUp = _hasPowerup;
+	hasOneUp = _hasOneUp;
 }
 
 void QuestionBlock::GetBoundingBox(float& l, float& t, float& r, float& b)
@@ -42,12 +44,17 @@ void QuestionBlock::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void QuestionBlock::Render()
 {
+	int ani = 0;
+
 	if (hasCollided)
 	{
 		animation_set->at(1)->Render(-nx, x, y);
 	}
 	else
-		animation_set->at(0)->Render(-nx, x, y);
+	{
+		ani = hasOneUp ? 2 : 0;
+		animation_set->at(ani)->Render(-nx, x, y);
+	}
 	RenderBoundingBox();
 }
 
@@ -82,7 +89,11 @@ void QuestionBlock::SetState(int state)
 void QuestionBlock::SpawnItem()
 {
 	auto curScence = CGame::GetInstance()->GetCurrentScene();
-	if (hasPowerUp)
+	if (hasOneUp)
+	{
+		item = new OneUpMushroom(x, y);
+	}
+	else if (hasPowerUp)
 	{
 		switch (Mario->level)
 		{

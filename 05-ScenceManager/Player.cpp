@@ -14,6 +14,7 @@
 #include "KoopaTroopa.h"
 #include "Fireball.h"
 #include "Mushroom.h"
+#include "OneUpMushroom.h"
 #include "Brick.h"
 #include "PBlock.h"
 #include "PSwitch.h"
@@ -80,7 +81,22 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CGameObject::Update(dt);
 	playerState->Update(dt);
 
+	int cam_x, cam_y;
+	CGame::GetInstance()->GetCurrentScene()->GetCamera()->GetPosition(cam_x, cam_y);
+
 	CheckCanAttack();
+
+	//Check Has Hit Goal
+	if (hasHitGoal)
+	{
+		vx = MARIO_WALKING_SPEED;
+		nx = 1;
+		if (x >= cam_x + SCREEN_WIDTH + 100)
+		{
+			CGame::GetInstance()->SwitchScene(4);
+			return;
+		}		
+	}
 
 	//Check Dead
 	if (isDead)
@@ -90,8 +106,7 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			CGame::GetInstance()->SwitchScene(4);
 			CGame::GetInstance()->SubtractLives();
 			return;
-		}
-		
+		}		
 	}
 
 	//Enter Pipe
@@ -116,7 +131,7 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		y -= MARIO_ENTER_PIPE_SPEED * dt;
 		if (y <= 286 && inSecretRoom)
 		{
-			SetPosition(2344, 238 - marioHeight);
+			SetPosition((float)2344, (float)238 - marioHeight);
 			inSecretRoom = false;
 		}
 		if (y <= 206 - marioHeight)
@@ -222,7 +237,7 @@ void Player::CheckCanAttack()
 
 void Player::HandleMovement(DWORD dt)
 {
-	if (state == MARIO_STATE_DIE)
+	if (state == MARIO_STATE_DIE || hasHitGoal)
 		return;
 
 	float targetVelocity = 0;
@@ -333,6 +348,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
+
 			if (e->obj->tag != Tag::ONE_WAY_PLATFORM)
 			{
 				if (nx != 0) vx = 0;
@@ -422,7 +438,11 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					if (untouchable == 0)
 					{
 						if (goomba->state != GOOMBA_STATE_DIE)
+						{
 							TakeDamage();
+							return;
+						}
+
 					}
 				}
 			}
@@ -459,6 +479,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						if (koopa->GetState() == KOOPA_STATE_WALKING || koopa->GetState() == KOOPA_STATE_SPIN)
 						{
 							TakeDamage();
+							return;
 						}
 						else
 						{
@@ -549,6 +570,9 @@ void Player::OnOverlapped(LPGAMEOBJECT other)
 		dynamic_cast<Item*>(other)->OnCollected();
 		SetLevel(MARIO_LEVEL_BIG);
 		break;
+	case Tag::ONE_UP_MUSHROOM:
+		dynamic_cast<OneUpMushroom*>(other)->OnCollected();
+		break;
 	case Tag::COIN:
 		dynamic_cast<Coin*>(other)->OnCollected();
 		break;
@@ -558,6 +582,10 @@ void Player::OnOverlapped(LPGAMEOBJECT other)
 			other->SetActive(false);
 			other->DisableGameObject();
 		}
+		break;
+	case Tag::GOAL:
+		other->SetState(GOAL_STATE_HIT);
+		hasHitGoal = true;
 		break;
 	default:
 		break;

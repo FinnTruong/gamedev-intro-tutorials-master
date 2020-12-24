@@ -41,8 +41,16 @@ void Mushroom::Render()
 {
 	if (!isActive)
 		return;
+	
+	int ani = 0;
 
-	animation_set->at(0)->Render(nx, x, y, 255);
+	if (tag == Tag::MUSHROOM)
+		ani = MUSHROOM_ANI_NORMAL;
+	else if (tag == Tag::ONE_UP_MUSHROOM)
+		ani = MUSHROOM_ANI_ONE_UP;
+	
+	animation_set->at(ani)->Render(nx, x, y, 255);
+
 	RenderBoundingBox();
 }
 

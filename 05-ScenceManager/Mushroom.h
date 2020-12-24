@@ -11,10 +11,12 @@
 
 #define ANIMATION_SET_MUSHROOM	11
 
+#define MUSHROOM_ANI_NORMAL		0
+#define MUSHROOM_ANI_ONE_UP		1
+
 class Mushroom : public Item
 {
-	float start_x;
-	float spawnTime;
+	ULONGLONG spawnTime = 0;
 public:
 	Mushroom(float x, float y);
 	~Mushroom();

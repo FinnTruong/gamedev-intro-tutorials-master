@@ -250,6 +250,12 @@
     <ClCompile Include="ExplodeEffect.cpp">
       <Filter>Game Objects\VFX</Filter>
     </ClCompile>
+    <ClCompile Include="OneUpMushroom.cpp">
+      <Filter>Game Objects\PlayScene Objects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Goal.cpp">
+      <Filter>Game Objects\PlayScene Objects\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -443,6 +449,12 @@
     </ClInclude>
     <ClInclude Include="ExplodeEffect.h">
       <Filter>Game Objects\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="OneUpMushroom.h">
+      <Filter>Game Objects\PlayScene Objects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Goal.h">
+      <Filter>Game Objects\PlayScene Objects\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

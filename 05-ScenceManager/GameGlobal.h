@@ -40,9 +40,11 @@ enum class Tag
 	ITEM,
 	COIN,
 	MUSHROOM,
+	ONE_UP_MUSHROOM,
 	LEAF,
 	FLOWER,
 	P_SWITCH,
+	GOAL,
 	TAIL
 };
 

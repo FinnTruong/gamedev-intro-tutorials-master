@@ -37,7 +37,7 @@ void HUD::DrawBackground()
 	size.right = size.left + SCREEN_WIDTH;
 	size.bottom = size.top + 100;
 
-	CGame::GetInstance()->Draw(0, cam_x, cam_y + 192, tex, size.left, size.top, size.right, size.bottom);
+	CGame::GetInstance()->Draw(0, (float)cam_x, (float)(cam_y + 192), tex, size.left, size.top, size.right, size.bottom);
 }
 
 void HUD::DrawCard()
@@ -48,12 +48,12 @@ void HUD::DrawCard()
 	auto sprites = CSpriteDatabase::GetInstance();
 
 	CSprite* hud = sprites->Get(50);
-	hud->Draw(1, cam_x + 10, cam_y + 192 + 4);
+	hud->Draw(1, (float)(cam_x + 10), (float)(cam_y + 192 + 4));
 
-	for (size_t i = 0; i < 3; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		LPSPRITE card = sprites->Get(51);
-		card->Draw(1, cam_x + 10 + 152 + 12 + i * 24, cam_y + 192 + 4);
+		card->Draw(1, (float)(cam_x + 10 + 152 + 12 + i * 24), (float)(cam_y + 192 + 4));
 	}
 }
 
@@ -67,7 +67,7 @@ void HUD::DrawScore()
 
 	int score = CGame::GetInstance()->GetScore();
 	string scoreString = NumberToString(score, 7);
-	for (size_t i = 0; i < scoreString.length(); i++)
+	for (int i = 0; (unsigned)i < scoreString.length(); i++)
 	{
 		
 		if (scoreString[i] == ' ')
@@ -80,7 +80,7 @@ void HUD::DrawScore()
 				num = sprites->Get(j);
 			}
 		}
-		num->Draw(1, cam_x + 10 + 51 + i * 8, cam_y + 192 + 4 + 15);
+		num->Draw(1, (float)(cam_x + 10 + 51 + i * 8), (float)(cam_y + 192 + 4 + 15));
 	}
 }
 
@@ -92,10 +92,10 @@ void HUD::DrawTags()
 	auto sprites = CSpriteDatabase::GetInstance();
 
 	auto worldTag = sprites->Get(1);
-	worldTag->Draw(1, cam_x + 10 + 36, cam_y + 192 + 4 + 7);
+	worldTag->Draw(1, (float)(cam_x + 10 + 36), (float)(cam_y + 192 + 4 + 7));
 
 	auto characterTag = sprites->Get(55);
-	characterTag->Draw(1, cam_x + 10 + 4, cam_y + 192 + 4 + 15);
+	characterTag->Draw(1, (float)(cam_x + 10 + 4), (float)(cam_y + 192 + 4 + 15));
 }
 
 void HUD::DrawTimer()
@@ -121,7 +121,7 @@ void HUD::DrawTimer()
 				num = sprites->Get(j);
 			}
 		}
-		num->Draw(1, cam_x + 10 + 124 + i * 8, cam_y + 192 + 4 + 15);
+		num->Draw(1,(float)(cam_x + 10 + 124 + i * 8), (float)(cam_y + 192 + 4 + 15));
 	}
 }
 
@@ -136,11 +136,11 @@ void HUD::DrawSpeedBar()
 	{
 
 		auto barSegment = Mario->abilityBar <= MARIO_FULL_ABILITY_BAR / (6 - i) ? sprites->Get(57) : sprites->Get(58);
-		barSegment->Draw(1, cam_x + 10 + 51 + i * 8, cam_y + 192 + 4 + 6);
+		barSegment->Draw(1, (float)(cam_x + 10 + 51 + i * 8), (float)(cam_y + 192 + 4 + 6));
 	}
 
 	auto p = Mario->abilityBar >= MARIO_FULL_ABILITY_BAR ? sprites->Get(60) : sprites->Get(59);
-	p->Draw(1, cam_x + 10 + 99, cam_y + 192 + 4 + 6);
+	p->Draw(1, (float)(cam_x + 10 + 99), (float)(cam_y + 192 + 4 + 6));
 }
 
 void HUD::DrawLife()
@@ -152,7 +152,7 @@ void HUD::DrawLife()
 
 	int lives = CGame::GetInstance()->GetLives();
 	auto livesSprite = sprites->Get(lives);
-	livesSprite->Draw(1, cam_x + 42 + 4, cam_y + 192 + 4 + 15);
+	livesSprite->Draw(1, (float)(cam_x + 42 + 4), (float)(cam_y + 192 + 4 + 15));
 }
 
 void HUD::DrawCoinCollected()
@@ -177,7 +177,7 @@ void HUD::DrawCoinCollected()
 				num = sprites->Get(j);
 			}
 		}
-		num->Draw(1, cam_x + 24 + 124 + i * 8, cam_y + 184 + 4 + 15);
+		num->Draw(1, (float)(cam_x + 24 + 124 + i * 8), (float)(cam_y + 184 + 4 + 15));
 	}
 
 }

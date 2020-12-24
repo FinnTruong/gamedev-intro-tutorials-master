@@ -10,9 +10,9 @@
 
 class Tail : public CGameObject
 {
-	float firstPhaseStartTime;
-	float secondPhaseStartTime;
-	float thirdPhaseStartTime;
+	ULONGLONG firstPhaseStartTime = 0;
+	ULONGLONG secondPhaseStartTime = 0;
+	ULONGLONG thirdPhaseStartTime = 0;
 public:
 	Tail();
 	~Tail();

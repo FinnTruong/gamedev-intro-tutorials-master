@@ -15,11 +15,12 @@ class QuestionBlock : public CGameObject
 	bool hasCollided;
 	bool hasPowerUp = false;
 	bool hasSpawn = false;
+	bool hasOneUp = false;
 
 	Item* item = nullptr;
 
 public:
-	QuestionBlock(float x, float y, bool hasItem = 0);
+	QuestionBlock(float x, float y, bool hasItem, bool hasOneUp);
 	~QuestionBlock();
 
 

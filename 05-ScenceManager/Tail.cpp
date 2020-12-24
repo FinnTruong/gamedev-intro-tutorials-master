@@ -4,6 +4,9 @@
 
 Tail::Tail()
 {
+	firstPhaseStartTime = 0;
+	secondPhaseStartTime = 0;
+	thirdPhaseStartTime = 0;
 	tag = Tag::TAIL;
 	isTrigger = true;
 }

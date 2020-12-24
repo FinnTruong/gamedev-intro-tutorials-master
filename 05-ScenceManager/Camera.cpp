@@ -25,7 +25,7 @@ void Camera::Update(DWORD dt)
 	else if (!Mario->isFlying && cam_y >= 64)
 		cameraFolowYAxis = false;
 
-	SetPosition((int)cam_x, !Mario->inSecretRoom ?  cam_y : 286);
+	SetPosition(cam_x, !Mario->inSecretRoom ?  cam_y : 286);
 }
 
 void Camera::CheckBoundaries(DWORD dt, float &camX, float &camY)
