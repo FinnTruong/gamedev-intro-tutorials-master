@@ -9,6 +9,7 @@
 #include "Sprites.h"
 #include "PlayScence.h"
 
+
 CGameObject::CGameObject()
 {
 	x = y = 0;
@@ -26,7 +27,7 @@ CGameObject::CGameObject()
 	isTrigger = false;
 }
 
-void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
+void CGameObject::Update(DWORD dt,vector<LPGAMEOBJECT> *coObjects)
 {
 	this->dt = dt;
 	dx = vx*dt;

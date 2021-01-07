@@ -256,6 +256,9 @@
     <ClCompile Include="Goal.cpp">
       <Filter>Game Objects\PlayScene Objects\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Game Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -455,6 +458,9 @@
     </ClInclude>
     <ClInclude Include="Goal.h">
       <Filter>Game Objects\PlayScene Objects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Game Component</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

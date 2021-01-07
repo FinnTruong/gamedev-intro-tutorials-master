@@ -136,6 +136,7 @@
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Flower.cpp" />
     <ClCompile Include="Goal.cpp" />
+    <ClCompile Include="Grid.cpp" />
     <ClCompile Include="HammerBrother.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="IntroScene.cpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="Flower.h" />
     <ClInclude Include="GameGlobal.h" />
     <ClInclude Include="Goal.h" />
+    <ClInclude Include="Grid.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="HammerBrother.h" />
     <ClInclude Include="HUD.h" />

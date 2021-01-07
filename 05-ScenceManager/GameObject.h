@@ -8,11 +8,12 @@
 #include "Animations.h"
 #include "GameGlobal.h"
 
+#define ID_TEX_BBOX -100		// special texture to draw object bounding box
+#define ID_TEX_HUD_BG -200		// special texture to draw HUD background
 
 using namespace std;
 
-#define ID_TEX_BBOX -100		// special texture to draw object bounding box
-#define ID_TEX_HUD_BG -200		// special texture to draw HUD background
+class Grid;
 
 class CGameObject; 
 typedef CGameObject * LPGAMEOBJECT;
@@ -84,10 +85,10 @@ public:
 	~CGameObject();
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {}
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = nullptr);
 	virtual void Render() {}
 	virtual void SetState(int state) { this->state = state; }
-	virtual void HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
+	virtual void HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects = nullptr);
 
 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
@@ -99,7 +100,7 @@ public:
 	bool IsActive() { return this->isActive; }
 	void SetActive(bool value) { this->isActive = value; }
 
-	bool IsOverlapped(CGameObject* other);
+	bool IsOverlapped(LPGAMEOBJECT other);
 	virtual void OnOverlapped(CGameObject* other) {}
 
 

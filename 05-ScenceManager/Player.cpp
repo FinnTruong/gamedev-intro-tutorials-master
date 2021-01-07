@@ -91,9 +91,10 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	{
 		vx = MARIO_WALKING_SPEED;
 		nx = 1;
-		if (x >= cam_x + SCREEN_WIDTH + 100)
+		if (x >= cam_x + SCREEN_WIDTH + 32)
 		{
 			CGame::GetInstance()->SwitchScene(4);
+			hasHitGoal = true;
 			return;
 		}		
 	}
@@ -103,6 +104,7 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	{
 		if (GetTickCount64() - deadTime >= 1500)
 		{
+			isDead = false;
 			CGame::GetInstance()->SwitchScene(4);
 			CGame::GetInstance()->SubtractLives();
 			return;

@@ -2,7 +2,7 @@
 
 #include "GameObject.h"
 
-#define WM_MARIO_MOVE_SPEED		0.05f
+#define WM_MARIO_MOVE_SPEED		0.08f
 
 #define WM_MARIO_ANI_SMALL		0
 #define WM_MARIO_ANI_BIG		1

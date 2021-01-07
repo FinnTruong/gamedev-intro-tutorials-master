@@ -21,6 +21,7 @@
 #include "HUD.h"
 #include "Pipe.h"
 #include "Goal.h"
+#include "Grid.h"
 
 
 #define SCENE_SECTION_UNKNOWN -1
@@ -60,17 +61,22 @@
 
 #define SORTING_LAYERS_SIZE	2
 
+const int CELL_SIZE = 64;
+
 class CPlayScene: public CScene
 {
 protected: 
-	Tilemap* tilemap;
-	HUD* hud;
-	Player *player;					// A play scene has to have player, right? 
+	Tilemap* tilemap = nullptr;
+	HUD* hud = nullptr;
+	Player *player = nullptr;				// A play scene has to have player, right? 
+	Grid* grid = nullptr; // Grid for spatial partitioning for collision
 
 	ULONGLONG startSceneTime = 0;
 
 	vector<LPGAMEOBJECT> objects;
 	vector<LPGAMEOBJECT> disabledObjects;
+
+	bool isUnloading = false;
 
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);

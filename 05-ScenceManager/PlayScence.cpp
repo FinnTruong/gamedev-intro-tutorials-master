@@ -17,7 +17,7 @@
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 	CScene(id, filePath)
 {
-	/*key_handler = new CPlayScenceKeyHandler(this);*/
+	grid = new Grid(SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE);
 }
 
 /*
@@ -224,11 +224,15 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	// General object setup
 	obj->SetPosition(x, y);
-
 	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 	obj->SetAnimationSet(ani_set);
 	objects.push_back(obj);
+
+	if (!obj)
+		grid->AddObj(obj);
+	//Add object to grid
+
 }
 
 void CPlayScene::_ParseSection_TILEMAP(string line)
@@ -262,6 +266,7 @@ void CPlayScene::Load()
 {
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
 
+	isUnloading = false;
 	startSceneTime = GetTickCount64();
 
 	ifstream f;
@@ -354,7 +359,7 @@ void CPlayScene::Update(DWORD dt)
 
 	for (size_t i = 0; i < Mario->listFireball.size(); i++)
 	{
-		Mario->listFireball[i]->Update(dt, &coObjects);
+		//Mario->listFireball[i]->Update(dt, &coObjects);
 	}
 
 
@@ -363,6 +368,8 @@ void CPlayScene::Update(DWORD dt)
 
 	// Update camera to follow mario
 	camera->Update(dt);
+
+
 
 }
 
@@ -398,15 +405,17 @@ void CPlayScene::Render()
 */
 void CPlayScene::Unload()
 {
+	isUnloading = true;
+
 	for (int i = 0; (unsigned)i < objects.size(); i++)
 		delete objects[i];
 
 	objects.clear();
 
-	for (int i = 0; (unsigned)i < disabledObjects.size(); i++)
+	/*for (int i = 0; (unsigned)i < disabledObjects.size(); i++)
 		delete disabledObjects[i];
 
-	disabledObjects.clear();
+	disabledObjects.clear();*/
 
 	//Mario->listFireball.clear();
 
