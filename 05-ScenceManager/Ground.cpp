@@ -6,6 +6,7 @@ Ground::Ground(int width, int height)
 	this->width = width;
 	this->height = height;
 	isTrigger = true;
+	isStatic = true;
 }
 
 void Ground::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

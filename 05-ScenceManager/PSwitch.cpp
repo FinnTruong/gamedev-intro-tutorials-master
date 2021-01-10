@@ -6,6 +6,8 @@ PSwitch::PSwitch(float posX, float posY) : Item(posX, posY)
 	this->SetAnimationSet(CAnimationSetDatabase::GetInstance()->Get(SWITCH_ANIMATION_SET));
 	x = posX;
 	y = posY;
+	width = SWITCH_WIDTH;
+	height = SWITCH_NORMAL_HEIGHT;
 	tag = Tag::P_SWITCH;
 	SetState(SWITCH_STATE_NOT_ACTIVATE);
 	sproutSpeed = P_SWITCH_SPROUT_SPEED;
@@ -87,10 +89,11 @@ void PSwitch::SetState(int state)
 	CGameObject::SetState(state);
 	switch (state)
 	{
-	case SWITCH_ANI_NOT_ACTIVATE:
+	case SWITCH_ANI_NOT_ACTIVATE:		
 		break;
 	case SWITCH_ANI_ACTIVATE:
 		SetPosition(x, y + SWITCH_NORMAL_HEIGHT - SWITCH_ACTIVATE_HEIGHT);
+		SetActive(false);
 		break;
 	default:
 		break;

@@ -10,6 +10,8 @@ VenusFireTrap::VenusFireTrap(float posX, float posY, int venusType) : PiranhaPla
 	y = posY;
 	start_x = posX;
 	start_y = posY;
+	width = VENUS_WIDTH;
+	height = VENUS_HEIGHT;
 	type = venusType;
 	isTrigger = true;
 	plantHeight = VENUS_HEIGHT;

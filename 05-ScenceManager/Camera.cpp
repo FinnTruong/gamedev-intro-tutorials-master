@@ -71,3 +71,8 @@ void Camera::SmoothFollow(DWORD dt, float targetX, float targetY, float& x, floa
 	float lerp = 0.001f;
 	y = (y - targetY) * lerp * dt;
 }
+
+Rect Camera::GetRect()
+{
+	return Rect(cam_x, cam_y, SCREEN_WIDTH, SCREEN_HEIGHT);
+}

@@ -48,6 +48,27 @@ enum class Tag
 	TAIL
 };
 
+struct Rect
+{
+	float x, y;
+	float width, height;
+
+	Rect() {}
+	Rect(float x, float y, float width, float height)
+	{
+		this->x = x;
+		this->y = y;
+		this->width = width;
+		this->height = height;
+	}
+
+	bool IsContain(Rect r)
+	{
+		return !((x + width < r.x) || (x > r.x + r.width) || (y < r.y - r.height) || (y - height > r.y));
+	}
+};
+
+
 
 
 

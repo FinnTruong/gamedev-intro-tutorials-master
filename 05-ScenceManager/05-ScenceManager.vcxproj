@@ -129,6 +129,7 @@
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BrickShatterEffect.cpp" />
     <ClCompile Include="Cactus.cpp" />
+    <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Curtain.cpp" />
     <ClCompile Include="Effect.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="BrickShatterEffect.h" />
     <ClInclude Include="Cactus.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Cell.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Curtain.h" />
     <ClInclude Include="Effect.h" />

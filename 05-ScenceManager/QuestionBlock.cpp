@@ -8,6 +8,8 @@ QuestionBlock::QuestionBlock(float posX, float posY, bool _hasPowerup, bool _has
 	x = posX;
 	y = posY;
 	startY = posY;
+	width = BRICK_BBOX_WIDTH;
+	height = BRICK_BBOX_HEIGHT;
 	tag = Tag::QUESTION_BLOCK;
 	hasCollided = false;
 	hasPowerUp = _hasPowerup;

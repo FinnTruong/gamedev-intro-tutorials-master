@@ -7,8 +7,11 @@ Tail::Tail()
 	firstPhaseStartTime = 0;
 	secondPhaseStartTime = 0;
 	thirdPhaseStartTime = 0;
+	width = TAIL_WIDTH;
+	height = TAIL_HEIGHT;
 	tag = Tag::TAIL;
 	isTrigger = true;
+	isStatic = true;
 }
 
 void Tail::GetBoundingBox(float& left, float& top, float& right, float& bottom)

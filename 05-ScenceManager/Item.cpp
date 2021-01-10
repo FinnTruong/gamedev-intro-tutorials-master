@@ -9,6 +9,7 @@ Item::Item(float x,float y)
 	start_x = x;
 	start_y = y;	
 	sortingLayer = 0;
+	isStatic = true;
 }
 
 void Item::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

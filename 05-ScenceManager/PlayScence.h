@@ -74,6 +74,7 @@ protected:
 	ULONGLONG startSceneTime = 0;
 
 	vector<LPGAMEOBJECT> objects;
+	vector<LPGAMEOBJECT> activeObjects;
 	vector<LPGAMEOBJECT> disabledObjects;
 
 	bool isUnloading = false;
@@ -109,6 +110,7 @@ public:
 	//Remove game obj from active list
 	void DisableGameObject(LPGAMEOBJECT gameObj)
 	{
+		gameObj->SetActive(false);
 		for (size_t i = 0; i < objects.size(); i++)
 		{
 			disabledObjects.push_back(objects[i]);

@@ -9,6 +9,7 @@ BrickShatterEffect::BrickShatterEffect(float posX, float posY, int _nx, float vy
 	vx = 0.07f * nx;
 	vy = -0.16f * vyMultiplier;
 	duration = BRICK_SHATTER_DURATION;
+	//isStatic = true;
 }
 
 void BrickShatterEffect::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)

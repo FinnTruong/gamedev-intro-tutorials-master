@@ -59,6 +59,7 @@ void Mushroom::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	coEvents.clear();
 
 	CalcPotentialCollisions(coObjects, coEvents);
+	CalcPotentialOverlapped(coObjects);
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -89,5 +90,13 @@ void Mushroom::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void Mushroom::OnSproutComplete()
 {
 	Item::OnSproutComplete();
+}
+
+void Mushroom::OnOverlapped(LPGAMEOBJECT obj)
+{
+	if (obj->tag == Tag::PLAYER)
+	{
+		OnCollected();
+	}
 }
 

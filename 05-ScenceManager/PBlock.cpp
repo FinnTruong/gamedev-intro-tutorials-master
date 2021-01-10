@@ -8,6 +8,8 @@ PBlock::PBlock(float posX, float posY)
 	x = posX;
 	y = posY;
 	start_y = posY;
+	width = P_BLOCK_WIDTH;
+	height = P_BLOCK_HEIGHT;
 	tag = Tag::P_BLOCK;
 	isEmpty = false;
 }
@@ -23,6 +25,7 @@ void PBlock::GetBoundingBox(float& l, float& t, float& r, float& b)
 void PBlock::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
+
 
 	x += dx;
 	y += dy;
@@ -75,4 +78,12 @@ void PBlock::SpawnPSwitch()
 
 	p_switch->ActivateGameObject();
 	p_switch->SproutOut();
+}
+
+void PBlock::OnOverlapped(LPGAMEOBJECT obj)
+{
+	if (obj->tag == Tag::TAIL)
+	{
+		SpawnPSwitch();
+	}
 }

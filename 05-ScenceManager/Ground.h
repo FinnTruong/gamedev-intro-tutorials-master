@@ -6,7 +6,6 @@
 
 class Ground : public CGameObject
 {
-	int width, height;
 public:
 	Ground(int width = 16, int height = 16);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

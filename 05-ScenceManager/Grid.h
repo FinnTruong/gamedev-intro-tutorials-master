@@ -2,32 +2,32 @@
 
 #include <vector>
 #include "GameObject.h"
-
-
-struct Cell
-{
-	vector<LPGAMEOBJECT> gameObjs;
-};
+#include "Cell.h"
 
 class Grid
 {
-private:
-	std::vector<Cell> m_cells;  //Treat 1D vector as 2D vector for cache friendliness
-	int m_cellSize;
-	int m_width;
-	int m_height;
-	int m_numXCells;
-	int m_numYCells;
+	Rect viewport;
+	int numXCells, numYCells;
+	int columns, rows;
 
 public:
-	Grid(int width, int height, int cellSize);
+	Grid(int width, int height);
 	~Grid();
+
+	std::vector<vector<Cell*>> cells;  //Treat 1D vector as 2D vector for cache friendliness
+	std::vector<Cell*> activeCells;  //Treat 1D vector as 2D vector for cache friendliness
 	
-	void AddObj(LPGAMEOBJECT gameObj);
-	//Gets Cell based on cell coordinate
 	Cell* GetCell(int x, int y);
-	//Gets Cell based on viewport coordinate
 	Cell* GetCell(float x, float y);
 
+	void InitObjects(LPGAMEOBJECT obj);
+
+	void Update();
+
+	void GetActiveCells();
+
+	vector<LPGAMEOBJECT> GetActiveObjects();
+	void UpdateGridObjects();
+	void UpdateObjectGridPosition(LPGAMEOBJECT obj);
 };
 

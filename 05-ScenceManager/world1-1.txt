@@ -756,6 +756,10 @@
 #BRICK SHATTER EFFECT
 21	2010
 
+[TILEMAP]
+#tile id	file_texture	file_path	num row on tex	num col on tex	num row on tilemap	num col tilemap	tile size
+#1000	textures/world1-1.png	textures/world1-1.txt	9	11	26	176	16	16
+2000	textures/World/world1-1_Full.png	textures/World/world1-1_Full.txt	9	11	40	177	16	16
 [OBJECTS]
 # type	x	y	ani_set_id	extra_settings per object type
 # type: 0 = Mario , 1 = Ground, 2 = Brick, 3 = One Way Platform, 4 = GOOMBAS, 5 = KOOPAS
@@ -967,7 +971,3 @@
 # type	l	t	ani_set_id	r	b	scene_id
 #50	300	98	0	316	150	2
 
-[TILEMAP]
-#tile id	file_texture	file_path	num row on tex	num col on tex	num row on tilemap	num col tilemap	tile size
-#1000	textures/world1-1.png	textures/world1-1.txt	9	11	26	176	16	16
-2000	textures/World/world1-1_Full.png	textures/World/world1-1_Full.txt	9	11	40	177	16	16

@@ -1,6 +1,6 @@
 #include "Pipe.h"
 
-Pipe::Pipe(float w, float h, int pipeType, bool hasSecretEntrance)
+Pipe::Pipe(int w, int h, int pipeType, bool hasSecretEntrance)
 {
 	tag = Tag::PIPE;
 	width = w;

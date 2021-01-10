@@ -8,6 +8,8 @@ PiranhaPlant::PiranhaPlant(float posX, float posY)
 	y = posY;
 	start_x = posX;
 	start_y = posY;
+	width = PIRANHA_WIDTH;
+	height = PIRANHA_HEIGHT;
 	isTrigger = true;
 	plantHeight = PIRANHA_HEIGHT;
 }

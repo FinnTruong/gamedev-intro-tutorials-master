@@ -8,6 +8,8 @@ KoopaTroopa::KoopaTroopa(int _type)
 {
 	tag = Tag::KOOPA;
 	type = _type;
+	width = KOOPA_BBOX_WIDTH;
+	height = KOOPA_BBOX_HEIGHT;
 	SetState(KOOPA_STATE_WALKING);
 }
 

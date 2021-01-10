@@ -12,12 +12,11 @@
 class Pipe: public CGameObject
 {
 	int type;
-	float width, height;
 
 public:
 	bool secretEntrance = false;
 
-	Pipe(float, float, int, bool);
+	Pipe(int, int, int, bool);
 	~Pipe();
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);

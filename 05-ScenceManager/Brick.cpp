@@ -6,7 +6,8 @@
 Brick::Brick()
 {
 	tag = Tag::BRICK;
-
+	width = BRICK_WIDTH;
+	height = BRICK_HEIGHT;
 	SetState(BRICK_STATE_NORMAL);
 }
 
@@ -40,7 +41,7 @@ void Brick::Render()
 
 void Brick::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	if (state == BRICK_STATE_COIN)
+	if (state == BRICK_STATE_COIN || state == BRICK_STATE_SHATTER)
 	{
 		l = r = t = b = 0;
 	}
@@ -87,6 +88,7 @@ void Brick::OnOverlapped(LPGAMEOBJECT obj)
 {
 	if (obj->tag == Tag::TAIL)
 	{
-		SetState(BRICK_STATE_SHATTER);
+		if (state != BRICK_STATE_SHATTER)
+			SetState(BRICK_STATE_SHATTER);
 	}
 }

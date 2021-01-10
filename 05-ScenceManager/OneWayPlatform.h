@@ -5,7 +5,6 @@
 
 class OneWayPlatform : public CGameObject
 {
-	int width, height;
 public:
 	OneWayPlatform(int width = 16, int height = 16);
 	virtual void Render();

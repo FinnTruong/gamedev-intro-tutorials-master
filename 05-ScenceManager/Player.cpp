@@ -37,6 +37,8 @@ Player::Player(float posX, float posY) : CGameObject()
 	isDead = false;
 	sortingLayer = 1;
 	level = MARIO_LEVEL_SMALL;
+	width = MARIO_SMALL_BBOX_WIDTH;
+	height = MARIO_SMALL_BBOX_HEIGHT;
 	untouchable = 0;
 	instance = this;
 	isFlip = false;
@@ -51,11 +53,13 @@ Player::Player(float posX, float posY) : CGameObject()
 	if (!fireball1)
 	{
 		fireball1 = new Fireball();
+		fireball1->ActivateGameObject();
 		listFireball.push_back(fireball1);
 	}
 	if (!fireball2)
 	{
 		fireball2 = new Fireball();
+		fireball2->ActivateGameObject();
 		listFireball.push_back(fireball2);
 	}
 
@@ -504,6 +508,15 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 					else
 						x += dx;
+				}
+			}
+
+			else if (e->obj->tag == Tag::MUSHROOM || e->obj->tag == Tag::ONE_UP_MUSHROOM)
+			{
+				auto mushroom = dynamic_cast<Mushroom*>(e->obj);
+				if (e->nx != 0 || e->ny != 0)
+				{
+					mushroom->OnCollected();
 				}
 			}
 

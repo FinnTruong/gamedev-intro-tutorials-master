@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class Grid;
+class Cell;
 
 class CGameObject; 
 typedef CGameObject * LPGAMEOBJECT;
@@ -54,6 +54,8 @@ public:
 	float start_x;
 	float start_y;
 
+	int width, height;
+
 	float dx;	// dx = vx*dt
 	float dy;	// dy = vy*dt
 
@@ -66,6 +68,8 @@ public:
 
 	bool isActive;
 	bool isTrigger;
+
+	bool isStatic = false; //Not part of spatial partitioning grid
 
 	int sortingLayer = 1;
 
@@ -80,11 +84,14 @@ public:
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
+	Cell* ownerCell = nullptr;
+
 public: 
 	CGameObject();
 	~CGameObject();
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {}
+	virtual void SetBoundingBox() {}
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = nullptr);
 	virtual void Render() {}
 	virtual void SetState(int state) { this->state = state; }
@@ -146,6 +153,11 @@ public:
 	void DisableGameObject();
 
 	bool ObjectInCameraRange();
+
+	Rect GetRect()
+	{
+		return Rect(x, y, (float)width, (float)height);
+	}
 
 };
 

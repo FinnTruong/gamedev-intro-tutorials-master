@@ -10,6 +10,7 @@
 #include "PlayScence.h"
 
 
+
 CGameObject::CGameObject()
 {
 	x = y = 0;

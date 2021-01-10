@@ -26,4 +26,6 @@ public:
 	void Render();
 	void HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void OnSproutComplete();
+
+	void OnOverlapped(LPGAMEOBJECT obj);
 };

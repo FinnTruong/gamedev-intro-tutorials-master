@@ -259,6 +259,9 @@
     <ClCompile Include="Grid.cpp">
       <Filter>Game Component</Filter>
     </ClCompile>
+    <ClCompile Include="Cell.cpp">
+      <Filter>Game Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -460,6 +463,9 @@
       <Filter>Game Objects\PlayScene Objects\Item</Filter>
     </ClInclude>
     <ClInclude Include="Grid.h">
+      <Filter>Game Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Cell.h">
       <Filter>Game Component</Filter>
     </ClInclude>
   </ItemGroup>

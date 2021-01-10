@@ -4,6 +4,7 @@ OneWayPlatform::OneWayPlatform(int width, int height)
 	tag = Tag::ONE_WAY_PLATFORM;
 	this->width = width;
 	this->height = height;
+	isStatic = true;
 }
 
 void OneWayPlatform::Render()

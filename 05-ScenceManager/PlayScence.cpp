@@ -17,7 +17,7 @@
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 	CScene(id, filePath)
 {
-	grid = new Grid(SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE);
+
 }
 
 /*
@@ -185,6 +185,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		int width = (int)atof(tokens[4].c_str());
 		int height= (int)atof(tokens[5].c_str());
 		obj = new Ground(width,height);
+;
 	}
 	break;
 
@@ -228,10 +229,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	obj->SetAnimationSet(ani_set);
 	objects.push_back(obj);
-
-	if (!obj)
-		grid->AddObj(obj);
-	//Add object to grid
+	grid->InitObjects(obj);
 
 }
 
@@ -257,7 +255,7 @@ void CPlayScene::_ParseSection_TILEMAP(string line)
 	//grid->Resize(widthGrid, heightGrid);
 	//grid->PushGrid(allObject);
 	tilemap = new Tilemap(ID, filePath_texture.c_str(), filePath_data.c_str(), num_row_on_texture, num_col_on_texture, num_row_on_tilemap, num_col_on_tilemap, tileset_width, tileset_height);
-
+	grid = new Grid(tilemap->GetWidthTileMap(), tilemap->GetHeightTileMap());
 }
 
 #pragma endregion
@@ -340,31 +338,43 @@ void CPlayScene::Update(DWORD dt)
 {
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
-
+	grid->Update();
 	vector<LPGAMEOBJECT> coObjects;
-	for (size_t i = 1; i < objects.size(); i++)
-	{
-		coObjects.push_back(objects[i]);
-	}
+	coObjects.clear();
 
+
+	auto activeObjects = grid->GetActiveObjects();
 
 	for (size_t i = 0; i < objects.size(); i++)
-	{		
-		if (objects[i]->ObjectInCameraRange() || objects[i]->tag == Tag::TAIL)
-			//objects[i]->CalcPotentialCollisions(&coObjects, objects[i]->coEvents);
-			objects[i]->Update(dt, &coObjects);
-	}
-
-
-
-	for (size_t i = 0; i < Mario->listFireball.size(); i++)
 	{
-		//Mario->listFireball[i]->Update(dt, &coObjects);
+		if ((objects[i]->isStatic && objects[i]->isActive) || objects[i]->tag == Tag::TAIL)
+			activeObjects.push_back(objects[i]);
 	}
 
+	/*for (size_t i = 0; i < grid->activeCells.size(); i++)
+	{
+		auto o = grid->activeCells[i]->objects.begin();
+		while (o != grid->activeCells[i]->objects.end())
+		{
+			coObjects.push_back(*o);
+			o++;
+		}
+		
+	}*/
+
+
+	for (size_t i = 0; i < activeObjects.size(); i++)
+	{		
+		//if (activeObjects[i]->ObjectInCameraRange() || objects[i]->tag == Tag::TAIL)
+			//	//objects[i]->CalcPotentialCollisions(&coObjects, objects[i]->coEvents);
+		if (isUnloading)
+			return;
+		activeObjects[i]->Update(dt, &activeObjects);
+	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return; 
+
 
 	// Update camera to follow mario
 	camera->Update(dt);
@@ -409,6 +419,7 @@ void CPlayScene::Unload()
 
 	for (int i = 0; (unsigned)i < objects.size(); i++)
 		delete objects[i];
+
 
 	objects.clear();
 

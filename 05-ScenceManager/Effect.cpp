@@ -3,6 +3,7 @@
 Effect::Effect()
 {
 	ActivateGameObject();
+	isStatic = true;
 	startTime = GetTickCount64();
 }
 

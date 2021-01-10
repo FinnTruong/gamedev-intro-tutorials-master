@@ -9,7 +9,8 @@ Goomba::Goomba()
 	type = GoombaType::GOOMBA;
 	SetLevel(GOOMBA_LEVEL_GOOMBA);
 	SetState(GOOMBA_STATE_WALKING);
-
+	width = GOOMBA_BBOX_WIDTH;
+	height = GOOMBA_BBOX_HEIGHT;
 	//numOfLowJump = 0;
 	//lowJumpMax = 3;
 	//type = GoombaType::PARAGOOMBA;

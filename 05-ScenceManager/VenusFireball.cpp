@@ -5,6 +5,7 @@ VenusFireball::VenusFireball(): Projectile()
 	this->SetAnimationSet(CAnimationSetDatabase::GetInstance()->Get(ANIMATION_SET_FIREBALL));
 	tag = Tag::VENUS_FIREBALL;
 	isTrigger = true;
+	isStatic = true;
 }
 
 void VenusFireball::GetBoundingBox(float& left, float& top, float& right, float& bottom)
