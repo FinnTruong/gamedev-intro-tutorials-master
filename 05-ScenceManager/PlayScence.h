@@ -129,10 +129,12 @@ public:
 	Tilemap* GetTilemap() { return tilemap; }
 	Player * GetPlayer() { return player; } 
 
-	vector<LPGAMEOBJECT> GetObjList()
+	vector<LPGAMEOBJECT> GetBrickList()
 	{
 		return objects;
 	}
+
+	vector<LPGAMEOBJECT> GetActiveGameObjects();
 
 };
 

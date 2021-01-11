@@ -106,9 +106,11 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	//Check Dead
 	if (isDead)
 	{
+		isStatic = true;
 		if (GetTickCount64() - deadTime >= 1500)
 		{
 			isDead = false;
+			isStatic = false;
 			CGame::GetInstance()->SwitchScene(4);
 			CGame::GetInstance()->SubtractLives();
 			return;
@@ -412,7 +414,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 						//Set All brick to coin
 						auto scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
-						auto obj = scene->GetObjList();
+						auto obj = scene->GetBrickList();
 						for (size_t i = 0; i < obj.size(); i++)
 						{
 							if (obj[i]->tag == Tag::BRICK)

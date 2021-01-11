@@ -343,13 +343,7 @@ void CPlayScene::Update(DWORD dt)
 	coObjects.clear();
 
 
-	auto activeObjects = grid->GetActiveObjects();
-
-	for (size_t i = 0; i < objects.size(); i++)
-	{
-		if ((objects[i]->isStatic && objects[i]->isActive) || objects[i]->tag == Tag::TAIL)
-			activeObjects.push_back(objects[i]);
-	}
+	activeObjects = GetActiveGameObjects();
 
 	/*for (size_t i = 0; i < grid->activeCells.size(); i++)
 	{
@@ -388,21 +382,17 @@ void CPlayScene::Render()
 	tilemap->Draw(PLAY_TILEMAP_X_OFFSET,PLAY_TILEMAP_Y_OFFSET);
 	//Render objects
 
+	
+	activeObjects = GetActiveGameObjects();
+
 	for (size_t j = 0; j < SORTING_LAYERS_SIZE; j++)
 	{
-		for (int i = 0; (unsigned)i < objects.size(); i++)
+		for (int i = 0; (unsigned)i < activeObjects.size(); i++)
 		{
-			if (objects[i]->sortingLayer == j)
-				objects[i]->Render();
+			if (activeObjects[i]->sortingLayer == j)
+				activeObjects[i]->Render();
 
 		}
-	}
-	
-
-	//Render fireball
-	for (size_t i = 0; i < Mario->listFireball.size(); i++)
-	{
-		Mario->listFireball[i]->Render();
 	}
 
 	hud->Draw();
@@ -420,7 +410,6 @@ void CPlayScene::Unload()
 	for (int i = 0; (unsigned)i < objects.size(); i++)
 		delete objects[i];
 
-
 	objects.clear();
 
 	/*for (int i = 0; (unsigned)i < disabledObjects.size(); i++)
@@ -431,7 +420,7 @@ void CPlayScene::Unload()
 	//Mario->listFireball.clear();
 
 	player = NULL;
-
+	grid = nullptr;
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }
 
@@ -457,4 +446,17 @@ int CPlayScene::GetTimer()
 {
 	timer = (int)(MAX_PLAY_TIME - (GetTickCount64() - startSceneTime) / 1000);
 	return timer > 0 ? timer : 0;
+}
+
+vector<LPGAMEOBJECT> CPlayScene::GetActiveGameObjects()
+{
+	auto activeObjects = grid->GetActiveObjects();
+
+	for (size_t i = 0; i < objects.size(); i++)
+	{
+		if ((objects[i]->isStatic && objects[i]->isActive) || objects[i]->tag == Tag::TAIL)
+			activeObjects.push_back(objects[i]);
+	}
+
+	return activeObjects;
 }
