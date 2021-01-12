@@ -31,6 +31,7 @@
 #define SCENE_SECTION_ANIMATION_SETS	5
 #define SCENE_SECTION_OBJECTS	6
 #define SCENE_SECTION_TILEMAP	7
+#define SCENE_SECTION_GRID		8
 
 #define OBJECT_TYPE_MARIO					0
 #define OBJECT_TYPE_GROUND					1
@@ -85,7 +86,11 @@ protected:
 	void _ParseSection_ANIMATION_SETS(string line);
 	void _ParseSection_OBJECTS(string line);
 	void _ParseSection_TILEMAP(string line);
+	void _ParseSection_GRID(string line);
 
+
+	void LoadGrid(string line);
+	void LoadGridObjects(string line);
 	
 public: 
 	CPlayScene(int id, LPCWSTR filePath);
@@ -99,6 +104,7 @@ public:
 	void KeyState(BYTE *states);
 	void OnKeyDown(int KeyCode);
 	void OnKeyUp(int KeyCode);
+
 
 
 	//Add new game obj to active list
@@ -137,12 +143,3 @@ public:
 	vector<LPGAMEOBJECT> GetActiveGameObjects();
 
 };
-
-//class CPlayScenceKeyHandler : public CScenceKeyHandler
-//{
-//public: 
-//	virtual void KeyState(BYTE *states);
-//	virtual void OnKeyDown(int KeyCode);
-//	virtual void OnKeyUp(int KeyCode);
-//	CPlayScenceKeyHandler(CScene *s) :CScenceKeyHandler(s) {};
-//};

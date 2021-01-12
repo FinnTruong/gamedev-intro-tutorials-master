@@ -21,6 +21,7 @@ Grid::Grid(int width, int height)
 	}
 }
 
+
 void Grid::Update()
 {
 	auto camera = CGame::GetInstance()->GetCurrentScene()->GetCamera();
@@ -168,6 +169,16 @@ void Grid::InitObjects(LPGAMEOBJECT obj)
 	if (!obj->isStatic)
 	{
 		Cell* cell = GetCell(obj->x, obj->y);
+		cell->AddObject(obj);
+		obj->ownerCell = cell;
+	}
+}
+
+void Grid::InitObjects(LPGAMEOBJECT obj,int cellX, int cellY)
+{
+	if (!obj->isStatic)
+	{
+		Cell* cell = cells[cellX][cellY];
 		cell->AddObject(obj);
 		obj->ownerCell = cell;
 	}

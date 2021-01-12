@@ -765,9 +765,6 @@
 #BRICK SHATTER EFFECT
 21	2010
 
-[GRID]
-#filePath
-world1-1_grid.txt
 [TILEMAP]
 #tile id	file_texture	file_path	num row on tex	num col on tex	num row on tilemap	num col tilemap	tile size
 #1000	textures/world1-1.png	textures/world1-1.txt	9	11	26	176	16	16
