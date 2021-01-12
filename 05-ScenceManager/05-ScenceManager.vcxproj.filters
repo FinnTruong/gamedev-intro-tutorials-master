@@ -262,6 +262,12 @@
     <ClCompile Include="Cell.cpp">
       <Filter>Game Component</Filter>
     </ClCompile>
+    <ClCompile Include="MovingPlatform.cpp">
+      <Filter>Game Objects\PlayScene Objects\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingPlayScene.cpp">
+      <Filter>Game Component\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -467,6 +473,12 @@
     </ClInclude>
     <ClInclude Include="Cell.h">
       <Filter>Game Component</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingPlatform.h">
+      <Filter>Game Objects\PlayScene Objects\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingPlayScene.h">
+      <Filter>Game Component\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

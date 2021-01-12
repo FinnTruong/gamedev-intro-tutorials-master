@@ -15,11 +15,6 @@ PlayerFallingState::PlayerFallingState()
 
 void PlayerFallingState::Update(DWORD dt)
 {
-	if (GetTickCount64() - fallTime > 200)
-	{
-		Mario->abilityBar -= dt;
-	}
-
 	if (Mario->vy < 0)
 	{
 		Mario->vy += 0.0005f * dt;
@@ -35,8 +30,6 @@ void PlayerFallingState::Update(DWORD dt)
 
 void PlayerFallingState::HandleKeyboard(DWORD dt)
 {
-	Mario->vx = 0;
-
 	if (GetTickCount64() - Mario->releaseJumpInputTime <= 200.0f && Mario->level == MARIO_LEVEL_RACCOON)
 	{
 		Mario->isSlowFalling = true;
@@ -45,6 +38,9 @@ void PlayerFallingState::HandleKeyboard(DWORD dt)
 	{
 		Mario->isSlowFalling = false;
 	}
+	/*Mario->vx = 0;
+
+	
 
 	if (keyCode[DIK_LEFT])
 	{
@@ -56,7 +52,8 @@ void PlayerFallingState::HandleKeyboard(DWORD dt)
 	{
 		Mario->vx = Mario->previousState == MARIO_STATE_RUNNING ? MARIO_RUNNING_SPEED : MARIO_WALKING_SPEED;
 		Mario->nx = 1;
-	}
+	}*/
+	Mario->HandleMovement(dt);
 }
 
 void PlayerFallingState::UpdateAnimation()
@@ -64,20 +61,38 @@ void PlayerFallingState::UpdateAnimation()
 	switch (Mario->level)
 	{
 	case MARIO_LEVEL_SMALL:
-		animation = MARIO_ANI_SMALL_JUMPING;
+		animation = Mario->abilityBar >= MARIO_FULL_ABILITY_BAR ? MARIO_ANI_SMALL_MAX_JUMPING : MARIO_ANI_SMALL_JUMPING;
 		break;
 	case MARIO_LEVEL_BIG:
-		animation = MARIO_ANI_BIG_FALLING;
+		if (Mario->abilityBar >= MARIO_FULL_ABILITY_BAR)
+		{
+			animation = MARIO_ANI_BIG_MAX_JUMPING;
+		}
+		else
+			animation = MARIO_ANI_BIG_FALLING;
+
 		if (keyCode[DIK_DOWN])
 			animation = MARIO_ANI_BIG_CROUCHING;
 		break;
 	case MARIO_LEVEL_RACCOON:
-		animation = Mario->isSlowFalling ? MARIO_ANI_RACCOON_SLOW_FALLING : MARIO_ANI_RACCOON_FALLING;
+		if (Mario->abilityBar >= MARIO_FULL_ABILITY_BAR)
+		{
+			animation = MARIO_ANI_RACCOON_MAX_JUMPING;
+		}
+		else
+			animation = Mario->isSlowFalling ? MARIO_ANI_RACCOON_SLOW_FALLING : MARIO_ANI_RACCOON_FALLING;
+
 		if (keyCode[DIK_DOWN])
 			animation = MARIO_ANI_RACCOON_CROUCHING;
 		break;
 	case MARIO_LEVEL_FIRE:
-		animation = MARIO_ANI_FIRE_FALLING;
+		if (Mario->abilityBar >= MARIO_FULL_ABILITY_BAR)
+		{
+			animation = MARIO_ANI_FIRE_MAX_JUMPING;
+		}
+		else
+			animation = MARIO_ANI_FIRE_FALLING;
+
 		if (keyCode[DIK_DOWN])
 			animation = MARIO_ANI_FIRE_CROUCHING;
 		break;

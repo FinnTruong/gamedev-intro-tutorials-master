@@ -24,7 +24,7 @@ void Goomba::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	top = y;
 	right = x + GOOMBA_BBOX_WIDTH;
 
-	if (hasBeenSteppedOn || hasBeenAttacked)
+	if (state == GOOMBA_STATE_DIE || state == GOOMBA_STATE_DIE_ONESHOT)
 	{
 		left = right = top = bottom = 0;
 	}
@@ -143,7 +143,7 @@ void Goomba::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
-		if (nx != 0) vx *= -1; //Change direction when hit object
+
 		
 		if (ny != 0) vy = 0;
 
@@ -153,6 +153,14 @@ void Goomba::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
+
+			//Change direction when hit object
+			if (nx != 0)
+			{
+				if (!(e->obj->tag == Tag::PLAYER || e->obj->tag == Tag::KOOPA))
+					vx *= -1;
+			}
+
 			if (ny < 0)
 			{
 				//Expand Boundary by half object width  on each side if smaller than object width
@@ -165,8 +173,18 @@ void Goomba::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 
 			if (state == GOOMBA_STATE_WALKING && (x <= boundary.x || x >= boundary.y))
-			{
+			{				
 				vx *= -1;
+			}
+
+			if (e->obj->tag == Tag::KOOPA)
+			{
+				auto koopa = dynamic_cast<KoopaTroopa*>(e->obj);
+				if (e->nx != 0)
+				{
+					if (koopa->state == KOOPA_STATE_SPIN)
+						SetState(GOOMBA_STATE_DIE_ONESHOT);
+				}
 			}
 		}
 

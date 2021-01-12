@@ -142,7 +142,7 @@ void Player::SetState(int state)
 		nx = -1;
 		break;
 	case MARIO_STATE_JUMP: 
-		vy = -MARIO_JUMP_SPEED_Y;
+		vy = -MARIO_WALKING_JUMP_SPEED;
 	case MARIO_STATE_IDLE: 
 		vx = 0;
 		break;

@@ -50,10 +50,13 @@ enum class Tag
 
 struct Rect
 {
-	float x, y;
-	float width, height;
+	float x = 0.f;
+	float y = 0.f;
+	float width = 0.f;
+	float height = 0.f;
 
 	Rect() {}
+
 	Rect(float x, float y, float width, float height)
 	{
 		this->x = x;

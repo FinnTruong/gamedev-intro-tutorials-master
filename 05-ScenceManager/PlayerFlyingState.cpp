@@ -16,7 +16,7 @@ PlayerFlyingState::PlayerFlyingState()
 void PlayerFlyingState::Update(DWORD dt)
 {	
 	if (Mario->isFlying)
-		Mario->isFlying = GetTickCount64() - Mario->releaseJumpInputTime > 400 ? false : true;
+		Mario->isFlying = GetTickCount64() - Mario->releaseJumpInputTime > 1000 ? false : true;
 	this->HandleKeyboard(dt);
 }
 
@@ -25,6 +25,7 @@ void PlayerFlyingState::HandleKeyboard(DWORD dt)
 	if (!Mario->isFlying)
 	{
 		Mario->SetState(new PlayerFallingState());
+		Mario->abilityBar = 0;
 		return;
 	}
 

@@ -29,7 +29,7 @@ void PlayerWalkingState::HandleKeyboard(DWORD dt)
 	}	
 	else
 	{		
-		Mario->nx = Mario->facingDirection;
+		//Mario->nx = Mario->facingDirection;
 		Mario->SetState(new PlayerIdleState());
 	}
 
@@ -38,94 +38,19 @@ void PlayerWalkingState::HandleKeyboard(DWORD dt)
 
 void PlayerWalkingState::UpdateAnimation()
 {
-	int movingDirection =1;
-	if (keyCode[DIK_RIGHT])
-		movingDirection = 1;
-	else if (keyCode[DIK_LEFT])
-		movingDirection = -1;
-
-
 	switch (Mario->level)
 	{
 	case MARIO_LEVEL_SMALL:
-		if (GetTickCount64() - Mario->releaseMoveInputTime <= 150 && Mario->vx >= MARIO_WALKING_SPEED)
-		{
-			if (Mario->facingDirection != movingDirection)
-			{
-				isSkiding = true;
-				animation = MARIO_ANI_SMALL_SKIDING;				
-			}
-			else
-			{
-				isSkiding = false;
-				animation = MARIO_ANI_SMALL_WALKING;
-			}
-		}
-		else
-		{
-			isSkiding = false;
-			animation = MARIO_ANI_SMALL_WALKING;
-		}
+		animation = MARIO_ANI_SMALL_WALKING;
 		break;
 	case MARIO_LEVEL_BIG:
-		if (GetTickCount64() - Mario->releaseMoveInputTime <= 150)
-		{
-			if (Mario->facingDirection != movingDirection)
-			{
-				isSkiding = true;
-				animation = MARIO_ANI_BIG_SKIDING;
-			}
-			else
-			{
-				isSkiding = false;
-				animation = MARIO_ANI_BIG_WALKING;
-			}
-		}
-		else
-		{
-			isSkiding = false;
-			animation = MARIO_ANI_BIG_WALKING;
-		}
+		animation = MARIO_ANI_BIG_WALKING;
 		break;
 	case MARIO_LEVEL_RACCOON:
-		if (GetTickCount64() - Mario->releaseMoveInputTime <= 150)
-		{
-			if (Mario->facingDirection != movingDirection)
-			{
-				isSkiding = true;
-				animation = MARIO_ANI_RACCOON_SKIDING;
-			}
-			else
-			{
-				isSkiding = false;
-				animation = MARIO_ANI_RACCOON_WALKING;
-			}
-		}
-		else
-		{
-			isSkiding = false;
-			animation = MARIO_ANI_RACCOON_WALKING;
-		}
+		animation = MARIO_ANI_RACCOON_WALKING;
 		break;
 	case MARIO_LEVEL_FIRE:
-		if (GetTickCount64() - Mario->releaseMoveInputTime <= 150)
-		{
-			if (Mario->facingDirection != movingDirection)
-			{
-				isSkiding = true;
-				animation = MARIO_ANI_FIRE_SKIDING;
-			}
-			else
-			{
-				isSkiding = false;
-				animation = MARIO_ANI_FIRE_WALKING;
-			}
-		}
-		else
-		{
-			isSkiding = false;
-			animation = MARIO_ANI_FIRE_WALKING;
-		}
+		animation = MARIO_ANI_FIRE_WALKING;
 		break;
 	}
 }

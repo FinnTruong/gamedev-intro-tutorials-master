@@ -144,6 +144,8 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="KoopaParatroopa.cpp" />
     <ClCompile Include="Leaf.cpp" />
+    <ClCompile Include="MovingPlatform.cpp" />
+    <ClCompile Include="MovingPlayScene.cpp" />
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="OneUpMushroom.cpp" />
     <ClCompile Include="Paragoomba.cpp" />
@@ -216,6 +218,8 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="KoopaParatroopa.h" />
     <ClInclude Include="Leaf.h" />
+    <ClInclude Include="MovingPlatform.h" />
+    <ClInclude Include="MovingPlayScene.h" />
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="OneUpMushroom.h" />
     <ClInclude Include="OneWayPlatform.h" />

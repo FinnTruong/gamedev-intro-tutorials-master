@@ -199,8 +199,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	case OBJECT_TYPE_PIPE:
 	{
-		float width = (float)atof(tokens[4].c_str());
-		float height = (float)atof(tokens[5].c_str());
+		int width = (int)atof(tokens[4].c_str());
+		int height = (int)atof(tokens[5].c_str());
 		int type = (int)atof(tokens[6].c_str());
 		bool hasSecretEntrance = atof(tokens[7].c_str());
 		obj = new Pipe(width, height, type, hasSecretEntrance);

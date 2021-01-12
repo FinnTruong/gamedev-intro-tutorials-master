@@ -14,6 +14,7 @@ QuestionBlock::QuestionBlock(float posX, float posY, bool _hasPowerup, bool _has
 	hasCollided = false;
 	hasPowerUp = _hasPowerup;
 	hasOneUp = _hasOneUp;
+	sortingLayer = 1;
 }
 
 void QuestionBlock::GetBoundingBox(float& l, float& t, float& r, float& b)

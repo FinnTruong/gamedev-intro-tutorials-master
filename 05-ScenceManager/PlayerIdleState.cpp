@@ -25,7 +25,17 @@ void PlayerIdleState::Update(DWORD dt)
 		if (Mario->vx > 0)
 			Mario->vx = 0;
 	}
+	int velDir = 0;
+	if (keyCode[DIK_RIGHT])
+	{
+		velDir = 1;
+	}
+	else if (keyCode[DIK_LEFT])
+	{
+		velDir = -1;
+	}
 
+	Mario->isSkiding = velDir * Mario->facingDirection < 0;
 	Mario->abilityBar = Mario->abilityBar <= 0 ? 0 : Mario->abilityBar - 1 * dt;
 
 	this->HandleKeyboard(dt);

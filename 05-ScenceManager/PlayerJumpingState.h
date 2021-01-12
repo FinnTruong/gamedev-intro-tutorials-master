@@ -4,11 +4,10 @@
 class PlayerJumpingState : public PlayerState
 {
 public:
-	PlayerJumpingState();
+	PlayerJumpingState(float jumpSpeed);
 	void Update(DWORD dt);
 	void HandleKeyboard(DWORD dt);
 	void UpdateAnimation();
-	
-	float currentSpeed;
+
 };
 

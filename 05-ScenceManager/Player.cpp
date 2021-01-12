@@ -44,6 +44,7 @@ Player::Player(float posX, float posY) : CGameObject()
 	isFlip = false;
 	isAttacking = false;
 	abilityBar = 0;
+	isStatic = true;
 
 	if (!tail)
 	{
@@ -66,6 +67,7 @@ Player::Player(float posX, float posY) : CGameObject()
 	playerState = new PlayerIdleState();
 	start_x = posX; 
 	start_y = posY; 
+	last_y = posY;
 	this->x = posX; 
 	this->y = posY; 
 
@@ -81,222 +83,27 @@ Player* Player::GetInstance()
 
 void Player::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
-	// Calculate dx, dy 
+	CGame::GetInstance()->GetCurrentScene()->GetCamera()->GetPosition(cam_x, cam_y);
+
 	CGameObject::Update(dt);
 	playerState->Update(dt);
 
-	int cam_x, cam_y;
-	CGame::GetInstance()->GetCurrentScene()->GetCamera()->GetPosition(cam_x, cam_y);
-
-	CheckCanAttack();
-
-	//Check Has Hit Goal
-	if (hasHitGoal)
-	{
-		vx = MARIO_WALKING_SPEED;
-		nx = 1;
-		if (x >= cam_x + SCREEN_WIDTH + 32)
-		{
-			CGame::GetInstance()->SwitchScene(4);
-			hasHitGoal = true;
-			return;
-		}		
-	}
-
-	//Check Dead
-	if (isDead)
-	{
-		isStatic = true;
-		if (GetTickCount64() - deadTime >= 1500)
-		{
-			isDead = false;
-			isStatic = false;
-			CGame::GetInstance()->SwitchScene(4);
-			CGame::GetInstance()->SubtractLives();
-			return;
-		}		
-	}
-
-	//Enter Pipe
-	if (isEnteringSecretRoom)
-	{
-		int marioHeight = level == MARIO_LEVEL_SMALL ? MARIO_SMALL_BBOX_HEIGHT : MARIO_BIG_BBOX_HEIGHT;
-		y += MARIO_ENTER_PIPE_SPEED * dt;
-		if (abs(onPipeYPos - y) >= marioHeight && !inSecretRoom)
-		{
-			SetPosition(2120, 286);
-			inSecretRoom = true;
-		}
-		if (y >= 318)
-			isEnteringSecretRoom = false;
-
-		return;
-	}
-
-	if (isExitingSecretRoom)
-	{
-		int marioHeight = level == MARIO_LEVEL_SMALL ? MARIO_SMALL_BBOX_HEIGHT : MARIO_BIG_BBOX_HEIGHT;
-		y -= MARIO_ENTER_PIPE_SPEED * dt;
-		if (y <= 286 && inSecretRoom)
-		{
-			SetPosition((float)2344, (float)238 - marioHeight);
-			inSecretRoom = false;
-		}
-		if (y <= 206 - marioHeight)
-			isExitingSecretRoom = false;
-		return;
-	}
-
-
-	// Simple fall down
-	if (isSlowFalling && vy > 0)
-	{
-		vy += MARIO_GRAVITY / 3 * dt;
-	}
-	else
-		vy += MARIO_GRAVITY * dt;
-	
-	//Check if Mario is kicking object
-	isKicking = GetTickCount64() - startKickingAnimationTime <= MARIO_KICKING_TIME;
-	
-
-	// reset untouchable timer if untouchable time has passed
-	if (GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
-	{
-		untouchable_start = 0;
-		untouchable = 0;
-	}
-	
-
-	
-
-	float k, l;
-	GetPosition(k, l);
-	if (!keyCode[DIK_A])
-	{
-		holdingObject = nullptr;
-	}
-	if (holdingObject && keyCode[DIK_A])
-	{
-		if (level == MARIO_LEVEL_SMALL)
-			holdingObject->SetPosition(nx == 1 ? (k + nx * 10) : k + nx * 13, /*holdthing->Gety*/ l - 15);
-		else if (level == MARIO_LEVEL_RACCOON)
-			holdingObject->SetPosition(nx == 1 ? k + nx * 17 : k + nx * 13, /*holdthing->Gety*/ l - 5);
-		else
-			holdingObject->SetPosition(nx == 1 ? x + nx * 10 : x + nx * 13, /*holdthing->Gety*/ l - 5);
-	}
 	HandleCollision(dt, coObjects);
-}
 
-void Player::SetLevel(int l)
-{
-	if (level == MARIO_LEVEL_SMALL && l != MARIO_LEVEL_SMALL)
-	{
-		SetPosition(x, y - (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT));
-	}
-
-	if (l == MARIO_LEVEL_SMALL && level != MARIO_LEVEL_SMALL)
-	{
-		SetPosition(x, y + (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT));
-	}
-
-	level = l;
-}
-
-void Player::SetState(PlayerState* newState)
-{	
-	if (state == MARIO_STATE_DIE)
-		return;
-	previousState = state;
-	delete playerState;
-	playerState = newState;
-	state = newState->state;	
+	CheckIfHoldingObject();
+	CheckIfCanAttack();
+	CheckIfHasHitGoal();
+	CheckIfDead();
+	CheckIfEnterPipe();	
+	CheckUntouchableTimer();
 }
 
 
-/*
-	Reset Mario status to the beginning state of a scene
-*/
-void Player::Reset()
-{
-	inSecretRoom = false;
-	state = 0;
-	SetState(new PlayerIdleState());
-	SetLevel(MARIO_LEVEL_SMALL);
-	SetPosition(start_x, start_y);
-	SetSpeed(0, 0);
-}
+// -------------------------- HANDLE COLLISION --------------------------------
 
-void Player::CheckCanAttack()
-{
-	switch (level)
-	{
-	case MARIO_LEVEL_RACCOON:
-		if (GetTickCount64() - attackTime >= MARIO_RACCOON_ATTACK_TIME)
-			isAttacking = false;
-		break;
-
-	case MARIO_LEVEL_FIRE:
-		if (GetTickCount64() - attackTime >= MARIO_FIRE_ATTACK_TIME)
-			isAttacking = false;
-
-	}
-}
-
-void Player::HandleMovement(DWORD dt)
-{
-	if (state == MARIO_STATE_DIE || hasHitGoal)
-		return;
-
-	float targetVelocity = 0;
-	float curVelocity = vx;
-	float acceleration = 0;
-	float drag = 0;
-
-	bool isRunning = false;
-
-	if (keyCode[DIK_LEFT] || keyCode[DIK_RIGHT])
-	{
-		if (keyCode[DIK_A])
-		{
-			isRunning = true;
-
-		}
-		else
-		{
-			isRunning = false;
-		}
-
-		if (keyCode[DIK_LEFT])
-		{
-			targetVelocity = -1 * (isRunning ? MARIO_RUNNING_SPEED : MARIO_WALKING_SPEED);
-			nx = -1;
-		}
-		else if (keyCode[DIK_RIGHT])
-		{
-			targetVelocity = 1 * (isRunning ? MARIO_RUNNING_SPEED : MARIO_WALKING_SPEED);
-			nx = 1;
-		}
-
-		if (abs(curVelocity - targetVelocity) - abs(acceleration * dt))
-		{
-			acceleration = curVelocity < targetVelocity ? MARIO_ACCELERATION : -MARIO_ACCELERATION;
-			curVelocity += acceleration * dt;
-		}
-
-		vx = curVelocity;
-		facingDirection = curVelocity >= 0 ? 1 : -1;
-	}
-	else
-	{
-		if (!isGrounded)
-			return;		
-	}
-
-	
-}
 
 #pragma region  Handle Collision
+
 
 void Player::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -321,16 +128,36 @@ void Player::GetBoundingBox(float& left, float& top, float& right, float& bottom
 
 void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
+	if (isEnteringSecretRoom || isExitingSecretRoom)
+		return;
+
+	//Apply Gravity
+	if (isSlowFalling && vy > 0)
+	{
+		vy += MARIO_GRAVITY / 3 * dt;
+	}
+	else
+		vy += MARIO_GRAVITY * dt;
+
+
 	coEvents.clear();
 
 	CalcPotentialCollisions(coObjects, coEvents);
 	CalcPotentialOverlapped(coObjects);
+
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
 		x += dx;
 		y += dy;
+		if ((int)y > (int)last_y)
+		{
+			isFalling = true;
+		}
+		else
+			isFalling = false;
+
 	}
 	else
 	{
@@ -349,13 +176,23 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
-		//
+
+		//if (vy >= MARIO_GRAVITY * dt || vy < 0)
+		//{
+		//	isGrounded = false;
+		//}
+		if (ny < 0)
+		{
+			isFalling = false;
+			isGrounded = true;
+			hasJumped = false;
+		}
+
 		// Collision logic with other objects
 		//
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-
 
 			if (e->obj->tag != Tag::ONE_WAY_PLATFORM)
 			{
@@ -503,6 +340,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 							}
 							else if (keyCode[DIK_A])
 							{
+								pickUpObjectTime = GetTickCount64();
 								holdingObject = koopa;
 								koopa->isBeingHeld = true;
 							}
@@ -519,6 +357,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (e->nx != 0 || e->ny != 0)
 				{
 					mushroom->OnCollected();
+					SetLevel(MARIO_LEVEL_BIG);
 				}
 			}
 
@@ -529,6 +368,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					if (p->secretEntrance && keyCode[DIK_DOWN] && !isEnteringSecretRoom && !isExitingSecretRoom)
 					{
+						DebugOut(L"Enter Pipe \n");
 						isEnteringSecretRoom = true;
 						onPipeYPos = y;
 					}
@@ -555,7 +395,9 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	last_y = y;
 }
+
 
 void Player::OnOverlapped(LPGAMEOBJECT other)
 {
@@ -565,7 +407,6 @@ void Player::OnOverlapped(LPGAMEOBJECT other)
 		if (dynamic_cast<Item*>(other)->CheckIsSprouting())
 			return;
 	}
-
 
 	switch (other->tag)
 	{
@@ -582,13 +423,6 @@ void Player::OnOverlapped(LPGAMEOBJECT other)
 	case Tag::LEAF:
 		dynamic_cast<Item*>(other)->OnCollected();
 		SetLevel(MARIO_LEVEL_RACCOON);
-		break;
-	case Tag::MUSHROOM:
-		dynamic_cast<Item*>(other)->OnCollected();
-		SetLevel(MARIO_LEVEL_BIG);
-		break;
-	case Tag::ONE_UP_MUSHROOM:
-		dynamic_cast<OneUpMushroom*>(other)->OnCollected();
 		break;
 	case Tag::COIN:
 		dynamic_cast<Coin*>(other)->OnCollected();
@@ -612,10 +446,16 @@ void Player::OnOverlapped(LPGAMEOBJECT other)
 
 }
 
+
 #pragma endregion
 
 
+
+// ---------------------------- HANDLE KEYBOARD -----------------------------------
+
+
 #pragma region Handle Keyboard
+
 
 void Player::KeyState(BYTE* states)
 {
@@ -625,18 +465,39 @@ void Player::KeyState(BYTE* states)
 		return;
 }
 
+
 void Player::OnKeyDown(int keyCode)
 {
 	//Transition from any State
 	switch (keyCode)
 	{
 	case DIK_SPACE:
-		if (allow[MARIO_STATE_JUMPING])
+		if (!hasJumped)
 		{
-			allow[MARIO_STATE_JUMPING] = false;
-			this->SetState(new PlayerJumpingState());
+			if (isGrounded && !isFalling)
+			{
+				hasJumped = true;
+				allow[MARIO_STATE_JUMPING] = false;
+				float jumpSpeed = 0;
+				switch (state)
+				{
+				case MARIO_STATE_IDLE: case MARIO_STATE_WALKING:
+					jumpSpeed = MARIO_WALKING_JUMP_SPEED;
+					break;
+				case MARIO_STATE_RUNNING:
+					jumpSpeed = MARIO_RUNNING_JUMP_SPEED;
+					break;
+				case MARIO_STATE_RUNNING_MAX:
+					jumpSpeed = MARIO_RUNNING_MAX_JUMP_SPEED;
+					break;
+				default:
+					jumpSpeed = MARIO_WALKING_JUMP_SPEED;
+					break;
+				}
+				this->SetState(new PlayerJumpingState(jumpSpeed));
+			}
 		}
-		if ((abilityBar >= MARIO_FULL_ABILITY_BAR || isFlying))
+		else if ((abilityBar >= MARIO_FULL_ABILITY_BAR || isFlying))
 		{
 			if (level == MARIO_LEVEL_RACCOON)
 				SetState(new PlayerFlyingState());
@@ -652,7 +513,7 @@ void Player::OnKeyDown(int keyCode)
 		SetLevel(MARIO_LEVEL_FIRE);
 		break;
 	case DIK_R:
-		this->Reset();
+		this->ResetScene();
 		break;
 	case DIK_A:
 		if (!isAttacking)
@@ -696,6 +557,7 @@ void Player::OnKeyDown(int keyCode)
 	}
 }
 
+
 void Player::OnKeyUp(int keyCode)
 {
 	switch (keyCode)
@@ -725,10 +587,16 @@ void Player::OnKeyUp(int keyCode)
 	}
 }
 
+
 #pragma endregion
 
 
+
+// -------------------------- RENDERING -------------------------------
+
+
 #pragma region Rendering
+
 
 void Player::Render()
 {
@@ -752,11 +620,13 @@ void Player::Render()
 
 }
 
+
 void Player::UpdatePlayerStateAnimation()
 {
 	playerState->UpdateAnimation();
 	currentAnimation = playerState->animation;
 }
+
 
 void Player::UpdateGlobalAnimation()
 {
@@ -774,40 +644,58 @@ void Player::UpdateGlobalAnimation()
 		if (isEnteringSecretRoom || isExitingSecretRoom)
 			animation = MARIO_ANI_SMALL_ENTER_PIPE;
 
-		if (holdingObject)
+		else if (holdingObject)
 			animation = vx == 0 ? MARIO_ANI_SMALL_IDLE_HOLD : MARIO_ANI_SMALL_MOVING_HOLD;
 		else if (isKicking)
 			animation = MARIO_ANI_SMALL_KICK;
+
+		else if (isSkiding && isGrounded)
+			animation = MARIO_ANI_SMALL_SKIDING;
+
+		else if (isFalling)
+			animation = abilityBar >= MARIO_FULL_ABILITY_BAR ? MARIO_ANI_SMALL_MAX_JUMPING : MARIO_ANI_SMALL_JUMPING;
 		break;
 
 	case MARIO_LEVEL_BIG:
 		if (isEnteringSecretRoom || isExitingSecretRoom)
 			animation = MARIO_ANI_BIG_ENTER_PIPE;
 
-		if (holdingObject)
+		else if (holdingObject)
 			animation = vx == 0 ? MARIO_ANI_BIG_IDLE_HOLD : MARIO_ANI_BIG_MOVING_HOLD;
 		else if (isKicking)
 			animation = MARIO_ANI_BIG_KICK;
+		else if (isSkiding && isGrounded)
+			animation = MARIO_ANI_BIG_SKIDING;
+		else if (isFalling)
+			animation = abilityBar >= MARIO_FULL_ABILITY_BAR ? MARIO_ANI_BIG_MAX_JUMPING : MARIO_ANI_BIG_FALLING;
 		break;
 
 	case MARIO_LEVEL_RACCOON:
 		if (isEnteringSecretRoom || isExitingSecretRoom)
 			animation = MARIO_ANI_RACCOON_ENTER_PIPE;
 
-		if (holdingObject)
+		else if (holdingObject)
 			animation = vx == 0 ? MARIO_ANI_RACCOON_IDLE_HOLD : MARIO_ANI_RACCOON_MOVING_HOLD;
 		else if (isKicking)
 			animation = MARIO_ANI_RACCOON_KICK;
+		else if (isSkiding && isGrounded)
+			animation = MARIO_ANI_RACCOON_SKIDING;
+		else if (isFalling && !isSlowFalling)
+			animation = abilityBar >= MARIO_FULL_ABILITY_BAR ? MARIO_ANI_RACCOON_MAX_JUMPING : MARIO_ANI_RACCOON_FALLING;
 		break;
 
 	case MARIO_LEVEL_FIRE:
 		if (isEnteringSecretRoom || isExitingSecretRoom)
 			animation = MARIO_ANI_FIRE_ENTER_PIPE;
 
-		if (holdingObject)
+		else if (holdingObject)
 			animation = vx == 0 ? MARIO_ANI_FIRE_IDLE_HOLD : MARIO_ANI_FIRE_MOVING_HOLD;
 		else if (isKicking)
 			animation = MARIO_ANI_FIRE_KICK;
+		else if (isSkiding && isGrounded)
+			animation = MARIO_ANI_FIRE_SKIDING;
+		else if (isFalling)
+			animation = abilityBar >= MARIO_FULL_ABILITY_BAR ? MARIO_ANI_FIRE_MAX_JUMPING : MARIO_ANI_FIRE_FALLING;
 		break;
 
 	default:
@@ -816,7 +704,76 @@ void Player::UpdateGlobalAnimation()
 	currentAnimation = animation;
 }
 
+
 #pragma endregion
+
+
+
+// -------------------------  PLAYER CONTROLLER LOGIC  ----------------------------
+
+
+#pragma region Player Controller Logic
+
+
+void Player::HandleMovement(DWORD dt)
+{
+	if (state == MARIO_STATE_DIE || hasHitGoal)
+		return;
+
+	float targetVelocity = 0;
+	float curVelocity = vx;
+	float acceleration = 0.000346f;
+	float drag = 0.0004f;
+
+	bool isRunning = false;
+
+	if (keyCode[DIK_LEFT] || keyCode[DIK_RIGHT])
+	{
+		if (keyCode[DIK_A])
+		{
+			isRunning = true;
+
+		}
+		else
+		{
+			isRunning = false;
+		}
+
+		if (keyCode[DIK_LEFT])
+		{
+			targetVelocity = -1 * (isRunning ? MARIO_RUNNING_SPEED : MARIO_WALKING_SPEED);
+			nx = -1;
+		}
+		else if (keyCode[DIK_RIGHT])
+		{
+			targetVelocity = 1 * (isRunning ? MARIO_RUNNING_SPEED : MARIO_WALKING_SPEED);
+			nx = 1;
+		}
+
+		if (abs(curVelocity - targetVelocity) >= abs(acceleration))
+		{
+			acceleration = curVelocity < targetVelocity ? MARIO_ACCELERATION : -MARIO_ACCELERATION;
+			curVelocity += acceleration * dt;
+		}
+
+		vx = curVelocity;
+		facingDirection = curVelocity >= 0 ? 1 : -1;
+	}
+	else
+	{
+		auto vel = 0;
+		if (abs(curVelocity) >= drag * dt)
+		{
+			curVelocity = abs(curVelocity) - (drag * dt);
+		}
+		else
+			curVelocity = 0.0f;
+		vx = facingDirection * curVelocity;
+	}
+
+	isSkiding = targetVelocity * facingDirection < 0 ? true : false;
+}
+
 
 void Player::TakeDamage()
 {
@@ -844,3 +801,191 @@ void Player::TakeDamage()
 	}
 }
 
+
+#pragma endregion
+
+
+
+// ------------------------ SET MARIO VARIABLES -------------------------
+
+
+#pragma region Set Mario Properties
+
+
+void Player::SetLevel(int l)
+{
+	if (level == MARIO_LEVEL_SMALL && l != MARIO_LEVEL_SMALL)
+	{
+		SetPosition(x, y - (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT));
+	}
+
+	if (l == MARIO_LEVEL_SMALL && level != MARIO_LEVEL_SMALL)
+	{
+		SetPosition(x, y + (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT));
+	}
+
+	level = l;
+}
+
+
+void Player::SetState(PlayerState* newState)
+{
+	if (state == MARIO_STATE_DIE)
+		return;
+	previousState = state;
+	delete playerState;
+	playerState = newState;
+	state = newState->state;
+}
+
+
+#pragma endregion
+
+
+
+// ----------------------  CHECK GAME CONDITIONS  ------------------------
+
+
+#pragma region Check Game Conditions
+
+void Player::CheckIfHoldingObject()
+{
+	//Check if Mario is kicking object
+	isKicking = GetTickCount64() - startKickingAnimationTime <= MARIO_KICKING_TIME;
+
+	float k, l;
+	GetPosition(k, l);
+	if (!keyCode[DIK_A])
+	{
+		holdingObject = nullptr;
+	}
+	if (holdingObject && keyCode[DIK_A])
+	{
+		if (level == MARIO_LEVEL_SMALL)
+			holdingObject->SetPosition(nx == 1 ? (x + nx * 9) : x + nx * 12, y - 5);
+		else if (level == MARIO_LEVEL_RACCOON)
+			holdingObject->SetPosition(nx == 1 ? x + nx * 10 : x + nx * 13, y + 4);
+		else
+			holdingObject->SetPosition(nx == 1 ? x + nx * 10 : x + nx * 13, y + 4);
+	}
+
+	if (holdingObject && GetTickCount64() - pickUpObjectTime >= MARIO_MAX_HOLD_TIME)
+	{
+		auto koopa = dynamic_cast<KoopaTroopa*>(holdingObject);
+		koopa->isBeingHeld = false;
+		koopa->SetState(KOOPA_STATE_WALKING);
+		koopa->SetPosition(koopa->x + nx * 5, koopa->y - koopa->height);
+		holdingObject = nullptr;
+	}
+}
+
+
+void Player::CheckIfCanAttack()
+{
+	switch (level)
+	{
+	case MARIO_LEVEL_RACCOON:
+		if (GetTickCount64() - attackTime >= MARIO_RACCOON_ATTACK_TIME)
+			isAttacking = false;
+		break;
+
+	case MARIO_LEVEL_FIRE:
+		if (GetTickCount64() - attackTime >= MARIO_FIRE_ATTACK_TIME)
+			isAttacking = false;
+
+	}
+}
+
+
+void Player::CheckIfHasHitGoal()
+{
+	if (hasHitGoal)
+	{
+		vx = MARIO_WALKING_SPEED;
+		nx = 1;
+		if (x >= cam_x + SCREEN_WIDTH + 32)
+		{
+			CGame::GetInstance()->SwitchScene(4);
+			hasHitGoal = true;
+			return;
+		}
+	}
+}
+
+
+void Player::CheckIfDead()
+{
+	if (isDead)
+	{
+		if (GetTickCount64() - deadTime >= 1500)
+		{
+			isDead = false;
+			CGame::GetInstance()->SwitchScene(4);
+			CGame::GetInstance()->SubtractLives();
+			return;
+		}
+	}
+}
+
+
+void Player::CheckIfEnterPipe()
+{
+	//Enter Pipe
+	if (isEnteringSecretRoom)
+	{
+		int marioHeight = level == MARIO_LEVEL_SMALL ? MARIO_SMALL_BBOX_HEIGHT : MARIO_BIG_BBOX_HEIGHT;
+		y += MARIO_ENTER_PIPE_SPEED * dt;
+		if (abs(onPipeYPos - y) >= marioHeight && !inSecretRoom)
+		{
+			SetPosition(2120, 286);
+			inSecretRoom = true;
+		}
+		if (y >= 318)
+			isEnteringSecretRoom = false;
+
+		return;
+	}
+
+	if (isExitingSecretRoom)
+	{
+		int marioHeight = level == MARIO_LEVEL_SMALL ? MARIO_SMALL_BBOX_HEIGHT : MARIO_BIG_BBOX_HEIGHT;
+		y -= MARIO_ENTER_PIPE_SPEED * dt;
+		if (y <= 286 && inSecretRoom)
+		{
+			SetPosition((float)2344, (float)238 - marioHeight);
+			inSecretRoom = false;
+		}
+		if (y <= 206 - marioHeight)
+			isExitingSecretRoom = false;
+		return;
+	}
+}
+
+
+void Player::CheckUntouchableTimer()
+{
+	// reset untouchable timer if untouchable time has passed
+	if (GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
+	{
+		untouchable_start = 0;
+		untouchable = 0;
+	}
+}
+
+#pragma endregion
+
+
+
+// ------------------------- UTILITY FUNCTIONS ---------------------------
+
+	
+  /* Reset Mario status to the beginning state of a scene */
+void Player::ResetScene()
+{
+	inSecretRoom = false;
+	state = 0;
+	SetState(new PlayerIdleState());
+	SetLevel(MARIO_LEVEL_SMALL);
+	SetPosition(start_x, start_y);
+	SetSpeed(0, 0);
+}

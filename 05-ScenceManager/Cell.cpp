@@ -3,8 +3,8 @@
 
 Cell::Cell(int xID, int yID) : xID(xID), yID(yID)
 {
-	rect.x = xID * cellWidth;
-	rect.y = yID * cellHeight;
+	rect.x = (float)(xID * cellWidth);
+	rect.y = (float)(yID * cellHeight);
 	rect.width = cellWidth;
 	rect.height = cellHeight;
 }

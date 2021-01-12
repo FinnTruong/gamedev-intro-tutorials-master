@@ -84,10 +84,7 @@ void KoopaTroopa::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
-		if (nx != 0)
-		{
-			vx *= -1; //Change direction when hit object
-		}
+		
 
 		if (ny != 0)
 			vy = 0;
@@ -99,6 +96,12 @@ void KoopaTroopa::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
+			if (nx != 0)
+			{
+				//Change direction when hit object
+				if (!(e->obj->tag == Tag::PLAYER || e->obj->tag == Tag::GOOMBA || e->obj->tag == Tag::ONE_WAY_PLATFORM))
+					vx *= -1; 
+			}
 
 			if (e->obj->tag != Tag::ONE_WAY_PLATFORM)
 			{
@@ -135,7 +138,8 @@ void KoopaTroopa::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 			if (state == KOOPA_STATE_WALKING && (x <= boundary.x || x >= boundary.y))
 			{
-				vx *= -1;
+				
+					vx *= -1;
 			}
 
 			if (nx != 0)

@@ -7,8 +7,8 @@ Grid::Grid(int width, int height)
 	numXCells = width / Cell::cellWidth;
 	numYCells = height / Cell::cellHeight;
 
-	columns = ceil((float)width / (SCREEN_WIDTH >> 1));
-	rows = ceil((float)height / (SCREEN_HEIGHT >> 1));
+	columns = (int)ceil((float)width / (SCREEN_WIDTH >> 1));
+	rows = (int)ceil((float)height / (SCREEN_HEIGHT >> 1));
 
 	for (int y = 0; y < rows; ++y)
 	{
@@ -32,8 +32,8 @@ void Grid::Update()
 void Grid::GetActiveCells()
 {
 	activeCells.clear();
-	int startX = viewport.x / Cell::cellWidth;
-	int endX = (viewport.x + SCREEN_WIDTH) / Cell::cellWidth;
+	int startX = (int)(viewport.x / Cell::cellWidth);
+	int endX = (int)((viewport.x + SCREEN_WIDTH) / Cell::cellWidth);
 	int startY = (int)(viewport.y / Cell::cellHeight);
 	int endY = (int)(viewport.y + SCREEN_HEIGHT) / Cell::cellHeight;
 
