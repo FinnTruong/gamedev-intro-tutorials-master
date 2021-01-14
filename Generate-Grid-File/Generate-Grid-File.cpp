@@ -78,8 +78,8 @@ void _ParseSection_OBJECTS(ofstream& outputFile, string line)
 
 int main()
 {
-	string sceneFilePath = "world1-1.txt";
-	ofstream outputFile("world1-1_grid.txt");
+	string sceneFilePath = "world1-4.txt";
+	ofstream outputFile("world1-4_grid.txt");
 	outputFile.clear();
 
 	ifstream f;

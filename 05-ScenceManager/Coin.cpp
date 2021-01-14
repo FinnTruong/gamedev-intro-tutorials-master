@@ -16,11 +16,11 @@ Coin::Coin(float posX, float posY) : Item(posX, posY)
 
 void Coin::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = right = top = bottom = 0;
-	/*left = x;
+	//left = right = top = bottom = 0;
+	left = x;
 	top = y;
 	right = x + 15;
-	bottom = y + 15;*/
+	bottom = y + 15;
 }
 
 void Coin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

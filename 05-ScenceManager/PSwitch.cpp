@@ -39,36 +39,36 @@ void PSwitch::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void PSwitch::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	coEvents.clear();
+	//coEvents.clear();
 
-	CalcPotentialCollisions(coObjects, coEvents);
+	//CalcPotentialCollisions(coObjects, coEvents);
 
-	// No collision occured, proceed normally
-	if (coEvents.size() == 0)
-	{
-		x += dx;
-		y += dy;
-	}
-	else
-	{
-		float min_tx, min_ty, nx = 0, ny;
-		float rdx = 0;
-		float rdy = 0;
+	//// No collision occured, proceed normally
+	//if (coEvents.size() == 0)
+	//{
+	//	x += dx;
+	//	y += dy;
+	//}
+	//else
+	//{
+	//	float min_tx, min_ty, nx = 0, ny;
+	//	float rdx = 0;
+	//	float rdy = 0;
 
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+	//	FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
-		x += min_tx * dx + nx * 0.4f;
-		y += min_ty * dy + ny * 0.4f;
+	//	x += min_tx * dx + nx * 0.4f;
+	//	y += min_ty * dy + ny * 0.4f;
 
-		for (UINT i = 0; i < coEventsResult.size(); i++)
-		{
-			LPCOLLISIONEVENT e = coEventsResult[i];
+	//	for (UINT i = 0; i < coEventsResult.size(); i++)
+	//	{
+	//		LPCOLLISIONEVENT e = coEventsResult[i];
 
 
 
-		}
-		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-	}
+	//	}
+	//	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	//}
 }
 
 
@@ -93,7 +93,6 @@ void PSwitch::SetState(int state)
 		break;
 	case SWITCH_ANI_ACTIVATE:
 		SetPosition(x, y + SWITCH_NORMAL_HEIGHT - SWITCH_ACTIVATE_HEIGHT);
-		SetActive(false);
 		break;
 	default:
 		break;

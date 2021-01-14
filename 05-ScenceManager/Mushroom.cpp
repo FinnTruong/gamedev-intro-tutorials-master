@@ -31,7 +31,7 @@ void Mushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	vy += MUSHROOM_GRAVITY * dt;;
 	if (vx == 0)
-		vx = MUSHROOM_WALKING_SPEED;
+		vx = moveDirection * MUSHROOM_WALKING_SPEED;
 
 	HandleCollision(dt, coObjects);
 }
@@ -89,6 +89,7 @@ void Mushroom::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Mushroom::OnSproutComplete()
 {
+	moveDirection = x >= Mario->x ? 1 : -1;
 	Item::OnSproutComplete();
 }
 

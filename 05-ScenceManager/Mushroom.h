@@ -17,6 +17,7 @@
 class Mushroom : public Item
 {
 	ULONGLONG spawnTime = 0;
+	int moveDirection = 1;
 public:
 	Mushroom(float x, float y);
 	~Mushroom();

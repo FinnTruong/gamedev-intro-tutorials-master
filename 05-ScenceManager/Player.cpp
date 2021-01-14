@@ -5,10 +5,12 @@
 #include "Player.h"
 #include "Game.h"
 #include "PlayScence.h"
+#include "MovingPlayScene.h"
 
 #include "Ground.h"
 #include "QuestionBlock.h"
 #include "OneWayPlatform.h"
+#include "MovingPlatform.h"
 #include "Goomba.h"
 #include "Paragoomba.h"
 #include "KoopaTroopa.h"
@@ -128,10 +130,9 @@ void Player::GetBoundingBox(float& left, float& top, float& right, float& bottom
 
 void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
-	if (isEnteringSecretRoom || isExitingSecretRoom)
+	if (isEnteringSecretRoom || isExitingSecretRoom || isEnteringExitPipe || isExitingExitPipe)
 		return;
 
-	//Apply Gravity
 	if (isSlowFalling && vy > 0)
 	{
 		vy += MARIO_GRAVITY / 3 * dt;
@@ -150,14 +151,16 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (coEvents.size() == 0)
 	{
 		x += dx;
-		y += dy;
+		y += dy;		
 		if ((int)y > (int)last_y)
 		{
+			isOnMovingPlatform = false;
 			isFalling = true;
 		}
 		else
+		{			
 			isFalling = false;
-
+		}
 	}
 	else
 	{
@@ -188,13 +191,14 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			hasJumped = false;
 		}
 
+
 		// Collision logic with other objects
 		//
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (e->obj->tag != Tag::ONE_WAY_PLATFORM)
+			if (e->obj->tag != Tag::ONE_WAY_PLATFORM && e->obj->tag != Tag::COIN && e->obj->tag != Tag::MUSHROOM && e->obj->tag != Tag::ONE_UP_MUSHROOM)
 			{
 				if (nx != 0) vx = 0;
 				if (ny != 0) vy = 0;
@@ -298,30 +302,18 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 				if (e->ny < 0)
 				{
-					if (koopa->GetState() == KOOPA_STATE_WALKING)
-					{
-						koopa->SetState(KOOPA_STATE_SHELL);
-						vy = -MARIO_JUMP_DEFLECT_SPEED;
-					}
-					else if (koopa->GetState() == KOOPA_STATE_SHELL)
-					{
-						koopa->SetState(KOOPA_STATE_SPIN);
-						vy = -MARIO_JUMP_DEFLECT_SPEED;
-						y += dy;
-					}
-					else if (koopa->GetState() == KOOPA_STATE_SPIN)
-					{
-						koopa->SetState(KOOPA_STATE_SHELL);
-						vy = -MARIO_JUMP_DEFLECT_SPEED;
-					}
-
+					koopa->OnSteppedOn();
+					auto pointEffect = new PointEffect(e->obj->x, e->obj->y, 100);
+					CGame::GetInstance()->AddScore(100);
+					vy = -MARIO_JUMP_DEFLECT_SPEED;
+					
 				}
 
 				else if (e->nx != 0)
 				{
 					if (untouchable == 0)
 					{
-						if (koopa->GetState() == KOOPA_STATE_WALKING || koopa->GetState() == KOOPA_STATE_SPIN)
+						if (koopa->GetState() == KOOPA_STATE_FLYING || koopa->GetState() == KOOPA_STATE_JUMPING || koopa->GetState() == KOOPA_STATE_WALKING || koopa->GetState() == KOOPA_STATE_SPIN)
 						{
 							TakeDamage();
 							return;
@@ -351,7 +343,7 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 
-			else if (e->obj->tag == Tag::MUSHROOM || e->obj->tag == Tag::ONE_UP_MUSHROOM)
+			else if (e->obj->tag == Tag::MUSHROOM)
 			{
 				auto mushroom = dynamic_cast<Mushroom*>(e->obj);
 				if (e->nx != 0 || e->ny != 0)
@@ -361,16 +353,46 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 
+			else if (e->obj->tag == Tag::ONE_UP_MUSHROOM)
+			{
+				auto mushroom = dynamic_cast<OneUpMushroom*>(e->obj);
+				if (e->nx != 0 || e->ny != 0)
+				{
+					mushroom->OnCollected();
+				}
+			}
+
+			else if (e->obj->tag == Tag::COIN)
+			{
+				auto coin = dynamic_cast<Coin*>(e->obj);
+				if (e->nx != 0 || e->ny != 0)
+				{
+					coin->OnCollected();
+				}
+			}
+
+
 			else if (e->obj->tag == Tag::PIPE)
 			{
 				Pipe* p = dynamic_cast<Pipe*>(e->obj);
 				if (e->ny < 0)
 				{
-					if (p->secretEntrance && keyCode[DIK_DOWN] && !isEnteringSecretRoom && !isExitingSecretRoom)
+					auto curScene = CGame::GetInstance()->GetCurrentScene();
+					if (curScene->sceneType != 3)
 					{
-						DebugOut(L"Enter Pipe \n");
-						isEnteringSecretRoom = true;
-						onPipeYPos = y;
+						if (p->secretEntrance && keyCode[DIK_DOWN] && !isEnteringSecretRoom && !isExitingSecretRoom)
+						{
+							isEnteringSecretRoom = true;
+							onPipeYPos = y;
+						}
+					}
+					else if (curScene->sceneType == 3)
+					{
+						if (p->secretEntrance && keyCode[DIK_DOWN] && !isEnteringExitPipe)
+						{
+							isEnteringExitPipe = true;
+							onPipeYPos = y;								
+						}
 					}
 				}
 
@@ -384,18 +406,57 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 
+			else if (e->obj->tag == Tag::MOVING_PLATFORM)
+			{
+				platform = dynamic_cast<MovingPlatform*>(e->obj);
+				if (e->ny < 0)
+				{
+					
+					if (!platform->hasTouched)
+						platform->playerTouchTime = GetTickCount64();
+
+					isOnMovingPlatform = true;
+					platform->hasTouched = true;					
+					if (platform != nullptr)
+					{
+						if (x > platform->x + platform->width || x + width < platform->x)
+						{
+							isFalling = true;
+							if (vy >= MARIO_TERMINAL_VELOCITY_Y)
+								vy = 0;
+						}
+						else
+							vy += platform->dy;
+					}
+				}
+				else
+				{
+					vy = 0;
+				}
+			}
+
 			else if (dynamic_cast<CPortal*>(e->obj))
 			{
 				CPortal* p = dynamic_cast<CPortal*>(e->obj);
 				CGame::GetInstance()->SwitchScene(p->GetSceneId());
 			}		
-			
+
 		}
 	}
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	last_y = y;
+
+	if (platform != nullptr)
+	{
+		if (x > platform->x + platform->width || x + width < platform->x)
+		{
+			if (vy >=MARIO_TERMINAL_VELOCITY_Y)
+				vy = 0;
+		}
+	}
+
 }
 
 
@@ -435,12 +496,15 @@ void Player::OnOverlapped(LPGAMEOBJECT other)
 		}
 		break;
 	case Tag::GOAL:
-		other->SetState(GOAL_STATE_HIT);
-		hasHitGoal = true;
+		Goal* goal = dynamic_cast<Goal*>(other);
+		if (!goal->hasTouched)
+		{
+			goal->SetState(GOAL_STATE_HIT);
+			hasHitGoal = true;
+			hitGoalTime = GetTickCount64();
+			vx = 0;
+		}
 		break;
-	default:
-		break;
-
 	}
 
 
@@ -641,7 +705,7 @@ void Player::UpdateGlobalAnimation()
 	switch (level)
 	{
 	case MARIO_LEVEL_SMALL:
-		if (isEnteringSecretRoom || isExitingSecretRoom)
+		if (isEnteringSecretRoom || isExitingSecretRoom || isEnteringExitPipe || isExitingExitPipe)
 			animation = MARIO_ANI_SMALL_ENTER_PIPE;
 
 		else if (holdingObject)
@@ -657,7 +721,7 @@ void Player::UpdateGlobalAnimation()
 		break;
 
 	case MARIO_LEVEL_BIG:
-		if (isEnteringSecretRoom || isExitingSecretRoom)
+		if (isEnteringSecretRoom || isExitingSecretRoom || isEnteringExitPipe || isExitingExitPipe)
 			animation = MARIO_ANI_BIG_ENTER_PIPE;
 
 		else if (holdingObject)
@@ -671,7 +735,7 @@ void Player::UpdateGlobalAnimation()
 		break;
 
 	case MARIO_LEVEL_RACCOON:
-		if (isEnteringSecretRoom || isExitingSecretRoom)
+		if (isEnteringSecretRoom || isExitingSecretRoom || isEnteringExitPipe || isExitingExitPipe)
 			animation = MARIO_ANI_RACCOON_ENTER_PIPE;
 
 		else if (holdingObject)
@@ -685,7 +749,7 @@ void Player::UpdateGlobalAnimation()
 		break;
 
 	case MARIO_LEVEL_FIRE:
-		if (isEnteringSecretRoom || isExitingSecretRoom)
+		if (isEnteringSecretRoom || isExitingSecretRoom || isEnteringExitPipe || isExitingExitPipe)
 			animation = MARIO_ANI_FIRE_ENTER_PIPE;
 
 		else if (holdingObject)
@@ -722,7 +786,7 @@ void Player::HandleMovement(DWORD dt)
 
 	float targetVelocity = 0;
 	float curVelocity = vx;
-	float acceleration = 0.000346f;
+	float acceleration = 0.000146f;
 	float drag = 0.0004f;
 
 	bool isRunning = false;
@@ -901,14 +965,20 @@ void Player::CheckIfHasHitGoal()
 {
 	if (hasHitGoal)
 	{
-		vx = MARIO_WALKING_SPEED;
+		if (isGrounded)
+			vx = MARIO_WALKING_SPEED;
 		nx = 1;
-		if (x >= cam_x + SCREEN_WIDTH + 32)
+		if (GetTickCount64() - hitGoalTime >= TIME_BEFORE_SWITCH_SCENE)
+		{
+			CGame::GetInstance()->SwitchScene(4);
+			return;
+		}
+		/*if (x >= cam_x + SCREEN_WIDTH + 32)
 		{
 			CGame::GetInstance()->SwitchScene(4);
 			hasHitGoal = true;
 			return;
-		}
+		}*/
 	}
 }
 
@@ -952,13 +1022,42 @@ void Player::CheckIfEnterPipe()
 		y -= MARIO_ENTER_PIPE_SPEED * dt;
 		if (y <= 286 && inSecretRoom)
 		{
-			SetPosition((float)2344, (float)238 - marioHeight);
+			SetPosition((float)2344, (float)206);
 			inSecretRoom = false;
 		}
 		if (y <= 206 - marioHeight)
 			isExitingSecretRoom = false;
 		return;
 	}
+
+	if (isEnteringExitPipe)
+	{
+		int marioHeight = level == MARIO_LEVEL_SMALL ? MARIO_SMALL_BBOX_HEIGHT : MARIO_BIG_BBOX_HEIGHT;
+		y += MARIO_ENTER_PIPE_SPEED * dt;
+			
+			
+		if (abs(onPipeYPos - y) >= marioHeight)
+		{	
+			isEnteringExitPipe = false;
+			isExitingExitPipe = true;
+			SetPosition((float)2208 + 8, (float)206);	
+			CGame::GetInstance()->GetCurrentScene()->GetCamera()->cameraFollowXAxis = true;
+			return;
+		}
+	}
+
+	if (isExitingExitPipe)
+	{
+		int marioHeight = level == MARIO_LEVEL_SMALL ? MARIO_SMALL_BBOX_HEIGHT : MARIO_BIG_BBOX_HEIGHT;
+		y -= MARIO_ENTER_PIPE_SPEED * dt;
+
+		if (y < 206 - marioHeight)
+		{
+			isExitingExitPipe = false;
+			return;
+		}
+	}
+
 }
 
 

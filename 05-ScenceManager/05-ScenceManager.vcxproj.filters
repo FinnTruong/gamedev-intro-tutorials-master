@@ -59,6 +59,9 @@
     <Filter Include="Game Objects\PlayScene Objects\Player\PlayerStateMachine">
       <UniqueIdentifier>{53d367cc-75c5-4275-8083-7aac4bb19874}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Component\Camera">
+      <UniqueIdentifier>{3c86f807-faa3-4d09-83cc-5e1adabeffac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp">
@@ -86,9 +89,6 @@
       <Filter>Game Component</Filter>
     </ClCompile>
     <ClCompile Include="GameGlobal.cpp">
-      <Filter>Game Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
       <Filter>Game Component</Filter>
     </ClCompile>
     <ClCompile Include="PlayScence.cpp">
@@ -268,6 +268,9 @@
     <ClCompile Include="MovingPlayScene.cpp">
       <Filter>Game Component\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Game Component\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -295,9 +298,6 @@
       <Filter>Game Graphics</Filter>
     </ClInclude>
     <ClInclude Include="GameGlobal.h">
-      <Filter>Game Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
       <Filter>Game Component</Filter>
     </ClInclude>
     <ClInclude Include="PlayScence.h">
@@ -479,6 +479,9 @@
     </ClInclude>
     <ClInclude Include="MovingPlayScene.h">
       <Filter>Game Component\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Game Component\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

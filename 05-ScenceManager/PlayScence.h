@@ -52,6 +52,7 @@
 #define OBJECT_TYPE_P_BLOCK					16
 #define OBJECT_TYPE_PARATROOPA				17
 #define OBJECT_TYPE_GOAL					18
+#define OBJECT_TYPE_MOVING_PLATFORM			19
 
 #define OBJECT_TYPE_PORTAL	50
 
@@ -61,6 +62,7 @@
 #define PLAY_TILEMAP_Y_OFFSET -162
 
 #define SORTING_LAYERS_SIZE	3
+
 
 const int CELL_SIZE = 64;
 
@@ -100,6 +102,7 @@ public:
 	void Render();
 	void Unload();
 
+	void DrawEndLevelText();
 
 	void KeyState(BYTE *states);
 	void OnKeyDown(int KeyCode);

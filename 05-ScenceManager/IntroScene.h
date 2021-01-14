@@ -8,6 +8,8 @@
 #include "Tilemap.h"
 
 #include "Title.h"
+#include "Curtain.h"
+#include "Background.h"
 
 
 class IntroScene : public CScene
@@ -15,6 +17,7 @@ class IntroScene : public CScene
 protected:
 	
 	int curOption = 0;
+	ULONGLONG startTime = 0;
 
 	vector<LPGAMEOBJECT> objects;
 

@@ -4,6 +4,7 @@
 
 #define KOOPA_WALKING_SPEED 0.03f;
 #define KOOPA_JUMPING_SPEED	0.17f;
+#define KOOPA_FLYING_SPEED  0.06f;
 
 #define KOOPA_BBOX_WIDTH 16
 #define KOOPA_BBOX_HEIGHT 25
@@ -20,12 +21,13 @@
 #define KOOPA_GREEN_ANI_SPIN		8
 #define KOOPA_GREEN_ANI_DIE			9
 
-#define KOOPA_STATE_JUMPING			0
-#define KOOPA_STATE_WALKING			1
-#define KOOPA_STATE_SHELL			2
-#define KOOPA_STATE_SPIN			3
-#define KOOPA_STATE_DIE				4
-#define KOOPA_STATE_DIE_ONESHOT		5
+#define KOOPA_STATE_FLYING			0
+#define KOOPA_STATE_JUMPING			1
+#define KOOPA_STATE_WALKING			2
+#define KOOPA_STATE_SHELL			3
+#define KOOPA_STATE_SPIN			4
+#define KOOPA_STATE_DIE				5
+#define KOOPA_STATE_DIE_ONESHOT		6
 
 
 class KoopaTroopa : public CGameObject
@@ -37,7 +39,7 @@ protected:
 	bool isGrounded;
 	bool hasBeenSteppedOn, hasBeenAttacked;
 public:
-	KoopaTroopa(int type);
+	KoopaTroopa(float x, float y, int type);
 	~KoopaTroopa();
 
 	bool isBeingHeld;

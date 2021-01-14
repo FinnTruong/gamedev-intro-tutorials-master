@@ -15,7 +15,10 @@ protected:
 	int timer;
 	int maxPlayTime;
 
-public: 
+public:
+	//Scene type: 0: Intro		1: World Map		2:Play Scene			3:Moving Scene
+	int sceneType = 0;
+
 	CScene(int id, LPCWSTR filePath);
 
 	virtual void Load() = 0;

@@ -143,7 +143,7 @@ void Goomba::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
-
+		if (nx != 0) vx *= -1;
 		
 		if (ny != 0) vy = 0;
 
@@ -157,7 +157,7 @@ void Goomba::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			//Change direction when hit object
 			if (nx != 0)
 			{
-				if (!(e->obj->tag == Tag::PLAYER || e->obj->tag == Tag::KOOPA))
+				if ((e->obj->tag == Tag::PLAYER || e->obj->tag == Tag::KOOPA))
 					vx *= -1;
 			}
 
@@ -170,6 +170,7 @@ void Goomba::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				else
 					boundary = Vector2(e->obj->boundingBox.left + e->obj->x - this->boundingBox.left,
 						e->obj->boundingBox.right + e->obj->x - this->boundingBox.right);
+
 			}
 
 			if (state == GOOMBA_STATE_WALKING && (x <= boundary.x || x >= boundary.y))
@@ -187,7 +188,6 @@ void Goomba::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 		}
-
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
@@ -197,6 +197,13 @@ void Goomba::OnOverlapped(LPGAMEOBJECT obj)
 	if (obj->tag == Tag::TAIL)
 	{
 		OnAttacked();
+	}
+	if (obj->tag == Tag::GROUND || obj->tag == Tag::ONE_WAY_PLATFORM)
+	{
+		if (state == GOOMBA_STATE_DIE || state == GOOMBA_STATE_DIE_ONESHOT)
+			return;
+		if (y > obj->y + 2)
+			y = obj->y - 17;
 	}
 }
 

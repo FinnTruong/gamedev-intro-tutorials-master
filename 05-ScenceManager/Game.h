@@ -43,6 +43,7 @@ class CGame
 	int lives = 4;
 	int score = 0;
 	int coinCollected = 0;
+	int cardCollected[3] = { 0,0,0 };
 
 	int screen_width;
 	int screen_height; 
@@ -74,6 +75,8 @@ public:
 
 	int GetCoinCollected() { return coinCollected; }
 	void AddCoinCollected() { coinCollected += 1; }
+
+	int* GetCards() { return cardCollected; }
 
 	int GetLives() { return lives; }
 	void SubtractLives() { lives -= 1; }

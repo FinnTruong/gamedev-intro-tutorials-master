@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include "GameObject.h"
 
 #define GOAL_ANI_RANDOM			0
@@ -19,10 +20,12 @@
 class Goal : public CGameObject
 {
 	int curType = 0;
-	bool hasTouch = false;
+	
 
 	ULONGLONG startTypeTime = 0;
 public:
+
+	bool hasTouched = false;
 	Goal();
 	~Goal();
 

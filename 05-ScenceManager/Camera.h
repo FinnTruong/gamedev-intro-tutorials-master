@@ -4,9 +4,11 @@
 #include <d3dx9.h>
 
 #include "GameGlobal.h"
-class Camera
+#include "GameObject.h"
+
+#define CAMERA_MOVE_SPEED 0.045f
+class Camera : public CGameObject
 {
-	float cam_x, cam_y;
 
 	float camSpeed = 0.0f;
 public:
@@ -14,14 +16,15 @@ public:
 	~Camera();
 
 	bool cameraFolowYAxis = false;
+	bool cameraFollowXAxis = false;
 
 	void Update(DWORD dt);
-	void CheckBoundaries(DWORD dt, float&, float&);
-	void SetPosition(float posX, float posY) { cam_x = posX; cam_y = posY; }
-	void GetPosition(int& posX, int& posY) { posX = (int)cam_x; posY = (int)cam_y; }
-	void SmoothFollow(DWORD dt, float targetX, float targetY, float& x, float& y);
+	void FollowPlayer(DWORD dt, float&, float&);
+	void AutoMove(DWORD dt);
+	void SetPosition(float posX, float posY) { x = posX; y = posY; }
+	void GetPosition(int& posX, int& posY) { posX = (int)x; posY = (int)y; }
 
-	Vector2 ViewportToWorld(float& x, float& y) { return Vector2((float)(x + cam_x), (float)(y + cam_y)); }
+	Vector2 ViewportToWorld(float& posX, float& posY) { return Vector2((float)(posX + x), (float)(posY + y)); }
 
 	Rect GetRect();
 };

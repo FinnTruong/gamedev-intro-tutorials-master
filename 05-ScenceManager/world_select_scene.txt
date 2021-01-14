@@ -26,11 +26,11 @@
 #empty card
 51	160	159	24	28	0
 #mushroom card
-52
+52	184	159	24	28	0
 #flower card
-53
+53	208	159	24	28	0
 #star card
-54
+54	232	159	24	28	0
 #mario tag
 55	16	161	16	7	0
 #luigi tag

@@ -349,6 +349,8 @@ void WorldSelectionScene::OnKeyDown(int key)
 	case DIK_J:
 		if (mapGrid[curNodeX][curNodeY] == 3)
 			CGame::GetInstance()->SwitchScene(1);
+		else if (mapGrid[curNodeX][curNodeY] == 5)
+			CGame::GetInstance()->SwitchScene(2);
 	default:
 		break;
 	}

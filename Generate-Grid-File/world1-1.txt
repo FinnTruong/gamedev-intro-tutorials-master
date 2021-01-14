@@ -7,7 +7,7 @@
 4	textures\Enemy\enemies.png	255	255	255
 5	textures\UI\ui.png	255	127	39
 6	textures\Item\effect.png	176	224	248
-
+7	textures\UI\goal.png	0	0	0
 
 
 
@@ -17,7 +17,7 @@
 
 #[NUMBER + FONT]
 0	77	31	8	7	5
-1	87	31	8	7	5
+1	87	31	8	7	7
 2	97	31	8	7	5
 3	107	31	8	7	5
 4	117	31	8	7	5
@@ -29,10 +29,12 @@
 
 #[GAMEPLAY INFO]
 
-#[main card]
+# ------- [Course Clear Text]  ----------
+-11	53	374	146	30	5
+#------------ [main hud] ----------------
 50	12	128	152	29	5
 
-#[item card]
+# ----------- [item card] -----------------
 #empty card
 51	160	159	24	28	5
 #mushroom card
@@ -78,6 +80,7 @@
 #[Brick shatter effect]
 70	37	120	8	8	6
 71	48	120	8	8	6
+
 
 
 #-------------- SMALL MARIO -------------

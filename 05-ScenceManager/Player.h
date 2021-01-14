@@ -6,6 +6,7 @@
 #include "Tail.h"
 #include "Fireball.h"
 #include "PointEffect.h"
+#include "MovingPlatform.h"
 
 
 #define MARIO_WALKING_SPEED			0.1f
@@ -20,8 +21,9 @@
 #define MARIO_WALKING_JUMP_SPEED		0.23f
 #define MARIO_RUNNING_JUMP_SPEED		0.26f
 #define MARIO_RUNNING_MAX_JUMP_SPEED	0.275f
-#define MARIO_JUMP_DEFLECT_SPEED 0.15f
-#define MARIO_GRAVITY			0.0004f
+#define MARIO_JUMP_DEFLECT_SPEED		0.15f
+#define MARIO_GRAVITY					0.0004f
+#define MARIO_TERMINAL_VELOCITY_Y		1.f
 #define MARIO_DIE_DEFLECT_SPEED	 0.5f
 #define MARIO_ACCELERATION_MULTIPLIER	 0.005f
 
@@ -120,6 +122,8 @@
 #define MARIO_KICKING_TIME			300
 #define MARIO_MAX_HOLD_TIME			3000
 
+#define TIME_BEFORE_SWITCH_SCENE	3000
+
 
 class Player : public CGameObject
 {
@@ -133,6 +137,8 @@ private:
 	float start_y; 
 
 	float last_y;
+
+	float next_vy;
 
 	int cam_x, cam_y;
 public: 
@@ -148,12 +154,15 @@ public:
 	bool isFlying = false;
 	bool isFalling = false;
 	bool isSlowFalling = false;
+	bool isOnMovingPlatform = false;
 
 	bool hasJumped = false;
 
 	bool inSecretRoom = false;
 	bool isEnteringSecretRoom = false;
 	bool isExitingSecretRoom = false;
+	bool isEnteringExitPipe = false;
+	bool isExitingExitPipe = false;
 
 	bool isDead = false;
 	bool hasHitGoal = false;
@@ -168,6 +177,7 @@ public:
 	ULONGLONG attackTime = 0;
 	ULONGLONG deadTime = 0;
 	ULONGLONG pickUpObjectTime = 0;
+	ULONGLONG hitGoalTime = 0;
 	int facingDirection = 1;
 
 	float onPipeYPos = 0;
@@ -184,6 +194,8 @@ public:
 	Fireball* fireball2;
 
 	KoopaTroopa* holdingObject = nullptr;
+
+	MovingPlatform* platform = nullptr;
 
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
@@ -213,7 +225,6 @@ public:
 
 	void HandleMovement(DWORD dt);
 	void TakeDamage();
-	void HoldingObject();
 
 	void CheckIfHoldingObject();
 	void CheckIfCanAttack();
@@ -221,6 +232,7 @@ public:
 	void CheckIfDead();
 	void CheckIfEnterPipe();
 	void CheckUntouchableTimer();
+	void CheckIfIsOnMovingPlatform();
 
 	void ResetScene();
 

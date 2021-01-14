@@ -1,5 +1,6 @@
 #include "Goal.h"
 #include "Utils.h"
+#include "Game.h"
 
 Goal::Goal()
 {
@@ -14,7 +15,7 @@ void Goal::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	x += dx;
 	y += dy;
 
-	if (GetTickCount64() - startTypeTime >= TIME_BETWEEN_SWITCH && !hasTouch)
+	if (GetTickCount64() - startTypeTime >= TIME_BETWEEN_SWITCH && !hasTouched)
 	{
 		startTypeTime = GetTickCount64();
 		switch (curType)
@@ -33,15 +34,16 @@ void Goal::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			break;
 		}
 	}
+
 }
 
 void Goal::Render()
 {
 	int ani = 0;
 	
-	if (!hasTouch)
+	if (!hasTouched)
 		ani = GOAL_ANI_RANDOM;
-	else 
+	else
 	{
 		switch (curType)
 		{
@@ -68,9 +70,16 @@ void Goal::SetState(int state)
 	{
 	case GOAL_STATE_HIT:
 		vy = -0.1f;	
-		hasTouch = true;
-		break;
-	default:
+		hasTouched = true;
+		auto cardCollected = CGame::GetInstance()->GetCards();
+		for (int i = 0; i < 3; i++)
+		{
+			if (cardCollected[i] == 0)
+			{
+				cardCollected[i] = curType;
+				break;
+			}			
+		}
 		break;
 	}
 }

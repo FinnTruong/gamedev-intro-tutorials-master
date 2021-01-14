@@ -4,6 +4,6 @@
 class KoopaParatroopa : public KoopaTroopa
 {
 public:
-	KoopaParatroopa();
+	KoopaParatroopa(float x, float y,int type);
 };
 

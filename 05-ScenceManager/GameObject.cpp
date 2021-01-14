@@ -14,6 +14,8 @@
 CGameObject::CGameObject()
 {
 	x = y = 0;
+	start_x = x;
+	start_y = y;
 	start_x = start_y = 0;
 	sortingLayer = 0;
 	vx = vy = 0;

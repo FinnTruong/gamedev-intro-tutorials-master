@@ -11,7 +11,9 @@
 
 #define MAX_SCENE_LINE 1024
 
-#define OBJECT_TYPE_TITLE				3
+#define OBJECT_TYPE_CURTAIN		1
+#define OBJECT_TYPE_BACKGROUND	2
+#define OBJECT_TYPE_TITLE		3
 
 
 
@@ -127,6 +129,8 @@ void IntroScene::_ParseSection_OBJECTS(string line)
 	switch (object_type)
 	{	
 	case OBJECT_TYPE_TITLE: obj = new Title(); break;
+	case OBJECT_TYPE_CURTAIN: obj = new Curtain(); break;
+	case OBJECT_TYPE_BACKGROUND: obj = new Background(); break;
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;
@@ -202,7 +206,7 @@ void IntroScene::Load()
 	}
 
 	f.close();
-
+	startTime = GetTickCount64();
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
 }
 
@@ -231,6 +235,7 @@ void IntroScene::Render()
 	{
 		objects[i]->Render();
 	}
+	
 
 }
 
@@ -249,21 +254,24 @@ void IntroScene::Unload()
 
 void IntroScene::OnKeyDown(int key)
 {
-	switch (key)
+	if (GetTickCount64() - startTime >= 2500)
 	{
-	case DIK_DOWN:
-		if (curOption == 0)
-			curOption = 1; 
-		break;
-	case DIK_UP:
-		if (curOption == 1)
-			curOption = 0;
-		break;
-	case DIK_J:
-		if (curOption == 0)
-			CGame::GetInstance()->SwitchScene(4);
-	default:
-		break;
+		switch (key)
+		{
+		case DIK_DOWN:
+			if (curOption == 0)
+				curOption = 1;
+			break;
+		case DIK_UP:
+			if (curOption == 1)
+				curOption = 0;
+			break;
+		case DIK_J:
+			if (curOption == 0)
+				CGame::GetInstance()->SwitchScene(4);
+		default:
+			break;
+		}
 	}
 }
 

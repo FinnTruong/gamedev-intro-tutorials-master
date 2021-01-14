@@ -12,23 +12,23 @@
 
 Camera::Camera()
 {
-	cam_x = 0;
-	cam_y = 0;
+	x = 0;
+	y = 0;
 }
 
 void Camera::Update(DWORD dt)
 {
-	CheckBoundaries(dt, cam_x, cam_y);
+	FollowPlayer(dt, x, y);
 
 	if (Mario->isFlying)
 		cameraFolowYAxis = true;
-	else if (!Mario->isFlying && cam_y >= 64)
+	else if (!Mario->isFlying && y >= 64)
 		cameraFolowYAxis = false;
 
-	SetPosition(cam_x, !Mario->inSecretRoom ?  cam_y : 286);
+	SetPosition(x, !Mario->inSecretRoom ?  y : 286);
 }
 
-void Camera::CheckBoundaries(DWORD dt, float &camX, float &camY)
+void Camera::FollowPlayer(DWORD dt, float &camX, float &camY)
 {
 	Mario->GetPosition(camX, camY);
 
@@ -39,7 +39,6 @@ void Camera::CheckBoundaries(DWORD dt, float &camX, float &camY)
 
 	auto tilemap = dynamic_cast<CPlayScene*>(game->GetCurrentScene())->GetTilemap();
 
-
 	//Check Boundaries
 	if (camX <= 0)
 	{
@@ -48,6 +47,15 @@ void Camera::CheckBoundaries(DWORD dt, float &camX, float &camY)
 	else if (camX + SCREEN_WIDTH >= tilemap->GetWidthTileMap())
 	{
 		camX = (float)tilemap->GetWidthTileMap() - SCREEN_WIDTH;
+	}
+
+
+	if (!Mario->hasHitGoal)
+	{
+		if (Mario->x < camX)
+			Mario->x = camX;
+		else if (Mario->x + 16 >= camX + SCREEN_WIDTH - 16)
+			Mario->x = camX + SCREEN_WIDTH - 32;
 	}
 
 	if (cameraFolowYAxis)
@@ -66,13 +74,54 @@ void Camera::CheckBoundaries(DWORD dt, float &camX, float &camY)
 
 }
 
-void Camera::SmoothFollow(DWORD dt, float targetX, float targetY, float& x, float &y)
+void Camera::AutoMove(DWORD dt)
 {
-	float lerp = 0.001f;
-	y = (y - targetY) * lerp * dt;
+	CGameObject::Update(dt);
+	x += dx;
+	y += dy;
+
+	if (!cameraFollowXAxis)
+	{
+		if (x + SCREEN_WIDTH <= 2064)
+			vx = CAMERA_MOVE_SPEED;
+		else
+			vx = 0;
+	}
+	else
+	{
+		Mario->GetPosition(x, y);
+
+		CGame* game = CGame::GetInstance();
+
+		x -= game->GetScreenWidth() / 2;
+		y = 64;
+
+		auto tilemap = dynamic_cast<CPlayScene*>(game->GetCurrentScene())->GetTilemap();
+
+
+		//Check Boundaries
+		if (x <= 2080)
+		{
+			x = 2080;
+		}
+		else if (x + SCREEN_WIDTH >= tilemap->GetWidthTileMap())
+		{
+			x = (float)tilemap->GetWidthTileMap() - SCREEN_WIDTH;
+		}	
+
+		if (!Mario->hasHitGoal)
+		{
+			if (Mario->x < x)
+				Mario->x = x;
+			else if (Mario->x + 16 >= x + SCREEN_WIDTH - 16)
+				Mario->x = x + SCREEN_WIDTH - 32;
+		}
+	}
+
 }
+
 
 Rect Camera::GetRect()
 {
-	return Rect(cam_x, cam_y, SCREEN_WIDTH, SCREEN_HEIGHT);
+	return Rect(x, y, SCREEN_WIDTH, SCREEN_HEIGHT);
 }

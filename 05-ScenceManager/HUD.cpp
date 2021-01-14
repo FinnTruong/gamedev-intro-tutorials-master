@@ -50,9 +50,11 @@ void HUD::DrawCard()
 	CSprite* hud = sprites->Get(50);
 	hud->Draw(1, (float)(cam_x + 10), (float)(cam_y + 192 + 4));
 
+	auto cardCollected = CGame::GetInstance()->GetCards();
+
 	for (int i = 0; i < 3; i++)
 	{
-		LPSPRITE card = sprites->Get(51);
+		LPSPRITE card = sprites->Get(51 + cardCollected[i]);
 		card->Draw(1, (float)(cam_x + 10 + 152 + 12 + i * 24), (float)(cam_y + 192 + 4));
 	}
 }
@@ -164,7 +166,7 @@ void HUD::DrawCoinCollected()
 	LPSPRITE num = sprites->Get(0);
 
 	int coinCollected = CGame::GetInstance()->GetCoinCollected();
-	string coinString = NumberToString(coinCollected, 1);
+	string coinString = NumberToString(coinCollected, 2);
 	for (int i = 0; (unsigned)i < coinString.length(); i++)
 	{
 		if (coinString[i] == ' ')
@@ -177,7 +179,8 @@ void HUD::DrawCoinCollected()
 				num = sprites->Get(j);
 			}
 		}
-		num->Draw(1, (float)(cam_x + 24 + 124 + i * 8), (float)(cam_y + 184 + 4 + 15));
+		if (coinCollected < 10 && i == 0) continue;
+		num->Draw(1, (float)(cam_x + 18 + 124 + i * 8), (float)(cam_y + 184 + 4 + 15));
 	}
 
 }

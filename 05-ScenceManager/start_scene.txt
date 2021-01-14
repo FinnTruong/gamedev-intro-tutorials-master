@@ -6,12 +6,17 @@
 # id	left	top	right	bottom	texture_id
 
 [SPRITES]
-# -------------- BACKGROUND -----------------
+# ------------- BACKGROUN -----------------------
 0	782	226	256	224	0
+
+# -------------- DARK BACKGROUND -----------------
+1	258	0	256	186	0
+2	516	0	256	186	0
+3	776	0	256	186	0
 
 
 #----------------- CURTAIN ------------------
-1000	0	0	256	182	0
+1000	0	0	256	186	0
 
 # --------------- FLOOR ------------------
 2000	0	187	256	37	0
@@ -35,7 +40,14 @@
 [ANIMATIONS]
 
 # CURTAIN
-100	0	100
+100	1000	100
+
+#DARK BACKGROUND
+#[STATIC]
+200	1	100
+
+#[FLASH]
+201	2	100	3	100
 
 #TITLE
 300	3000	100	3001	100	3002	100	3003	100	3002	100
@@ -43,13 +55,24 @@
 [ANIMATION_SETS]
 # CURTAIN
 1	100
+#BACKGROUND
+2	200	201
 # TITLE
 3	300
 
+
 [OBJECTS]
 # type	x	y	ani_set_id	extra_settings per object type
-# type: 0 = Mario , 1 = Cactus , 2 = Hammer Brother , 3 = Speech Bubble
+# type: 0 = Mario , 1 = Curtain , 2 = Hammer Brother , 3 = Title
+
+
+
+#Title
 3	38.5	26	3
+#Dark Background
+2	0	0	2
+#Curtain
+1	0	0	1
 
 
 [TILEMAP]

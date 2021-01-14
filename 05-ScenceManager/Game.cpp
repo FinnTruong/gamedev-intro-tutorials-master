@@ -5,6 +5,7 @@
 #include "Utils.h"
 
 #include "PlayScence.h"
+#include "MovingPlayScene.h"
 #include "WorldSelectionScene.h"
 #include "IntroScene.h"
 
@@ -262,6 +263,9 @@ void CGame::_ParseSection_SCENES(string line)
 		break;
 	case 2:
 		scene = new IntroScene(id, path);
+		break;
+	case 3:
+		scene = new MovingPlayScene(id, path);
 		break;
 	default:
 		scene = new CPlayScene(id, path);

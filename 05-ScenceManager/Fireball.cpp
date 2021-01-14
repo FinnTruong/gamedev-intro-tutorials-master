@@ -1,5 +1,6 @@
 ﻿#include "Fireball.h"
 #include "Goomba.h"
+#include "KoopaTroopa.h"
 
 Fireball::Fireball()
 {
@@ -100,6 +101,20 @@ void Fireball::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects
 					}
 				}
 
+			}
+
+			else if (e->obj->tag == Tag::KOOPA)
+			{
+				KoopaTroopa* koopa = dynamic_cast<KoopaTroopa*>(e->obj);
+				if (e->nx != 0 || e->ny != 0)
+				{
+					hasCollided = true;
+					//vy = -FIREBALL_DEFLECT_SPEED_Y;
+					if (koopa->GetState() != KOOPA_STATE_DIE)
+					{
+						koopa->OnAttacked();
+					}
+				}
 			}
 		}
 	}
