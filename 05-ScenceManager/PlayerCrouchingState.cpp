@@ -5,7 +5,8 @@
 
 PlayerCrouchingState::PlayerCrouchingState()
 {
-	state = MARIO_STATE_CROUCHING;	
+	Mario->SetPosition(Mario->x, Mario->y + (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT));
+	state = MARIO_STATE_CROUCHING;
 }
 
 void PlayerCrouchingState::Update(DWORD dt)
@@ -28,6 +29,8 @@ void PlayerCrouchingState::HandleKeyboard(DWORD dt)
 {
 	if (!keyCode[DIK_DOWN])
 	{
+		//if (Mario->state != MARIO_STATE_CROUCHING)
+			Mario->SetPosition(Mario->x, Mario->y - (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT));
 		Mario->SetState(new PlayerIdleState());
 	}
 }

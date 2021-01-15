@@ -26,6 +26,13 @@ void PlayerIdleState::Update(DWORD dt)
 			Mario->vx = 0;
 	}
 	int velDir = 0;
+	if (keyCode[DIK_DOWN])
+	{
+		if (Mario->level != MARIO_LEVEL_SMALL)
+			Mario->SetState(new PlayerCrouchingState());
+		return;
+	}
+
 	if (keyCode[DIK_RIGHT])
 	{
 		velDir = 1;
@@ -34,6 +41,7 @@ void PlayerIdleState::Update(DWORD dt)
 	{
 		velDir = -1;
 	}
+
 
 	Mario->isSkiding = velDir * Mario->facingDirection < 0;
 	Mario->abilityBar = Mario->abilityBar <= 0 ? 0 : Mario->abilityBar - 1 * dt;

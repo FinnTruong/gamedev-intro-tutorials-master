@@ -105,8 +105,6 @@ void KoopaTroopa::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		
 		if (nx != 0)
 			vx *= -1;
-		if (ny != 0)
-			vy = 0;
 
 		if (ny < 0)
 			isGrounded = true;
@@ -277,8 +275,8 @@ void KoopaTroopa::OnOverlapped(LPGAMEOBJECT obj)
 	{
 		if (state != KOOPA_STATE_WALKING)
 			return;
-		if (y > obj->y + 2)
-			y = obj->y - 20;
+		if ((int)y + 24 > (int)obj->y)
+			y = obj->y - 32;
 	}
 }
 

@@ -203,8 +203,8 @@ void Goomba::OnOverlapped(LPGAMEOBJECT obj)
 	{
 		if (state == GOOMBA_STATE_DIE || state == GOOMBA_STATE_DIE_ONESHOT)
 			return;
-		if (y > obj->y + 2)
-			y = obj->y - 17;
+		if ((int)y > (int)obj->y)
+			y = obj->y - 16;
 	}
 }
 

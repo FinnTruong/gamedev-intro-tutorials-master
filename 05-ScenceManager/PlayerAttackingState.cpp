@@ -40,7 +40,10 @@ void PlayerAttackingState::UpdateAnimation()
 		animation = MARIO_ANI_RACCOON_ATTACKING;
 		break;
 	case MARIO_LEVEL_FIRE:
-		animation = MARIO_ANI_FIRE_ATTACKING;
+		if (Mario->canAttack)
+			animation = MARIO_ANI_FIRE_ATTACKING;
+		else
+			animation = MARIO_ANI_FIRE_IDLE;
 		break;
 	default:
 		break;

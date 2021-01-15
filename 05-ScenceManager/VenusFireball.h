@@ -3,6 +3,7 @@
 #include "Projectile.h"
 
 #define VENUS_FIREBALL_SPEED 0.05f
+#define FIREBALL_SIZE	6
 
 class VenusFireball : public Projectile
 {

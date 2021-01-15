@@ -17,6 +17,7 @@
 #include "Fireball.h"
 #include "Mushroom.h"
 #include "OneUpMushroom.h"
+#include "Flower.h"
 #include "Brick.h"
 #include "PBlock.h"
 #include "PSwitch.h"
@@ -112,12 +113,14 @@ void Player::GetBoundingBox(float& left, float& top, float& right, float& bottom
 	left = x;
 	top = y;
 
-	if (level == MARIO_LEVEL_BIG || level == MARIO_LEVEL_RACCOON || level == MARIO_LEVEL_FIRE)
-	{
+
+
+	if (state != MARIO_STATE_CROUCHING && (level == MARIO_LEVEL_BIG || level == MARIO_LEVEL_RACCOON || level == MARIO_LEVEL_FIRE))
+	{		
 		right = x + MARIO_BIG_BBOX_WIDTH;
 		bottom = y + MARIO_BIG_BBOX_HEIGHT;
 	}
-	else if(level == MARIO_LEVEL_SMALL)
+	else if(level == MARIO_LEVEL_SMALL || state == MARIO_STATE_CROUCHING)
 	{
 		right = x + MARIO_SMALL_BBOX_WIDTH;
 		bottom = y + MARIO_SMALL_BBOX_HEIGHT;
@@ -198,7 +201,10 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (e->obj->tag != Tag::ONE_WAY_PLATFORM && e->obj->tag != Tag::COIN && e->obj->tag != Tag::MUSHROOM && e->obj->tag != Tag::ONE_UP_MUSHROOM)
+			//"Ignore" Collision with certain objects
+			if (e->obj->tag != Tag::ONE_WAY_PLATFORM && e->obj->tag != Tag::COIN
+				&& e->obj->tag != Tag::MUSHROOM && e->obj->tag != Tag::ONE_UP_MUSHROOM
+				&& e->obj->tag != Tag::FLOWER && e->obj->tag != Tag::VENUS_FIREBALL)
 			{
 				if (nx != 0) vx = 0;
 				if (ny != 0) vy = 0;
@@ -380,6 +386,16 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					mushroom->OnCollected();
 				}
 			}
+			
+			else if (e->obj->tag == Tag::FLOWER)
+			{
+				auto flower = dynamic_cast<Flower*>(e->obj);
+				if (e->nx != 0 || e->ny != 0)
+				{
+					flower->OnCollected();
+					SetLevel(MARIO_LEVEL_FIRE);
+				}
+			}
 
 			else if (e->obj->tag == Tag::COIN)
 			{
@@ -390,6 +406,15 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 
+			else if (e->obj->tag == Tag::VENUS_FIREBALL)
+			{
+				if (e->nx != 0 || e->ny != 0)
+				{
+					if (untouchable == 0)
+						TakeDamage();
+					return;
+				}
+			}
 
 			else if (e->obj->tag == Tag::PIPE)
 			{
@@ -494,9 +519,9 @@ void Player::OnOverlapped(LPGAMEOBJECT other)
 		if (dynamic_cast<PiranhaPlant*>(other)->canDamagePlayer)
 			TakeDamage();
 		break;
-	case Tag::VENUS_FIREBALL:
-		TakeDamage();
-		break;
+	//case Tag::VENUS_FIREBALL:
+	//	TakeDamage();
+	//	break;
 	case Tag::ITEM:
 		dynamic_cast<Item*>(other)->OnCollected();
 		break;
@@ -617,9 +642,12 @@ void Player::OnKeyDown(int keyCode)
 				{
 					if (listFireball[i]->isDone == true)
 					{
+						canAttack = true;
 						listFireball[i]->Fire(nx, x, y);
 						break;
 					}
+					else
+						canAttack = false;
 				}
 				return;
 			}
@@ -693,11 +721,18 @@ void Player::Render()
 		alpha = 128;
 
 	if (level == MARIO_LEVEL_RACCOON && nx == 1 && currentAnimation != MARIO_ANI_RACCOON_ATTACKING)
-		animation_set->at(currentAnimation)->Render(nx, x - 6, y, alpha);	
+	{
+		if(state == MARIO_STATE_CROUCHING)
+			animation_set->at(currentAnimation)->Render(nx, x - 6, y - 12, alpha);
+		else
+			animation_set->at(currentAnimation)->Render(nx, x - 6, y, alpha);
+	}
 	else if (nx == -1 && animation_set->at(MARIO_ANI_RACCOON_ATTACKING)->GetCurrentFrame() == 1)
 	{
 		animation_set->at(currentAnimation)->Render(nx, x - 6, y, alpha);
 	}
+	else if (state == MARIO_STATE_CROUCHING)
+		animation_set->at(currentAnimation)->Render(nx, x, y - 12, alpha);
 	else
  		animation_set->at(currentAnimation)->Render(nx, x, y, alpha);
 

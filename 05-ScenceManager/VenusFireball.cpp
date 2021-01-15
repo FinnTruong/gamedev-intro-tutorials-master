@@ -10,13 +10,18 @@ VenusFireball::VenusFireball(): Projectile()
 
 void VenusFireball::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = right = top = bottom = 0;
+	//left = right = top = bottom = 0;
+	left = x;
+	top = y;
+	right = x + FIREBALL_SIZE;
+	bottom = y + FIREBALL_SIZE;
 }
 
 
 void VenusFireball::Render()
 {
 	animation_set->at(0)->Render(nx, x, y, 255);
+	RenderBoundingBox();
 }
 
 void VenusFireball::Fire(D3DXVECTOR2 direction, float posX, float posY)

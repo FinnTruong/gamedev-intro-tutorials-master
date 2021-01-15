@@ -145,9 +145,11 @@ public:
 	Player(float x = 0.0f, float y = 0.0f);
 	static Player* GetInstance();
 
+	bool canAttack = false;
 
 	bool isFlip = false;
 	bool isGrounded = false;
+	bool isCrouching = false;
 	bool isAttacking = false;
 	bool isKicking = false;
 	bool isSkiding = false;

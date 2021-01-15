@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "PlayScence.h"
 #include "OneUpMushroom.h"
+#include "Flower.h"
 
 QuestionBlock::QuestionBlock(float posX, float posY, bool _hasPowerup, bool _hasOneUp)
 {
