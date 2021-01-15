@@ -12,6 +12,7 @@
 #include "Brick.h"
 #include "PBlock.h"
 #include "MovingPlatform.h"
+#include "SledgeBro.h"
 
 
 
@@ -185,6 +186,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	break;
 
+	case OBJECT_TYPE_SLEDGE_BRO: obj = new SledgeBro(x,y); break;
+
 	case OBJECT_TYPE_GROUND:
 	{
 		int width = (int)atof(tokens[4].c_str());
@@ -256,7 +259,7 @@ void CPlayScene::_ParseSection_TILEMAP(string line)
 	int tileset_height = atoi(tokens[8].c_str());
 
 	tilemap = new Tilemap(ID, filePath_texture.c_str(), filePath_data.c_str(), num_row_on_texture, num_col_on_texture, num_row_on_tilemap, num_col_on_tilemap, tileset_width, tileset_height);
-	grid = new Grid(tilemap->GetWidthTileMap(), tilemap->GetHeightTileMap());
+	//grid = new Grid(tilemap->GetWidthTileMap(), tilemap->GetHeightTileMap());
 }
 
 void CPlayScene::_ParseSection_GRID(string line)
@@ -388,7 +391,7 @@ void CPlayScene::LoadGridObjects(string line)
 		obj = new VenusFireTrap(x, y, type);
 	}
 	break;
-
+	case OBJECT_TYPE_SLEDGE_BRO: obj = new SledgeBro(x,y); break;
 	case OBJECT_TYPE_GROUND:
 	{
 		int width = (int)atof(tokens[6].c_str());
@@ -405,7 +408,7 @@ void CPlayScene::LoadGridObjects(string line)
 		obj = new OneWayPlatform(width, height);
 	}
 	break;
-
+	case OBJECT_TYPE_MOVING_PLATFORM: obj = new MovingPlatform(); break;
 	case OBJECT_TYPE_PIPE:
 	{
 		int width = (int)atof(tokens[6].c_str());
@@ -508,9 +511,9 @@ void CPlayScene::Load()
 			case SCENE_SECTION_SPRITES: _ParseSection_SPRITES(line); break;
 			case SCENE_SECTION_ANIMATIONS: _ParseSection_ANIMATIONS(line); break;
 			case SCENE_SECTION_ANIMATION_SETS: _ParseSection_ANIMATION_SETS(line); break;
-			case SCENE_SECTION_OBJECTS: _ParseSection_OBJECTS(line); break;
+			//case SCENE_SECTION_OBJECTS: _ParseSection_OBJECTS(line); break;
 			case SCENE_SECTION_TILEMAP: _ParseSection_TILEMAP(line); break;
-			//case SCENE_SECTION_GRID: _ParseSection_GRID(line); break;
+			case SCENE_SECTION_GRID: _ParseSection_GRID(line); break;
 		}
 	}
 
@@ -668,7 +671,7 @@ vector<LPGAMEOBJECT> CPlayScene::GetActiveGameObjects()
 
 	for (size_t i = 0; i < objects.size(); i++)
 	{
-		if ((objects[i]->isStatic && objects[i]->isActive) || objects[i]->tag == Tag::TAIL)
+		if ((objects[i]->isStatic && objects[i]->isActive) || objects[i]->tag == Tag::TAIL || objects[i]->tag == Tag::MOVING_PLATFORM)
 		{
 			//Check if objects already in active list
 			if (find(activeObjects.begin(), activeObjects.end(), objects[i]) == activeObjects.end())

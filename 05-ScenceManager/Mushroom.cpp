@@ -1,5 +1,6 @@
 #include "Mushroom.h"
 #include "Player.h"
+#include "Game.h"
 
 Mushroom::Mushroom(float startX, float startY) : Item(startX,startY)
 {
@@ -89,7 +90,11 @@ void Mushroom::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Mushroom::OnSproutComplete()
 {
-	moveDirection = x >= Mario->x ? 1 : -1;
+	int curSceneType = CGame::GetInstance()->GetCurrentScene()->sceneType;
+	if (curSceneType == 3)
+		moveDirection = 1;
+	else
+		moveDirection = x >= Mario->x ? 1 : -1;
 	Item::OnSproutComplete();
 }
 

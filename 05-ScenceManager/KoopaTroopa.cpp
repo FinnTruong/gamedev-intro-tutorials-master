@@ -4,6 +4,7 @@
 #include "Brick.h"
 #include "QuestionBlock.h"
 #include "Game.h"
+#include "ExplodeEffect.h"
 
 KoopaTroopa::KoopaTroopa(float x, float y,int _type)
 {
@@ -308,6 +309,7 @@ void KoopaTroopa::OnSteppedOn()
 
 void KoopaTroopa::OnAttacked()
 {
+	auto explodeEffect = new ExplodeEffect(x, y);
 	SetState(KOOPA_STATE_DIE);
 }
 

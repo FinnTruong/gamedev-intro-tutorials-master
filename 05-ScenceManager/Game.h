@@ -80,6 +80,7 @@ public:
 
 	int GetLives() { return lives; }
 	void SubtractLives() { lives -= 1; }
+	void AddLives() { lives += 1; }
 	
 
 	LPDIRECT3DDEVICE9 GetDirect3DDevice() { return this->d3ddv; }

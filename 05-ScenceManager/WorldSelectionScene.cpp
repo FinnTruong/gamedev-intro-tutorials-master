@@ -315,8 +315,6 @@ void WorldSelectionScene::OnKeyDown(int key)
 		{
 			player->Move(Vector2(0, 1));
 			curNodeX -= 2;
-			DebugOut(L"current node: [%d][%d]", curNodeX, curNodeY);
-			DebugOut(L"current node value: %d", mapGrid[curNodeX][curNodeY]);
 		}
 		break;
 	case DIK_DOWN:
@@ -324,8 +322,6 @@ void WorldSelectionScene::OnKeyDown(int key)
 		{
 			player->Move(Vector2(0, -1));
 			curNodeX += 2;
-			DebugOut(L"current node: [%d][%d]", curNodeX, curNodeY);
-			DebugOut(L"current node value: %d", mapGrid[curNodeX][curNodeY]);
 		}
 		break;
 	case DIK_LEFT:
@@ -333,8 +329,6 @@ void WorldSelectionScene::OnKeyDown(int key)
 		{
 			player->Move(Vector2(-1, 0));
 			curNodeY -= 2;
-			DebugOut(L"current node: [%d][%d]", curNodeX, curNodeY);
-			DebugOut(L"current node value: %d", mapGrid[curNodeX][curNodeY]);
 		}
 		break;
 	case DIK_RIGHT:
@@ -346,7 +340,7 @@ void WorldSelectionScene::OnKeyDown(int key)
 			DebugOut(L"current node value: %d", mapGrid[curNodeX][curNodeY]);
 		}
 		break;
-	case DIK_J:
+	case DIK_RETURN:
 		if (mapGrid[curNodeX][curNodeY] == 3)
 			CGame::GetInstance()->SwitchScene(1);
 		else if (mapGrid[curNodeX][curNodeY] == 5)

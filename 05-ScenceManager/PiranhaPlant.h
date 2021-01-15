@@ -44,6 +44,7 @@ public:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {}
 	virtual void SetState(int state);
+	virtual void OnOverlapped(LPGAMEOBJECT obj);
 
 	virtual void Attack();
 	bool IsPlayerInRange();

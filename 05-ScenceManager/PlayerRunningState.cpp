@@ -15,7 +15,7 @@ PlayerRunningState::PlayerRunningState()
 
 void PlayerRunningState::Update(DWORD dt)
 {
-	if (Mario->holdingObject)
+	if (Mario->holdingObject || abs(Mario->dx) <=1)
 	{
 		Mario->abilityBar -= 0.5 * dt;
 		if (Mario->abilityBar <= 0)
@@ -23,6 +23,8 @@ void PlayerRunningState::Update(DWORD dt)
 	}
 	else
 		Mario->abilityBar += 0.5 * dt;
+
+
 
 	if (Mario->abilityBar == MARIO_FULL_ABILITY_BAR)
 		Mario->abilityBar = MARIO_FULL_ABILITY_BAR;

@@ -2,7 +2,7 @@
 [TEXTURES]
 0	textures\mario.png	255	255	255
 1	textures\Item\misc1.png	0	162	232
-2	textures\Enemy\enemy.png	255	255	255
+2	textures\Enemy\enemy.png	0	162	232
 3	textures\Item\misc.png	176	224	248
 4	textures\Enemy\enemies.png	255	255	255
 5	textures\UI\ui.png	255	127	39
@@ -79,6 +79,12 @@
 #[Brick shatter effect]
 70	37	120	8	8	6
 71	48	120	8	8	6
+
+#[Explode Effect]
+72	80	20	16	16	6
+73	99	20	16	16	6
+74	114	20	16	16	6
+75	129	20	16	16	6
 
 
 #-------------- SMALL MARIO -------------
@@ -453,6 +459,12 @@
 # ============= MOVING PLATFORM ============
 140001	352	167	48	16	1
 
+# ============ SLEDGE BRO ==================
+150001	33	171	16	24	2
+150002	57	171	16	24	2
+150003	80	171	16	24	2
+150004	103	171	16	24	2
+
 
 				
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
@@ -707,6 +719,9 @@
 #[STAR]
 1604	130003	100
 
+# ======SLEDGE BRO ==========
+1701	150001	100	150002	100	150003	100	150004	100
+
 # ===== MOVING PLATFORM ======
 1901	140001	100
 
@@ -724,6 +739,9 @@
 
 #[brick shatter effect]
 2010	70	100	71	100
+
+#[explode effect]
+2011	71	100	72	100	73	100	74	100
 
 #
 # id	ani1	ani2	ani3
@@ -774,6 +792,12 @@
 
 #BRICK SHATTER EFFECT
 21	2010
+
+#EXPLODE EFFECT
+22	2011
+
+# SLEDGE BRO
+23	1701
 
 [GRID]
 #filePath
@@ -838,14 +862,14 @@ world1-4_grid.txt
 
 15	944	158	16
 15	944	174	16
-15	960	174	16
+2	960	174	3	1	0	
 
 15	960	222	16
 15	976	222	16
 15	992	222	16
 15	1008	222	16
 
-15	1008	174	16
+2	1008	174	3	0	0
 15	1024	174	16
 15	1040	174	16
 15	1056	174	16
@@ -953,6 +977,9 @@ world1-4_grid.txt
 19	1744	206	19
 19	1776	158	19
 19	1792	238	19
+
+#SLEDGE BRO
+23	2096	210	23
 
 #PIPE
 14	1936	158	6	32	64	0	1

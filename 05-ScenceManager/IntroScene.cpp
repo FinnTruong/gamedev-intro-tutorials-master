@@ -266,7 +266,7 @@ void IntroScene::OnKeyDown(int key)
 			if (curOption == 1)
 				curOption = 0;
 			break;
-		case DIK_J:
+		case DIK_RETURN:
 			if (curOption == 0)
 				CGame::GetInstance()->SwitchScene(4);
 		default:

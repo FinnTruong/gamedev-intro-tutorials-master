@@ -62,6 +62,9 @@
     <Filter Include="Game Component\Camera">
       <UniqueIdentifier>{3c86f807-faa3-4d09-83cc-5e1adabeffac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Objects\PlayScene Objects\Enemy\Sledge Bro">
+      <UniqueIdentifier>{aacc7acd-004b-44e8-8db5-0fd2239da40f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp">
@@ -270,6 +273,9 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Game Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="SledgeBro.cpp">
+      <Filter>Game Objects\PlayScene Objects\Enemy\Sledge Bro</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -482,6 +488,9 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Game Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="SledgeBro.h">
+      <Filter>Game Objects\PlayScene Objects\Enemy\Sledge Bro</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

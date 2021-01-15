@@ -11,6 +11,7 @@ void OneUpMushroom::OnCollected()
 {
 	SetActive(false);
 	DisableGameObject();
+	CGame::GetInstance()->AddLives();
 	auto pointEffect = new PointEffect(x, y, 0);
 	CGame::GetInstance()->AddScore(1000);
 }

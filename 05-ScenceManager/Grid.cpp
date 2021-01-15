@@ -192,7 +192,7 @@ Cell* Grid::GetCell(int x, int y)
 	if (x >= numXCells) x = numXCells;
 
 	if (y < 0) y = 0;
-	if (y >= numYCells) x = numYCells;	
+	if (y >= numYCells) y = numYCells;	
 
 	return cells[y][x]; //Treat 1D vector as 2D vector
 

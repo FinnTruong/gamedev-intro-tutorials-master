@@ -1,5 +1,6 @@
 #include "PiranhaPlant.h"
 #include "Player.h"
+#include "ExplodeEffect.h"
 
 PiranhaPlant::PiranhaPlant(float posX, float posY)
 {
@@ -30,6 +31,7 @@ void PiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	
 	nx = x > Mario->x ? 1 : -1;
 
+	CalcPotentialOverlapped(coObjects);
 	//RISE
 	if (IsPlayerInRange())
 	{
@@ -125,4 +127,14 @@ bool PiranhaPlant::IsPlayerInRange()
 {
 	float distanceToPlayer = abs(x - Mario->x);
 	return (distanceToPlayer >= PIRANHA_MIN_DISTANCE_TO_PLAYER && distanceToPlayer <= PIRANHA_MAX_DISTANCE_TO_PLAYER);
+}
+
+void PiranhaPlant::OnOverlapped(LPGAMEOBJECT obj)
+{
+	if (obj->tag == Tag::TAIL)
+	{
+		SetActive(false);
+		DisableGameObject();
+		auto explodeEffect = new ExplodeEffect(x, y);
+	}
 }

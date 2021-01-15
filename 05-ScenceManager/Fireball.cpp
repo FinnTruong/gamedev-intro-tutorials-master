@@ -1,6 +1,8 @@
 ﻿#include "Fireball.h"
 #include "Goomba.h"
 #include "KoopaTroopa.h"
+#include "PiranhaPlant.h"
+#include "ExplodeEffect.h"
 
 Fireball::Fireball()
 {
@@ -114,6 +116,19 @@ void Fireball::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects
 					{
 						koopa->OnAttacked();
 					}
+				}
+			}
+
+			else if (e->obj->tag == Tag::PIRANHA_PLANT || e->obj->tag == Tag::VENUS_FIRE_TRAP)
+			{
+				PiranhaPlant* piranha = dynamic_cast<PiranhaPlant*>(e->obj);
+				if (e->nx != 0 || e->ny != 0)
+				{
+					hasCollided = true;
+					//vy = -FIREBALL_DEFLECT_SPEED_Y;
+					piranha->SetActive(false);
+					piranha->DisableGameObject();
+					auto explodeEffect = new ExplodeEffect(piranha->x, piranha->y);
 				}
 			}
 		}

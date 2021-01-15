@@ -52,7 +52,7 @@ void PlayerJumpingState::HandleKeyboard(DWORD dt)
 
 	Mario->HandleMovement(dt);
 
-	if (Mario->vy < 0 && !keyCode[DIK_SPACE])
+	if (Mario->vy < 0 && !keyCode[DIK_S])
 	{
 		Mario->SetState(new PlayerFallingState());
 		

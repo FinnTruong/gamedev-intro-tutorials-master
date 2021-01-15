@@ -154,6 +154,7 @@
     <ClCompile Include="PiranhaPlant.cpp" />
     <ClCompile Include="PointEffect.cpp" />
     <ClCompile Include="PSwitch.cpp" />
+    <ClCompile Include="SledgeBro.cpp" />
     <ClCompile Include="SpeechBubble.cpp" />
     <ClCompile Include="Tail.cpp" />
     <ClCompile Include="QuestionBlock.cpp" />
@@ -234,6 +235,7 @@
     <ClInclude Include="PlayerJumpingState.h" />
     <ClInclude Include="PointEffect.h" />
     <ClInclude Include="PSwitch.h" />
+    <ClInclude Include="SledgeBro.h" />
     <ClInclude Include="SpeechBubble.h" />
     <ClInclude Include="Tail.h" />
     <ClInclude Include="PlayerRunningMaxState.h" />

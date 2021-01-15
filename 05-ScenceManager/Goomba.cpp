@@ -2,7 +2,7 @@
 #include "Ground.h"
 #include "Utils.h"
 #include "Player.h"
-
+#include "ExplodeEffect.h"
 Goomba::Goomba()
 {
 	tag = Tag::GOOMBA;
@@ -196,6 +196,7 @@ void Goomba::OnOverlapped(LPGAMEOBJECT obj)
 {
 	if (obj->tag == Tag::TAIL)
 	{
+		auto explodeEffect = new ExplodeEffect(x, y);
 		OnAttacked();
 	}
 	if (obj->tag == Tag::GROUND || obj->tag == Tag::ONE_WAY_PLATFORM)
@@ -224,6 +225,7 @@ void Goomba::OnSteppedOn()
 
 void Goomba::OnAttacked()
 {
+	auto explodeEffect = new ExplodeEffect(x, y);
 	SetState(GOOMBA_STATE_DIE_ONESHOT);
 	hasBeenAttacked = true;
 }

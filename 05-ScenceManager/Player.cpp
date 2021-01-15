@@ -343,6 +343,25 @@ void Player::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 
+			else if (e->obj->tag == Tag::SLEDGE_BRO)
+			{
+				if (e->ny < 0)
+				{
+					e->obj->SetActive(false);
+					e->obj->DisableGameObject();
+					vy = -MARIO_JUMP_DEFLECT_SPEED;
+				}
+
+				if (e->nx != 0)
+				{
+					if (untouchable == 0)
+					{
+						TakeDamage();
+						return;
+					}
+				}
+			}
+
 			else if (e->obj->tag == Tag::MUSHROOM)
 			{
 				auto mushroom = dynamic_cast<Mushroom*>(e->obj);
@@ -535,7 +554,7 @@ void Player::OnKeyDown(int keyCode)
 	//Transition from any State
 	switch (keyCode)
 	{
-	case DIK_SPACE:
+	case DIK_S:
 		if (!hasJumped)
 		{
 			if (isGrounded && !isFalling)
@@ -634,7 +653,7 @@ void Player::OnKeyUp(int keyCode)
 		releaseMoveInputTime = GetTickCount64();
 		facingDirection = -1;
 		break;
-	case DIK_SPACE:
+	case DIK_S:
 		releaseJumpInputTime = GetTickCount64();
 		break;
 	case DIK_A:
@@ -836,6 +855,11 @@ void Player::HandleMovement(DWORD dt)
 	}
 
 	isSkiding = targetVelocity * facingDirection < 0 ? true : false;
+
+	if (isSkiding)
+	{
+		abilityBar -= 0.7 * dt;
+	}
 }
 
 
@@ -985,7 +1009,7 @@ void Player::CheckIfHasHitGoal()
 
 void Player::CheckIfDead()
 {
-	if (isDead)
+	if (isDead && !hasHitGoal)
 	{
 		if (GetTickCount64() - deadTime >= 1500)
 		{

@@ -47,6 +47,7 @@ void QuestionBlock::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void QuestionBlock::Render()
 {
+	int curSceneType = CGame::GetInstance()->GetCurrentScene()->sceneType;
 	int ani = 0;
 
 	if (hasCollided)
@@ -55,7 +56,7 @@ void QuestionBlock::Render()
 	}
 	else
 	{
-		ani = hasOneUp ? 2 : 0;
+		ani = hasOneUp || curSceneType == 3 ? 2 : 0;
 		animation_set->at(ani)->Render(-nx, x, y);
 	}
 	RenderBoundingBox();
@@ -104,6 +105,9 @@ void QuestionBlock::SpawnItem()
 			item = new Mushroom(x, y);
 			break;
 		case MARIO_LEVEL_BIG:
+			item = new Leaf(x, y);
+			break;
+		case MARIO_LEVEL_RACCOON:
 			item = new Leaf(x, y);
 			break;
 		default:

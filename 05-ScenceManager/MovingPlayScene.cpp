@@ -55,7 +55,6 @@ void MovingPlayScene::Render()
 		{
 			if (activeObjects[i]->sortingLayer == j)
 				activeObjects[i]->Render();
-
 		}
 	}
 	DrawEndLevelText();
