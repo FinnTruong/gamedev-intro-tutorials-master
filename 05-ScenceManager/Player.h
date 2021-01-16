@@ -125,12 +125,14 @@
 #define TIME_BEFORE_SWITCH_SCENE	3000
 
 
+
 class Player : public CGameObject
 {
 private:
 	static Player* instance;
 	int untouchable = 0;
 	DWORD untouchable_start = 0;
+	int alpha = 255;
 
 
 	float start_x;			// initial position of Mario at scene

@@ -277,6 +277,9 @@
     <ClCompile Include="SledgeBro.cpp">
       <Filter>Game Objects\PlayScene Objects\Enemy\Sledge Bro</Filter>
     </ClCompile>
+    <ClCompile Include="Boomerang.cpp">
+      <Filter>Game Objects\PlayScene Objects\Projectile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -491,6 +494,9 @@
     </ClInclude>
     <ClInclude Include="SledgeBro.h">
       <Filter>Game Objects\PlayScene Objects\Enemy\Sledge Bro</Filter>
+    </ClInclude>
+    <ClInclude Include="Boomerang.h">
+      <Filter>Game Objects\PlayScene Objects\Projectile</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

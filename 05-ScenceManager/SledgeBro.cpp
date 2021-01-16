@@ -1,4 +1,7 @@
 #include "SledgeBro.h"
+#include "Player.h"
+#include "Boomerang.h"
+#include "Utils.h"
 
 SledgeBro::SledgeBro(float posX, float posY)
 {
@@ -35,12 +38,18 @@ void SledgeBro::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vx = SLEDGE_BRO_MOVE_SPEED;
 	}
 
+	canAttack = GetTickCount64() - attackTime <= BOOMERANG_DURATION + TIME_BETWEEN_ATTACK ? false : true;
+
+	if (canAttack)
+	{
+		Attack();
+	}
 }
 
 void SledgeBro::Render()
 {
 	if (isActive)
-		animation_set->at(0)->Render(nx, x, y);
+		animation_set->at(0)->Render(-1, x, y);
 }
 
 void SledgeBro::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -79,4 +88,17 @@ void SledgeBro::HandleCollision(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+}
+
+void SledgeBro::Attack()
+{
+	attackTime = GetTickCount64();
+	Boomerang* boomerang = new Boomerang(x, y);
+	boomerang->ActivateGameObject();
+}
+
+bool SledgeBro::IsPlayerInRange()
+{
+	float distanceToPlayer = abs(x - Mario->x);
+	return !(distanceToPlayer >= MIN_DISTANCE_FROM_PLAYER);
 }

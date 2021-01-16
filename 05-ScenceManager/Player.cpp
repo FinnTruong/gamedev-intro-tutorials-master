@@ -18,6 +18,7 @@
 #include "Mushroom.h"
 #include "OneUpMushroom.h"
 #include "Flower.h"
+#include "Boomerang.h"
 #include "Brick.h"
 #include "PBlock.h"
 #include "PSwitch.h"
@@ -522,6 +523,9 @@ void Player::OnOverlapped(LPGAMEOBJECT other)
 	//case Tag::VENUS_FIREBALL:
 	//	TakeDamage();
 	//	break;
+	case Tag::BOOMERANG:
+		TakeDamage();
+		break;
 	case Tag::ITEM:
 		dynamic_cast<Item*>(other)->OnCollected();
 		break;
@@ -716,9 +720,11 @@ void Player::Render()
 	UpdatePlayerStateAnimation();
 	UpdateGlobalAnimation();
 
-	int alpha = 255;
+	alpha = 255;
 	if (untouchable)
+	{		
 		alpha = 128;
+	}
 
 	if (level == MARIO_LEVEL_RACCOON && nx == 1 && currentAnimation != MARIO_ANI_RACCOON_ATTACKING)
 	{
